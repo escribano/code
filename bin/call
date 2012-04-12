@@ -1,0 +1,43 @@
+#!/usr/bin/env coffee
+# chmod +x bin/call
+
+###
+ * Module dependencies.
+###
+
+call = require("../")
+exec = require("child_process").exec
+program = require("commander")
+#mkdirp = require("mkdirp")
+os = require("os")
+fs = require("fs")
+
+console.log call
+
+
+# CLI
+
+program
+  .version(call.version)
+  .option('-s, --assets', 'add assets support')
+  .option('-c, --compiler <engine>', 'add compiler <engine> support (coffee|jade) (defaults to coffee)')
+  .parse(process.argv)
+
+# Path
+
+path = program.args.shift() or "."
+
+
+# end-of-line code
+
+eol = (if "win32" is os.platform() then "\r\n" else "\n")
+
+switch program.css
+  when "coffee"
+    console.log  "coffee"
+  when "jade"
+    console.log "stylus"
+  else
+    console.log "less"
+
+

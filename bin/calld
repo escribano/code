@@ -1,0 +1,128 @@
+#!/usr/bin/env coffee
+
+###
+ * Module dependencies.
+###
+
+program = require("commander")
+exec = require("child_process").exec
+vm = require("vm")
+fs = require("fs")
+path = require("path")
+join = path.join
+resolve = path.resolve
+cwd = process.cwd()
+call = require("../")
+#utils = call.utils
+#reporters = call.reporters
+#Context = call.Context
+
+###
+ * Files.
+###
+
+files = []
+
+# options
+
+program
+  .version(call.version)
+  .usage('[debug] [options] [files]')
+  .option('-r, --require <name>', 'require the given module')
+  .option('-R, --reporter <name>', 'specify the reporter to use', 'dot')
+  .option('-u, --ui <name>', 'specify user-interface (bdd|tdd|exports)', 'bdd')
+  .option('-g, --grep <pattern>', 'only run tests matching <pattern>')
+  .option('-t, --timeout <ms>', 'set test-case timeout in milliseconds [2000]')
+  .option('-s, --slow <ms>', '"slow" test threshold in milliseconds [75]', parseInt)
+  .option('-w, --watch', 'watch files for changes')
+  .option('-c, --colors', 'force enabling of colors')
+  .option('-C, --no-colors', 'force disabling of colors')
+  .option('-G, --growl', 'enable growl notification support')
+  .option('-d, --debug', "enable node's debugger, synonym for node --debug")
+  .option('-b, --bail', "bail after first test failure")
+  .option('--debug-brk', "enable node's debugger breaking on the first line")
+  .option('--globals <names>', 'allow the given comma-delimited global [names]', list, [])
+  .option('--ignore-leaks', 'ignore global variable leaks')
+  .option('--interfaces', 'display available interfaces')
+  .option('--reporters', 'display available reporters')
+  .option('--compilers <ext>:<module>,...', 'use the given module(s) to compile files', list, [])
+
+program.name = 'call'
+
+# --reporters
+
+program.on "reporters", ->
+  console.log()
+  console.log "    dot - dot matrix"
+  console.log "    doc - html documentation"
+  console.log "    spec - hierarchical spec list"
+  console.log "    json - single json object"
+  console.log "    progress - progress bar"
+  console.log "    list - spec-style listing"
+  console.log "    tap - test-anything-protocol"
+  console.log "    landing - unicode landing strip"
+  console.log "    xunit - xunit reportert"
+  console.log "    teamcity - teamcity ci support"
+  console.log "    html-cov - HTML test coverage"
+  console.log "    json-cov - JSON test coverage"
+  console.log "    min - minimal reporter (great with --watch)"
+  console.log "    json-stream - newline delimited json events"
+  console.log "    markdown - markdown documentation (github flavour)"
+  console.log()
+  process.exit()
+
+
+# -r, --require
+
+module.paths.push cwd, join(cwd, "node_modules")
+program.on "require", (mod) ->
+  abs = path.existsSync(mod) or path.existsSync(mod + ".js")
+  mod = join(cwd, mod)  if abs
+  require mod
+
+
+# mocha.opts support
+
+try
+  opts = fs.readFileSync("opts/call.opts", "utf8").trim().split(/\s+/)
+  process.argv = process.argv.slice(0, 2).concat(opts.concat(process.argv.slice(2)))
+
+
+# parse args
+
+program.parse process.argv
+
+
+# infinite stack traces
+
+#Error.stackTraceLimit = Infinity; // TODO: config
+
+###
+Base = require("../lib/reporters/base")
+
+# --no-colors
+
+Base.useColors = false  unless program.colors
+
+
+# --colors
+
+Base.useColors = true  if ~process.argv.indexOf("--colors") or ~process.argv.indexOf("-c")
+###
+
+###
+# custom compiler support
+extensions = [ "js" ]
+program.compilers.forEach (c) ->
+  compiler = c.split(":")
+  ext = compiler[0]
+  mod = compiler[1]
+  mod = join(process.cwd(), mod)  if mod[0] is "."
+  require mod
+  extensions.push ext
+###
+
+#re = new RegExp("\\.(" + extensions.join("|") + ")$")
+
+list = (str) ->
+  str.split RegExp(" *, *")

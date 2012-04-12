@@ -1,0 +1,25 @@
+#!/usr/bin/env coffee
+
+###
+ * This tiny wrapper file checks for known node flags and appends them
+ * when found, before invoking the "real" _code(1) executable.
+###
+
+spawn = require("child_process").spawn
+args = [ __dirname + "/_code" ]
+
+process.argv.slice(2).forEach (arg) ->
+  switch arg
+    when "-d"
+      args.unshift "--debug"
+    when "debug", "--debug", "--debug-brk"
+      args.unshift arg
+    when "-gc", "--expose-gc"
+      args.unshift "--expose-gc"
+    else
+      args.push arg
+
+proc = spawn(process.argv[0], args,
+  customFds: [ 0, 1, 2 ]
+)
+proc.on "exit", process.exit
