@@ -1,0 +1,314 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0068)http://joost.zeekat.nl/constructors-considered-mildly-confusing.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Constructors considered mildly confusing</title>
+<link rel="stylesheet" href="./Constructors considered mildly confusing_files/eval-code.css" type="text/css">
+
+<link rev="made" href="mailto:joost@sepia..lan">
+</head>
+
+<body>
+
+
+<!-- INDEX BEGIN -->
+<div name="index">
+<p><a name="__index__"></a></p>
+<!--
+
+<ul>
+
+	<li><a href="#constructors_considered_mildly_confusing">Constructors considered mildly confusing</a></li>
+	<ul>
+
+		<li><a href="#what_s_going_on_some_definitions">What's going on? Some definitions</a></li>
+		<ul>
+
+			<li><a href="#objects_and_methods">Objects and methods</a></li>
+			<li><a href="#prototypes">Prototypes</a></li>
+			<li><a href="#property_lookup">Property lookup</a></li>
+		</ul>
+
+		<li><a href="#what_s_going_on_line_by_line_">What's going on? Line by line.</a></li>
+		<ul>
+
+			<li><a href="#_1__function_myconstructor_____">#1: <code>function MyConstructor() {}</code></a></li>
+			<li><a href="#_2__myconstructor_prototype_____">#2: <code>MyConstructor.prototype = {}</code></a></li>
+			<li><a href="#_3__var_myobject___new_myconstructor___">#3: <code>var myobject = new MyConstructor();</code></a></li>
+		</ul>
+
+		<li><a href="#what_about_instanceof_">What about <code>instanceof</code> ?</a></li>
+		<li><a href="#constructors_are_not_classes">Constructors are not classes</a></li>
+		<li><a href="#constructors_do_not_work_like_class_based_initializers">Constructors do not work like class-based initializers</a></li>
+		<li><a href="#constructors_are_just_functions">Constructors are just functions</a></li>
+		<li><a href="#comments">Comments</a></li>
+		<li><a href="#foot_notes">Foot notes</a></li>
+		<ul>
+
+			<li><a href="#0_">0]</a></li>
+			<li><a href="#1_">1]</a></li>
+			<li><a href="#2_">2]</a></li>
+		</ul>
+
+		<li><a href="#references">References</a></li>
+		<ul>
+
+			<li><a href="#a_comp_lang_javascript_question">A comp.lang.javascript question</a></li>
+			<li><a href="#ecma_262">Ecma-262</a></li>
+			<li><a href="#flanagan_2006">Flanagan 2006</a></li>
+		</ul>
+
+		<li><a href="#changes">Changes</a></li>
+		<li><a href="#author___copyright">Author &amp; copyright</a></li>
+	</ul>
+
+</ul>
+
+-->
+
+
+</div>
+<!-- INDEX END -->
+
+<p>
+</p>
+<h1><a name="constructors_considered_mildly_confusing">Constructors considered mildly confusing</a></h1>
+[ <a href="http://joost.zeekat.nl/">Other ramblings</a> ]<p>Consider this quote from <a href="http://joost.zeekat.nl/constructors-considered-mildly-confusing.html#flanagan_2006">Flanagan 2006</a>, page 111 that came up in <a href="http://joost.zeekat.nl/constructors-considered-mildly-confusing.html#a_comp_lang_javascript_question">a comp.lang.javascript question</a> last month:</p>
+<blockquote>In javascript, every object has a constructor property that refers to
+the constructor function that initializes the object.</blockquote><p>Sounds nice: it makes constructors sound static like
+classes in Java. Even the <code>new Constructor()</code> syntax looks like
+it. And it seems true:</p>
+<pre> function MyConstructor() {}
+ var myobject = new MyConstructor();
+ myobject.constructor == MyConstructor;     // true</pre><button> Run this code ==&gt; </button><span class="result"></span><hr>
+<p>But life isn't that simple:</p>
+<pre> function MyConstructor() {}
+ MyConstructor.prototype = {};
+ var myobject = new MyConstructor();
+ 
+ myobject.constructor == MyConstructor;  // false</pre><button> Run this code ==&gt; </button><span class="result"></span><hr>
+<p>
+</p>
+<h2><a name="what_s_going_on_some_definitions">What's going on? Some definitions</a></h2>
+<p>
+</p>
+<h3><a name="objects_and_methods">Objects and methods</a></h3>
+<p>Javascript <a href="http://joost.zeekat.nl/constructors-considered-mildly-confusing.html#0_">0]</a> objects are simply bags of named properties that you
+can read and set. Javascript does not have classes. <a href="http://joost.zeekat.nl/constructors-considered-mildly-confusing.html#1_">1]</a></p>
+<p>Functions in javascript are first-class objects. Methods in javascript
+are just properties that are functions.</p>
+<p>
+</p>
+<h3><a name="prototypes">Prototypes</a></h3>
+<p>The <em>prototype</em> of an object is an <em>internal</em> property that I'll
+refer to here as "<code>[[Prototype]]</code>" (as in <a href="http://joost.zeekat.nl/constructors-considered-mildly-confusing.html#ecma_262">Ecma-262</a>). In other words,
+<code>obj.prototype</code> is in general <strong>not</strong> the <code>obj</code>'s <code>[[Prototype]]</code>. The
+standard does not provide <em>any</em> way to retrieve the <code>[[Prototype]]</code> property
+from an object.</p>
+<p>Javascript objects can <em>delegate</em> properties to their [[Prototype]]
+(and their [[Prototype]] can do the same; all the way up to Object.prototype).</p>
+<p>
+</p>
+<h3><a name="property_lookup">Property lookup</a></h3>
+<p>Whenever a property <em>"propname"</em> of an object is read, the system
+checks if that object has a property named <em>"propname"</em>. If that
+propery does not exist, the system checks the object's <code>[[Prototype]]</code>
+for that property, recursively.</p>
+<p>This means that objects that share a <code>[[Protoype]]</code> also share the
+properties of that <code>[[Prototype]]</code>.</p>
+<p>Whenever a property <em>"propname"</em> of an object is set, the property is
+inserted into that object, ignoring the <code>[[Prototype]]</code> chain of that object.</p>
+<p>The "<code>[[Prototype]]</code>" property is set from the (public) "<code>prototype</code>" property
+of the constructor function when constructor function is called.</p>
+<p>
+</p>
+<h2><a name="what_s_going_on_line_by_line_">What's going on? Line by line.</a></h2>
+<p>This is what the relevant <code>prototype</code> and <code>[[Prototype]]</code> properties look like. The
+ellipses are objects, the arrows are properties that reference other
+objects. The <code>[[Prototype]]</code> chain(s) are in green.</p>
+<p>
+</p>
+<h3><a name="_1__function_myconstructor_____">#1: <code>function MyConstructor() {}</code></a></h3>
+<img src="./Constructors considered mildly confusing_files/graph1.png"><p>Fairly simple. <code>MyConstructor.prototype</code> is a property that's automatically created
+which in turn has a <code>constructor</code> property pointing back at <code>MyConstructor</code>. Remember that: the only
+objects that in fact have a <code>constructor</code> property by default are the automatically created
+<code>prototype</code> properties of functions.</p>
+<p>The rest isn't really relevant but may confuse and enlighten (and
+hopefully in that order):</p>
+<p><code>MyConstructor</code>'s <code>[[Prototype]]</code> is <code>Function.prototype</code>, not
+<code>MyConstructor.prototype</code>.  Also note that the <code>[[Prototype]]</code> chain for
+each object ends up at <code>Object.prototype</code>.</p>
+<p><code>Object.prototype</code>'s <code>[[Prototype]]</code> is actually <code>null</code> indicating that it's the
+end of the chain. <a href="http://joost.zeekat.nl/constructors-considered-mildly-confusing.html#2_">2]</a></p>
+<p>For the next steps I'm leaving out the <code>[[Prototype]]</code> chain of
+<code>MyConstructor</code> for clarity, since it doesn't change and it's not relevant.</p>
+<p>
+</p>
+<h3><a name="_2__myconstructor_prototype_____">#2: <code>MyConstructor.prototype = {}</code></a></h3>
+<img src="./Constructors considered mildly confusing_files/graph2.png"><p>We've now done away with the predefined MyConstructor.protoype object
+and replaced it with an anonymous object, shown here as "{}". This object
+does not have a constructor property,</p>
+<p>
+</p>
+<h3><a name="_3__var_myobject___new_myconstructor___">#3: <code>var myobject = new MyConstructor();</code></a></h3>
+<img src="./Constructors considered mildly confusing_files/graph3.png"><p>From this graph, following the <a href="http://joost.zeekat.nl/constructors-considered-mildly-confusing.html#property_lookup">property lookup</a> rules, we can now
+see that myobject.constructor is delegated to Object.prototype.constructor, which
+points to Object.  In other words:</p>
+<pre> function MyConstructor() {}
+ MyConstructor.prototype = {};
+ var myobject = new MyConstructor();
+ 
+ myobject.constructor == Object</pre><button> Run this code ==&gt; </button><span class="result"></span><hr>
+<p>
+</p>
+<h2><a name="what_about_instanceof_">What about <code>instanceof</code> ?</a></h2>
+<p>Javascript provides the instanceof operator that's intended to check
+the prototype chain of the object you're dealing with. From the above
+you might think that the following would return false:</p>
+<pre> function MyConstructor() {}
+ MyConstructor.prototype = {};
+ var myobject = new MyConstructor();
+ 
+ myobject instanceof MyConstructor  // true</pre><button> Run this code ==&gt; </button><span class="result"></span><hr>
+<p>But in fact it works (click the button). It also notices that myobject delegates
+to Object.prototype:</p>
+<pre> function MyConstructor() {}
+ MyConstructor.prototype = {};
+ var myobject = new MyConstructor();
+ 
+ myobject instanceof Object</pre><button> Run this code ==&gt; </button><span class="result"></span><hr>
+<p>When <code>instanceof</code> is called it checks the <code>prototype</code> property of
+the given constructor and checks it agains the <code>[[Prototype]]</code> chain of
+the given object. In other words, it's not dependent on the
+<code>constructor</code> property.</p>
+<p>All nice and dandy, but you <em>can</em> still break it if you try hard enough:</p>
+<pre> function MyConstructor() {}
+ var myobject = new MyConstructor();
+ MyConstructor.prototype = {};
+ 
+ [ myobject instanceof MyConstructor,     // false !
+   myobject.constructor == MyConstructor, // true !
+   myobject instanceof Object ]           // true</pre><button> Run this code ==&gt; </button><span class="result"></span><hr>
+<p>This is what the prototype chains look like after running that:</p>
+<img src="./Constructors considered mildly confusing_files/graph4.png"><p>
+</p>
+<h2><a name="constructors_are_not_classes">Constructors are not classes</a></h2>
+<p>In a class-based object system, typically classes inherit from each
+other, and objects are instances of those classes. Methods and
+properties that are shared between instances are (at least
+conceptually) properties of a class. Properties (and for some
+languages, methods) that should not be shared are properties of the
+objects themselves.</p>
+<p>Javascript's constructors do nothing like this: in fact constructors
+have their own <code>[[Prototype]]</code> chain <em>completely separate</em> from the
+<code>[[Prototype]]</code> chain of objects they initialize.</p>
+<p>
+</p>
+<h2><a name="constructors_do_not_work_like_class_based_initializers">Constructors do not work like class-based initializers</a></h2>
+<p>A constructor call associates a new object with a <code>[[Prototype]]</code> the
+constructor function <em>may</em> set additional properties on the object.
+Constructor calls do <strong>not</strong> call "inherited" constructors, and they
+shouldn't because the object's <code>[[Prototype]]</code> (the constructor's
+<code>prototype</code>) is assumed to be shared and (probably) already
+initialized.</p>
+<p>
+</p>
+<h2><a name="constructors_are_just_functions">Constructors are just functions</a></h2>
+<p>Any user-defined function in javascript automatically gets a
+<code>prototype</code> property which in turn has a <code>constructor</code> property that
+refers back to the function.</p>
+<p>Any user-defined function in javascript can be called as a constructor
+by prepending <code>new</code> to the call. This will pass a new <code>this</code> object
+to the function and its <code>[[Prototype]]</code> property will be set to the
+<code>prototype</code> property of the function.</p>
+<p>
+</p>
+<h2><a name="comments">Comments</a></h2>
+<p>If you want, you can leave your comments <a href="http://joost.zeekat.nl/2008/02/11/rambling-on-javascript-constructors-considered-mildly-confusing/">at the blog post</a>, or catch my attention in comp.lang.javascript.</p><p>
+</p>
+<h2><a name="foot_notes">Foot notes</a></h2>
+<p>
+</p>
+<h3><a name="0_">0]</a></h3>
+<p>"Javascript" in this text refers to implementations of <a href="http://joost.zeekat.nl/constructors-considered-mildly-confusing.html#ecma_262">Ecma-262</a>.</p>
+<p>
+</p>
+<h3><a name="1_">1]</a></h3>
+<p>The specification mentions that every object must have an internal
+[[Class]] property. The values of these properties are strings and
+"used internally to distinguish different kinds of built-in objects".
+Javascript code can't establish new values for the [[Class]] property,
+but the host system can.</p>
+<p>Anyone not implementing or embedding a javascript interpreter is
+probably best off ignoring this property, since it's (almost)
+invisible and there are better ways to distinguishing build-in types
+in the language if you need to.</p>
+<p>Still curious? See section 8.6.2 of <a href="http://joost.zeekat.nl/constructors-considered-mildly-confusing.html#ecma_262">Ecma-262</a>.</p>
+<p>
+</p>
+<h3><a name="2_">2]</a></h3>
+<p>John G Harris wrote in on comp.lang.javascript to say that this isn't
+quite true, and he's technically correct. The best kind of correct :-)
+Theoretically, the host system may swap the <code>Object.prototype</code>
+property with something else. As far as Javascript code is concerned,
+<code>Object.prototype</code> should be read-only. In the only browser I've
+tested (firefox) you can assign a new value to <code>Object.prototype</code>,
+but the assignment is ignored.</p>
+<p>In any case, if you or the host system change it in a fit of
+perversity <em>it will not have affect the respective [[Prototype]]
+properties of any object</em>, not even those created later.</p>
+<p>In other words, wherever you read <code>Object.prototype</code> in this text, it
+refers to what the specs call "The initial value of
+<code>Object.prototype</code>".</p>
+<p>The same caveat applies to <code>Function.prototype</code>, <code>Array.prototype</code>,
+<code>String.prototype</code>, <code>Boolean.prototype</code>, <code>Number.prototype</code>,
+<code>Date.prototype</code>, <code>RegExp.prototype</code> and <code>Error.prototype</code>. Search
+the specs for "initial value" and you'll find them (and some more
+interesting stuff, too).</p>
+<p>Example:</p>
+<pre> // running this code has a very slight chance of breaking the examples
+ // on this page. So you may want to reload after trying it, if the results
+ // don't match the expectations. (Oh, and let me know!)
+ 
+ var oldp = Object.prototype;
+ Object.prototype = {};
+ var b = new Object();
+ [ b.constructor == Object,                      // should be true
+   b.constructor.prototype == Object.prototype,  // should be true
+   Object.prototype == oldp ]                    // should be true</pre><button> Run this code ==&gt; </button><span class="result"></span><hr>
+<p>
+</p>
+<h2><a name="references">References</a></h2>
+<p>
+</p>
+<h3><a name="a_comp_lang_javascript_question">A comp.lang.javascript question</a></h3>
+<p><code>Subject: "x.constructor == Foo" vs "x instanceof Foo".
+Message-ID: &lt;fniu6a$2cn$1@reader2.panix.com</code>&gt;
+<a href="http://groups.google.com/group/comp.lang.javascript/msg/102ab20c68aa738f">http://groups.google.com/group/comp.lang.javascript/msg/102ab20c68aa738f</a></p>
+<p>
+</p>
+<h3><a name="ecma_262">Ecma-262</a></h3>
+<p>Standard ECMA-262. ECMAScript Language Specification 3rd edition (December 1999)
+<a href="http://www.ecma-international.org/publications/standards/Ecma-262.htm">http://www.ecma-international.org/publications/standards/Ecma-262.htm</a></p>
+<p>
+</p>
+<h3><a name="flanagan_2006">Flanagan 2006</a></h3>
+<p>JavaScript: The Definitive Guide, Fifth Edition.
+ISBN 10: 0-596-10199-6 | ISBN 13:9780596101992</p>
+<p>
+</p>
+<h2><a name="changes">Changes</a></h2>
+<p>2008/02/11 - initial version</p>
+<p>2008/02/13 - added footnote <a href="http://joost.zeekat.nl/constructors-considered-mildly-confusing.html#2_">2]</a> and modified footnote <a href="http://joost.zeekat.nl/constructors-considered-mildly-confusing.html#1_">1]</a> to be even less
+normative (also, removed <code>[[Class]]</code> "Class")</p>
+<p>2008/02/17 - rewrote note <a href="http://joost.zeekat.nl/constructors-considered-mildly-confusing.html#1_">1]</a> once again. And corrected it. Added <a href="http://joost.zeekat.nl/constructors-considered-mildly-confusing.html#0_">0]</a>.</p>
+<p>
+</p>
+<h2><a name="author___copyright">Author &amp; copyright</a></h2>
+<p>(c)2008 Joost Diepenmaat, Zeekat Softwareontwikkeling.</p>
+<p>URI: <a href="./Constructors considered mildly confusing_files/Constructors considered mildly confusing.html">http://joost.zeekat.nl/constructors-considered-mildly-confusing.html</a></p>
+[ <a href="http://joost.zeekat.nl/">Other ramblings</a> ]<script language="JavaScript" src="./Constructors considered mildly confusing_files/tools.js"></script>
+<script language="JavaScript" src="./Constructors considered mildly confusing_files/eval-code.js"></script>
+
+
+
+</body></html>

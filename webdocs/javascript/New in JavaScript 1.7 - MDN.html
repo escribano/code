@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)https://developer.mozilla.org/En/New_in_JavaScript_1.7 -->
+<html lang="en" dir="ltr" id="developer-mozilla-org"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>New in JavaScript 1.7 - MDN</title>
+
+<meta charset="utf-8">
+
+<meta name="viewport" content="initial-scale=1.0, width=device-width">
+<meta name="MSSmartTagsPreventParsing" content="true">
+<meta name="Copyright" content="Copyright (c) 2005-2012 Mozilla.">
+<meta name="Rating" content="General">
+
+<link rel="home" href="https://developer.mozilla.org/">
+<link rel="copyright" href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#copyright">
+<meta name="robots" content="index,follow">
+<link rel="shortcut icon" href="https://developer.mozilla.org/favicon.ico">
+<link rel="alternate" type="application/rss+xml" title="What&#39;s new feed" href="https://developer.mozilla.org/index.php?title=Special:Recentchanges&feed=rss">
+<link rel="alternate" type="application/rss+xml" title="Page and subpages changes feed" href="https://developer.mozilla.org/index.php?title=Special:Article&type=feed&feedtype=subpagechanges&pageid=14174">
+<link rel="alternate" type="application/rss+xml" title="Page changes feed" href="https://developer.mozilla.org/index.php?title=Special:Article&type=feed&pageid=14174">
+<meta name="generator" content="MindTouch">
+<link rel="search" type="application/opensearchdescription+xml" title="MDN Search" href="https://developer.mozilla.org/deki/gui/opensearch.php?type=description">
+<link rel="stylesheet" type="text/css" media="screen" href="./New in JavaScript 1.7 - MDN_files/css.php"> <!--[if IE 7]><style type="text/css">@import "/skins/common/_ie7.css";</style><![endif]--><!--[if IE 6]><style type="text/css">@import "/skins/common/_ie.css";</style><![endif]--><link rel="stylesheet" type="text/css" media="print" href="./New in JavaScript 1.7 - MDN_files/print.css">
+<link rel="stylesheet" type="text/css" media="screen,projection" href="./New in JavaScript 1.7 - MDN_files/css(1).php">
+<!--[if lte IE 7]><link rel="stylesheet" type="text/css" media="all" href="/skins/mdn/Transitional/ie7.css"><![endif]-->
+<!--[if lte IE 6]><link rel="stylesheet" type="text/css" media="all" href="/skins/mdn/Transitional/ie6.css"><![endif]-->
+<link rel="stylesheet" type="text/css" media="print" href="./New in JavaScript 1.7 - MDN_files/print(1).css">
+
+<script type="text/javascript">CKEDITOR_BASEPATH = "/deki/plugins/page_editor_ckeditor/ckeditor/";</script>
+<script type="text/javascript" src="./New in JavaScript 1.7 - MDN_files/js.php"></script><script type="text/javascript">var _starttime = new Date().getTime();</script>
+
+<!--[if IE]>
+<meta http-equiv="imagetoolbar" content="no">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<script src="/skins/mdn/Transitional/js/html5.js"></script>
+<![endif]-->
+
+	<script type="text/javascript">
+
+		var aLt = aLt || [];aLt["attach-no-description"] = 'No description'; aLt["cancel"] = 'Cancel'; aLt["close"] = 'Close'; aLt["comment-delete"] = 'Are you sure you want to delete this comment?'; aLt["contentrating-title-popup"] = 'Thanks for your feedback'; aLt["error"] = 'Error'; aLt["error-permission-denied"] = 'Permission denied'; aLt["error-permission-details"] = 'Your account does not have sufficient permissions to perform that action.'; aLt["gallery-close"] = 'close'; aLt["gallery-next"] = 'next'; aLt["gallery-prev"] = 'prev'; aLt["internal-error"] = 'Sorry, but there was an internal problem - please try again soon.'; aLt["js-label_cancel"] = 'Cancel'; aLt["js-label_save"] = 'Save'; aLt["js-tooltip_cancel"] = 'Exit Without Saving Changes'; aLt["js-tooltip_save"] = 'Save and Exit (Alt+S)'; aLt["ldap-provide-credentials"] = 'Please provide external service login credentials.'; aLt["loading"] = 'Loading...'; aLt["menu-confirm-delete"] = 'Are you sure you want to delete this file?'; aLt["menu-delete-file"] = 'Delete'; aLt["menu-edit-description"] = 'Edit description'; aLt["menu-move-file"] = 'Move'; aLt["menu-previous-versions"] = 'Previous versions'; aLt["menu-view-original"] = 'View original'; aLt["ready"] = 'Ready'; aLt["remove-tag"] = 'Remove tag'; aLt["restore-tag"] = 'Restore tag'; aLt["adding-tags"] = 'Adding Tags...'; aLt["save"] = 'Save'; aLt["submit"] = 'Submit'; aLt["wikibits-attach-another"] = 'Attach another file'; aLt["wikibits-attach-file"] = 'Attach File'; aLt["wikibits-cant-attach-editing"] = 'Sorry, you can\'t attach files while editing a page. Please close the editor first.'; aLt["wikibits-edit-section"] = 'Edit section'; aLt["wikibits-remove-file"] = 'Remove file'; aLt["advanced-search"] = 'Advanced Search'; aLt["standard-search"] = 'Standard Search';  var wfMsg = wfMsg || function (key) { return aLt[key] ? aLt[key] : 'MISSING: ' + key; };
+	//hook in menu clicking events to the document's body
+	YAHOO.util.Event.addListener(document, "click", function () { DWMenu.BodyClick(); });
+	YAHOO.util.Event.onDOMReady(function () { new clientWindow });
+
+		
+
+			YAHOO.util.Event.onDOMReady(function() {
+			tb_init("a.lightbox, area.lightbox, input.lightbox, a[rel='awesomebox']");//pass where to apply thickbox
+		});
+	
+			YAHOO.util.Event.onDOMReady(function() {
+			MTComments.HookBehavior();
+		});
+		</script>
+<link type="text/css" rel="stylesheet" href="./New in JavaScript 1.7 - MDN_files/SyntaxHighlighter.css"><script type="text/javascript" src="./New in JavaScript 1.7 - MDN_files/shCore.js"></script><script type="text/javascript" src="./New in JavaScript 1.7 - MDN_files/shBrushXml.js"></script><script type="text/javascript" src="./New in JavaScript 1.7 - MDN_files/shBrushJScript.js"></script><script type="text/javascript" src="./New in JavaScript 1.7 - MDN_files/rgbcolor.js"></script>
+<script type="text/javascript" src="./New in JavaScript 1.7 - MDN_files/nav.js"></script>
+
+<script type="text/javascript">
+
+Deki.BaseHref = 'https://developer.mozilla.org';
+Deki.PageId = 14174;
+Deki.PageTitle = 'en/JavaScript/New in JavaScript/1.7';
+Deki.PageLanguageCode = 'en';
+Deki.FollowRedirects = 1;
+Deki.PathTpl = '/skins/mdn';
+Deki.PathSkin = '/skins/mdn/Transitional';
+Deki.PathCommon = '/skins/common';
+Deki.UserName = 'Anonymous';
+Deki.Today = '14 Apr 2012';
+Deki.UserIsAnonymous = true;
+Deki.EditorConfigToken = '2a459788';
+Deki.EditorStylesToken = '5c812475';
+Deki.PageEditable = false;
+</script>
+<script type="text/javascript">aLt["commercial-required"] = 'Gather feedback on your content with <strong>community scoring</strong> - these ratings weight results in adaptive search. Through curation analytics, ratings are used to highlight pages in need of attention. <a href="http://www.mindtouch.com/redir/mindtouch-tcs/">Learn more on enabling these capabilities with MindTouch 2010.</a>';aLt["login-required"] = 'You must be <a href="/index.php?title=Special:Userlogin&returntotitle=en%2FJavaScript%2FNew+in+JavaScript%2F1.7">logged in</a> to perform that action';</script><link href="./New in JavaScript 1.7 - MDN_files/custom_css.php" rel="stylesheet" type="text/css"> 
+ 
+<style type="text/css">.dp-xml .cdata { color: #ff1493; }.dp-xml .tag, .dp-xml .tag-name { color: #069; font-weight: bold; }.dp-xml .attribute { color: red; }.dp-xml .attribute-value { color: blue; }</style></head>
+
+<body id="docs" class="section-docs en ltr yui-skin-sam PageDW-enJavaScriptNewinJavaScript17 hasJS" role="document">
+<!--[if lte IE 8]>
+<noscript><div class="global-notice">
+<p><strong>Warning:</strong> The Mozilla Developer Network website employs emerging web standards that may not be fully supported in some versions of MicroSoft Internet Explorer. You can improve your experience of this website by enabling JavaScript.</p>
+</div></noscript>
+<![endif]-->
+<noscript>&lt;div class="noscript"&gt;This application requires Javascript to be enabled.&lt;/div&gt;</noscript>
+<header id="masthead" role="banner">
+  <div class="wrap">
+  
+    <div id="branding">
+      <h1 id="logo"><a href="https://developer.mozilla.org/"><img src="./New in JavaScript 1.7 - MDN_files/mdn-logo-sm.png" alt="" title="" width="62" height="71"> Mozilla Developer Network</a></h1>
+    </div>
+    
+    <a id="moz-tab" href="http://mozilla.org/">Mozilla</a>
+
+    <nav id="nav" role="menubar">
+      <ul id="nav-main">
+        <li id="nav-main-topics" class="menu"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#nav-sub-topics" aria-haspopup="true" class="toggle" title="Explore other parts of MDN">Topics</a>
+          <ul id="nav-sub-topics" class="sub-menu" aria-hidden="true">
+            <li id="nav-sub-web"><a href="https://developer.mozilla.org/web">Web</a></li>
+            <li id="nav-sub-apps"><a href="https://developer.mozilla.org/apps">Apps</a></li>
+            <li id="nav-sub-mobile"><a href="https://developer.mozilla.org/mobile">Mobile</a></li>
+            <li id="nav-sub-addons"><a href="https://developer.mozilla.org/addons">Add-ons</a></li>
+            <li id="nav-sub-mozilla"><a href="https://developer.mozilla.org/mozilla">Mozilla</a></li>
+          </ul>
+        </li>
+        <li id="nav-main-docs" class="menu"><a href="https://developer.mozilla.org/docs" class="docs toggle" aria-haspopup="true" aria-labelledby="nav-main-docs">Docs</a>
+          <div id="nav-sub-docs" class="sub-menu" aria-hidden="true">
+            <ul>
+              <li>
+                <ul>
+                  <li><a href="https://developer.mozilla.org/en/HTML">HTML</a></li>
+                  <li><a href="https://developer.mozilla.org/en/DOM">DOM</a></li>
+                  <li><a href="https://developer.mozilla.org/en/Using_audio_and_video_in_Firefox">Video</a></li>
+                  <li><a href="https://developer.mozilla.org/en/Using_audio_and_video_in_Firefox">Audio</a></li>
+                  <li><a href="https://developer.mozilla.org/en/SVG">SVG</a></li>
+                  <li><a href="https://developer.mozilla.org/en/WebGL">WebGL</a></li>
+                </ul>
+              </li>
+              <li>
+                <ul>
+                  <li><a href="https://developer.mozilla.org/en/HTML/HTML5">HTML5</a></li>
+                  <li><a href="https://developer.mozilla.org/en/WebSockets">WebSockets</a></li>
+                  <li><a href="https://developer.mozilla.org/en/Offline_resources_in_Firefox">Offline Cache</a></li>
+                  <li><a href="https://developer.mozilla.org/en/DOM/Storage">Local Storage</a></li>
+                  <li><a href="https://developer.mozilla.org/en/IndexedDB">IndexedDB</a></li>
+                  <li><a href="https://developer.mozilla.org/en/Using_files_from_web_applications">File API</a></li>
+                </ul>
+              </li>
+              <li>
+                <ul>
+                  <li><a href="https://developer.mozilla.org/en/CSS">CSS</a></li>
+                  <li><a href="https://developer.mozilla.org/en/Using_gradients">Gradients</a></li>
+                  <li><a href="https://developer.mozilla.org/en/CSS/Using_CSS_transforms">Transforms</a></li>
+                  <li><a href="https://developer.mozilla.org/en/CSS/CSS_transitions">Transitions</a></li>
+                  <li><a href="https://developer.mozilla.org/en/CSS/CSS_animations">Animations</a></li>
+                  <li><a href="https://developer.mozilla.org/en/CSS/Media_queries">Media Queries</a></li>
+                </ul>
+              </li>
+              <li>
+                <ul>
+                  <li><a href="https://developer.mozilla.org/en/JavaScript">JavaScript</a></li>
+                  <li><a href="https://developer.mozilla.org/en/Ajax">Ajax</a></li>
+                  <li><a href="https://developer.mozilla.org/en/HTML/Canvas">Canvas</a></li>
+                  <li><a href="https://developer.mozilla.org/en/Using_geolocation">Geolocation</a></li>
+                  <li><a href="https://developer.mozilla.org/en/DragDrop/Drag_and_Drop">Drag &amp; Drop</a></li>
+                  <li><a href="https://developer.mozilla.org/en/Using_web_workers">Web Workers</a></li>
+                </ul>
+              </li>
+            </ul>
+            <p><a href="https://developer.mozilla.org/docs">More docs…</a></p>
+          </div>
+        </li>
+        <li id="nav-main-demos"><a href="https://developer.mozilla.org/demos" class="demos">Demos</a></li>
+        <li id="nav-main-learning"><a href="https://developer.mozilla.org/learn" class="learning">Learning</a></li>
+        <li id="nav-main-community" class="menu"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#nav-sub-community" class="community toggle" aria-haspopup="true" aria-labelledby="nav-main-community">Community</a>
+          <ul id="nav-sub-community" class="sub-menu" aria-hidden="true">
+            <li><a href="https://developer.mozilla.org/events">Events</a></li>
+            <li><a href="https://developer.mozilla.org/discussions">Discussions</a></li>
+            <li><a href="https://developer.mozilla.org/promote">Promote</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    
+          <ul class="user-state signed-out superfish" data-browserid-header-signin-html="/en-US/users/browserid_header_signin_html" style="display: block; ">    <li class="user-signin menu">
+      <form class="browserid" action="https://developer.mozilla.org/en-US/users/browserid_verify" method="POST"><div style="display:none;"><input type="hidden" id="csrfmiddlewaretoken" name="csrfmiddlewaretoken" value="021a63c7d35d846bf62402e942f60742"></div>
+        <input id="next" name="next" type="hidden" value="/En/New_in_JavaScript_1.7">
+        <input required="required" type="hidden" name="assertion" id="id_assertion">
+                        <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" target="_blank" class="browserid-signin toggle" aria-haspopup="true" title="Sign in with BrowserID">Sign in</a> 
+                <div class="browserid-info sub-menu" aria-hidden="true">
+                <h3>What's this?</h3> <p>MDN has switched to <a href="https://browserid.org/" target="_blank" rel="external">BrowserID</a>, a safe and simple way to sign in with just your e-mail address. <a href="http://identity.mozilla.com/post/12950196039/deploying-browserid-at-mozilla" rel="external">Learn more about why Mozilla is using BrowserID</a>.</p> <p><strong>Returning members:</strong> sign in with BrowserID and you'll be connected to your MDN profile (all your information is still here).</p> <p><strong>New members:</strong> sign in with BrowserID first, then you'll be able to set up your new MDN profile.</p>          <p><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" target="_blank" class="browserid-signin" title="Sign in with BrowserID">Sign in</a></p>
+        </div>
+              </form>
+    </li></ul>
+        
+    <form id="site-search" method="get" action="https://developer.mozilla.org/search">
+      <p>
+        <input type="text" role="search" placeholder="Search MDN" id="q" name="q">
+        <noscript>&lt;button type="submit"&gt;Search&lt;/button&gt;</noscript>
+      </p>
+      
+      <div id="site-search-gg"><div class="gsc-branding"><table cellspacing="0" cellpadding="0" class="gsc-branding"><tbody><tr><td class="gsc-branding-text"><div class="gsc-branding-text">powered by</div></td><td class="gsc-branding-img-noclear"><img src="./New in JavaScript 1.7 - MDN_files/small-logo.png" class="gsc-branding-img-noclear"></td></tr></tbody></table></div></div>
+    </form>
+
+  </div>
+</header>
+
+
+<section id="nav-toolbar">
+<div class="wrap">
+
+<nav id="tool-menus">
+  <ul id="tools" class="superfish">
+    <li class="menu">
+      <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#site-tools" class="toggle">Site tools</a>
+      <ul id="site-tools" class="sub-menu" role="navigation" style="display: none; visibility: hidden; ">
+         
+        <li class="site-recent">	<a href="https://developer.mozilla.org/Special:Recentchanges" title="Recent changes">Recent changes</a>
+</li>
+        <li class="site-rss">	<a href="https://developer.mozilla.org/Special:ListRss" title="RSS feeds">RSS feeds</a>
+</li>
+      	<li class="siteListusers"><a href="https://developer.mozilla.org/User:" title="Users">Users</a></li>
+              <li class="site-templates">	<a href="https://developer.mozilla.org/Template:" title="Templates">Templates</a>
+</li>
+              <li class="site-map">	<a href="https://developer.mozilla.org/Special:Sitemap" title="Sitemap">Sitemap</a>
+</li>
+        <li class="site-popular">	<a href="https://developer.mozilla.org/Special:Popularpages" title="Popular pages">Popular pages</a>
+</li>
+      	<li class="siteAbout"><a href="https://developer.mozilla.org/Special:About" title="About MDN">About MDN</a></li>
+      </ul>
+    </li>
+    <li class="menu">
+      <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#page-tools" class="toggle">This page</a>
+      <ul id="page-tools" class="sub-menu" role="navigation" style="display: none; visibility: hidden; ">
+                                <li class="page-new"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" title="New page" class="disabled ">New sub-page</a></li>
+                    <li class="page-history"><a href="https://developer.mozilla.org/index.php?title=en/JavaScript/New_in_JavaScript/1.7&action=history" title="Page history">History</a></li>
+                    <li class="page-talk">	<a href="https://developer.mozilla.org/Talk:en/JavaScript/New_in_JavaScript/1.7" title="Talk page">Talk page</a>
+</li>
+                                                        <li class="page-print">	<a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="return window.print();" title="Print page">Print page</a>
+</li>
+            <li class="page-backlinks"><a href="https://developer.mozilla.org/index.php?title=Special:Article&type=backlinks&pageid=14174">Pages that link here</a></li>      </ul>
+    </li>
+      <li class="menu">
+      <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" class="toggle">Languages</a>
+      <ul style="display: none; visibility: hidden; "><li><a rel="internal" href="https://developer.mozilla.org/es/Novedades_en_JavaScript_1.7" title="es/Novedades_en_JavaScript_1.7">Español</a></li><li><a rel="internal" href="https://developer.mozilla.org/fr/Nouveaut%C3%A9s_dans_JavaScript_1.7" title="fr/Nouveautés_dans_JavaScript_1.7">Français</a></li><li><a rel="internal" href="https://developer.mozilla.org/it/Novit%C3%A0_in_JavaScript_1.7" title="it/Novità_in_JavaScript_1.7">Italiano</a></li><li><a rel="internal" href="https://developer.mozilla.org/pl/Nowo%C5%9Bci_w_JavaScript_1.7" title="pl/Nowości_w_JavaScript_1.7">Polski</a></li><li><a rel="internal" href="https://developer.mozilla.org/ko/New_in_JavaScript_1.7" title="ko/New_in_JavaScript_1.7">한국어</a></li><li><a rel="internal" href="https://developer.mozilla.org/zh_tw/JavaScript_1.7_%E6%96%B0%E9%AE%AE%E4%BA%8B" title="zh_tw/JavaScript_1.7_新鮮事">中文 (台湾)</a></li><li><a rel="internal" href="https://developer.mozilla.org/ja/New_in_JavaScript_1.7" title="ja/New_in_JavaScript_1.7">日本語</a></li></ul>    </li>
+    </ul>
+</nav>
+
+  <nav class="crumbs" role="navigation">
+    <ol>
+      <li class="crumb-one"><a href="https://developer.mozilla.org/">MDN</a></li>
+      <li class="crumb-two"><a href="https://developer.mozilla.org/docs">Docs</a></li>
+    <li class="first"><a href="https://developer.mozilla.org/" class="deki-ns">MDN</a></li>
+<li class="second"><a href="https://developer.mozilla.org/en" class="deki-ns">MDN</a></li>
+<li><a href="https://developer.mozilla.org/en/JavaScript" class="deki-ns">JavaScript</a></li>
+<li><a href="https://developer.mozilla.org/en/JavaScript/New_in_JavaScript" class="deki-ns">New in JavaScript</a></li>
+<li class="last"><a href="https://developer.mozilla.org/en/JavaScript/New_in_JavaScript/1.7" class="deki-ns current">New in JavaScript 1.7</a></li> 
+    </ol>
+  </nav>
+
+</div>
+</section>
+
+<section id="content">
+<div class="wrap">
+  <div id="content-main" class="full">
+
+    <div id="sessionMsg"><div class="inner"><ul></ul></div></div>
+        
+    <article class="article PageDW-enJavaScriptNewinJavaScript17" role="main">
+            
+            <div class="page-title hideforedit">
+              <h1 class="first" id="title">New in JavaScript 1.7</h1>            
+              <span class="page-moved"><a class="pageMoved" href="https://developer.mozilla.org/index.php?title=en/New_in_JavaScript_1.7&redirect=no">Redirected from en/New in JavaScript 1.7</a></span>
+      
+              <ul id="page-buttons">
+          <li class="page-edit"><a href="https://developer.mozilla.org/index.php?title=Special:Userlogin&returntotitle=en%2FJavaScript%2FNew+in+JavaScript%2F1.7" class="disabled" title="Log in or sign up to edit this page">Edit</a></li>
+          <li class="page-watch"><a href="https://developer.mozilla.org/index.php?title=Special:Userlogin&returntotitle=en%2FJavaScript%2FNew+in+JavaScript%2F1.7" class="disabled" title="Log in or sign up to add this page to your watch list">Watch</a></li>
+        </ul> 
+            </div>
+      
+    <div class="page-content boxed">
+
+     
+      <div id="article-nav" class="hideforedit">      
+              <div class="page-toc">
+          <h2>Table of contents</h2>
+          <ol style="list-style-type:none; margin-left:0px; padding-left:0px;"><li><span>1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Using_JavaScript_1.7" rel="internal">Using JavaScript 1.7</a></li><li><span>2.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Generators_and_iterators_(merge_into_Iterators_and_Generators)" rel="internal">Generators and iterators (merge into Iterators and Generators)</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>2.1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Generators" rel="internal">Generators</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>2.1.1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Resuming_a_generator_at_a_specific_point" rel="internal">Resuming a generator at a specific point</a></li><li><span>2.1.2.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Exceptions_in_generators" rel="internal">Exceptions in generators</a></li><li><span>2.1.3.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Closing_a_generator" rel="internal">Closing a generator</a></li><li><span>2.1.4.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Generator_example" rel="internal">Generator example</a></li></ol></li><li><span>2.2.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Iterators" rel="internal">Iterators</a></li></ol></li><li><span>3.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Array_comprehensions_(Merge_into_Array_comprehensions)" rel="internal">Array comprehensions (Merge into Array comprehensions)</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>3.1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Scoping_rules" rel="internal">Scoping rules</a></li></ol></li><li><span>4.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Block_scope_with_let_(Merge_into_let_Statement)" rel="internal">Block scope with let (Merge into let Statement)</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>4.1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#let_statement" rel="internal">let statement</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>4.1.1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Scoping_rules_2" rel="internal">Scoping rules</a></li></ol></li><li><span>4.2.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#let_expressions" rel="internal">let expressions</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>4.2.1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Scoping_rules_3" rel="internal">Scoping rules</a></li></ol></li><li><span>4.3.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#let_definitions" rel="internal">let definitions</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>4.3.1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Scoping_rules_4" rel="internal">Scoping rules</a></li></ol></li><li><span>4.4.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#let-scoped_variables_in_for_loops" rel="internal">let-scoped variables in for loops</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>4.4.1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Scoping_rules_5" rel="internal">Scoping rules</a></li></ol></li></ol></li><li><span>5.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Destructuring_assignment_(Merge_into_own_page.2Fsection)" rel="internal">Destructuring assignment (Merge into own page/section)</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>5.1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Examples" rel="internal">Examples</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>5.1.1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Avoiding_temporary_variables" rel="internal">Avoiding temporary variables</a></li><li><span>5.1.2.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Multiple-value_returns" rel="internal">Multiple-value returns</a></li><li><span>5.1.3.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Looping_across_objects" rel="internal">Looping across objects</a></li><li><span>5.1.4.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Looping_across_values_in_an_array_of_objects" rel="internal">Looping across values in an array of objects</a></li><li><span>5.1.5.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Pulling_fields_from_objects_passed_as_function_parameter" rel="internal">Pulling fields from objects passed as function parameter</a></li><li><span>5.1.6.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Ignoring_some_returned_values" rel="internal">Ignoring some returned values</a></li><li><span>5.1.7.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Pulling_values_from_a_regular_expression_match" rel="internal">Pulling values from a regular expression match</a></li></ol></li></ol></li></ol>        </div>
+      
+        <ul class="page-anchors">
+          <li class="anchor-tags"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#page-tags" title="Jump to tags for this article">Tags</a></li>
+          <li class="anchor-files"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#page-files" title="Jump to files for this article">Files</a></li>
+        </ul>
+
+              <div id="deki-page-alerts" class="disabled">
+				<div class="toggle">
+					<a href="javascript:void(0);" class="off">
+						<span>Page Notifications</span>
+						<span class="status">Off</span>
+					</a>
+				</div></div>      
+      
+      </div> 
+    
+            
+      <div id="page-top"><div id="pageToc"><div class="pageToc"><h5>Table of contents</h5><ol style="list-style-type:none; margin-left:0px; padding-left:0px;"><li><span>1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Using_JavaScript_1.7" rel="internal">Using JavaScript 1.7</a></li><li><span>2.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Generators_and_iterators_(merge_into_Iterators_and_Generators)" rel="internal">Generators and iterators (merge into Iterators and Generators)</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>2.1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Generators" rel="internal">Generators</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>2.1.1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Resuming_a_generator_at_a_specific_point" rel="internal">Resuming a generator at a specific point</a></li><li><span>2.1.2.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Exceptions_in_generators" rel="internal">Exceptions in generators</a></li><li><span>2.1.3.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Closing_a_generator" rel="internal">Closing a generator</a></li><li><span>2.1.4.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Generator_example" rel="internal">Generator example</a></li></ol></li><li><span>2.2.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Iterators" rel="internal">Iterators</a></li></ol></li><li><span>3.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Array_comprehensions_(Merge_into_Array_comprehensions)" rel="internal">Array comprehensions (Merge into Array comprehensions)</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>3.1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Scoping_rules" rel="internal">Scoping rules</a></li></ol></li><li><span>4.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Block_scope_with_let_(Merge_into_let_Statement)" rel="internal">Block scope with let (Merge into let Statement)</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>4.1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#let_statement" rel="internal">let statement</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>4.1.1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Scoping_rules_2" rel="internal">Scoping rules</a></li></ol></li><li><span>4.2.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#let_expressions" rel="internal">let expressions</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>4.2.1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Scoping_rules_3" rel="internal">Scoping rules</a></li></ol></li><li><span>4.3.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#let_definitions" rel="internal">let definitions</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>4.3.1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Scoping_rules_4" rel="internal">Scoping rules</a></li></ol></li><li><span>4.4.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#let-scoped_variables_in_for_loops" rel="internal">let-scoped variables in for loops</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>4.4.1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Scoping_rules_5" rel="internal">Scoping rules</a></li></ol></li></ol></li><li><span>5.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Destructuring_assignment_(Merge_into_own_page.2Fsection)" rel="internal">Destructuring assignment (Merge into own page/section)</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>5.1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Examples" rel="internal">Examples</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>5.1.1.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Avoiding_temporary_variables" rel="internal">Avoiding temporary variables</a></li><li><span>5.1.2.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Multiple-value_returns" rel="internal">Multiple-value returns</a></li><li><span>5.1.3.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Looping_across_objects" rel="internal">Looping across objects</a></li><li><span>5.1.4.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Looping_across_values_in_an_array_of_objects" rel="internal">Looping across values in an array of objects</a></li><li><span>5.1.5.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Pulling_fields_from_objects_passed_as_function_parameter" rel="internal">Pulling fields from objects passed as function parameter</a></li><li><span>5.1.6.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Ignoring_some_returned_values" rel="internal">Ignoring some returned values</a></li><li><span>5.1.7.</span> <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#Pulling_values_from_a_regular_expression_match" rel="internal">Pulling values from a regular expression match</a></li></ol></li></ol></li></ol></div></div><div class="pageText" id="pageText"><p>
+</p><div style="overflow:hidden; margin: 10px 0px; padding: 0px 10px; background-color: rgb(254, 244, 156); font-weight: bold; text-align: center;"><p style="margin: 4px 0px;">This content covers features introduced in <a rel="custom" href="https://developer.mozilla.org/en/Firefox_2_for_developers">Firefox 2</a>.</p></div> JavaScript 1.7 is a language update introducing several new features, in particular generators, iterators, array comprehensions, <code>let</code> expressions, and destructuring assignment. It also includes all the features of <a title="en/New_in_JavaScript_1.6" rel="internal" href="https://developer.mozilla.org/en/JavaScript/New_in_JavaScript/1.6">JavaScript 1.6</a>.<p></p>
+<p>JavaScript 1.7 support was introduced in Firefox 2.</p>
+<p>The code samples included in this article can be experimented with in the JavaScript shell. Read <a title="en/Introduction_to_the_JavaScript_shell" rel="internal" href="https://developer.mozilla.org/En/SpiderMonkey/Introduction_to_the_JavaScript_shell">Introduction to the JavaScript shell</a> to learn how to build and use the shell.</p>
+<div id="section_1"><span id="Using_JavaScript_1.7"></span><h2 class="editable">Using JavaScript 1.7</h2>
+<p>In order to use some of the new features of JavaScript 1.7, you need to specify that you wish to use JavaScript 1.7. In HTML or XUL code, use:</p>
+<div style="width: auto;"> 
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-xml"><li class="alt"><span><span class="tag">&lt;</span><span class="tag-name">script</span><span>&nbsp;</span><span class="attribute">type</span><span>=</span><span class="attribute-value">"application/javascript;version=1.7"</span><span class="tag">/&gt;</span><span>&nbsp;&nbsp;</span></span></li></ol></div><pre name="code" class="xml" style="display: none; ">&lt;script type="application/javascript;version=1.7"/&gt;</pre>
+        
+</div>
+<p>When using the <a title="en/Introduction_to_the_JavaScript_shell" rel="internal" href="https://developer.mozilla.org/En/SpiderMonkey/Introduction_to_the_JavaScript_shell">JavaScript shell</a>, you need to set the version you wish to use using the <code>-version 170</code> switch on the command line or using the <code>version()</code> function:</p>
+<div style="width: auto;"> 
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span>version(170);&nbsp;&nbsp;</span></span></li></ol></div><pre name="code" class="js" style="display: none; ">version(170);</pre>
+        
+</div>
+<p>The features that require the use of the new keywords "yield" and "let" require you to specify version 1.7 because existing code might use those keywords as variable or function names. The features that do not introduce new keywords (destructuring assignment and array comprehensions) can be used without specifying the JavaScript version.</p>
+</div><div id="section_2"><span id="Generators_and_iterators_(merge_into_Iterators_and_Generators)"></span><h2 class="editable">Generators and iterators (merge into <a title="en/Core_JavaScript_1.5_Guide/Iterators_and_Generators" rel="internal" href="https://developer.mozilla.org/en/JavaScript/Guide/Iterators_and_Generators">Iterators and Generators</a>)</h2>
+<p>When developing code that involves an iterative algorithm (such as iterating over a list, XML nodes, or database results; or repeatedly performing computations on the same data set), there are often state variables whose values need to be maintained for the duration of the computation process. Traditionally, you have to use a callback function to obtain the intermediate values of an iterative algorithm.</p>
+<div id="section_3"><span id="Generators"></span><h3 class="editable">Generators</h3>
+<p>Consider this iterative algorithm that computes Fibonacci numbers:</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">function</span><span>&nbsp;do_callback(num)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;console.log(num);&nbsp;&nbsp;</span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">function</span><span>&nbsp;fib()&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;<span class="keyword">var</span><span>&nbsp;i&nbsp;=&nbsp;0,&nbsp;j&nbsp;=&nbsp;1,&nbsp;n&nbsp;=&nbsp;0;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;<span class="keyword">while</span><span>&nbsp;(n&nbsp;&lt;&nbsp;10)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;do_callback(i);&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">var</span><span>&nbsp;t&nbsp;=&nbsp;i;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;i&nbsp;=&nbsp;j;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;j&nbsp;+=&nbsp;t;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;n++;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>fib();&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="js" style="display: none; ">function do_callback(num) {
+  console.log(num);
+}
+
+function fib() {
+  var i = 0, j = 1, n = 0;
+  while (n &lt; 10) {
+    do_callback(i);
+    var t = i;
+    i = j;
+    j += t;
+    n++;
+  }
+}
+
+fib();</pre>
+        
+<p>This code uses a callback routine to perform operations on each iterative step of the algorithm. In this case, each Fibonacci number is simply printed to the console.</p>
+<p>Generators and iterators work together to provide a new, better, way to do this. Let's see how the Fibonacci number routine looks written using a generator:</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">function</span><span>&nbsp;fib()&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;<span class="keyword">var</span><span>&nbsp;i&nbsp;=&nbsp;0,&nbsp;j&nbsp;=&nbsp;1;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;<span class="keyword">while</span><span>&nbsp;(</span><span class="keyword">true</span><span>)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">yield</span><span>&nbsp;i;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">var</span><span>&nbsp;t&nbsp;=&nbsp;i;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;i&nbsp;=&nbsp;j;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;j&nbsp;+=&nbsp;t;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">var</span><span>&nbsp;g&nbsp;=&nbsp;fib();&nbsp;&nbsp;</span></span></li><li class=""><span><span class="keyword">for</span><span>&nbsp;(</span><span class="keyword">var</span><span>&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;10;&nbsp;i++)&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;console.log(g.next());&nbsp;&nbsp;</span></li><li class=""><span>}&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="js" style="display: none; ">function fib() {
+  var i = 0, j = 1;
+  while (true) {
+    yield i;
+    var t = i;
+    i = j;
+    j += t;
+  }
+}
+
+var g = fib();
+for (var i = 0; i &lt; 10; i++) {
+  console.log(g.next());
+}</pre>
+        
+<p>The function containing the <code>yield</code> keyword is a generator. When you call it, its formal parameters are bound to actual arguments, but its body isn't actually evaluated. Instead, a generator-iterator is returned. Each call to the generator-iterator's <code>next()</code> method performs another pass through the iterative algorithm. Each step's value is the value specified by the <code>yield</code> keyword. Think of <code>yield</code> as the generator-iterator version of <code>return</code>, indicating the boundary between each iteration of the algorithm. Each time you call <code>next()</code>, the generator code resumes from the statement following the <code>yield</code>.</p>
+<p>You cycle a generator-iterator by repeatedly calling its <code>next()</code> method until you reach your desired result condition. In this example, we can obtain however many Fibonacci numbers we want by continuing to call <code>g.next()</code> until we have the number of results we want.</p>
+<div id="section_4"><span id="Resuming_a_generator_at_a_specific_point"></span><h4 class="editable">Resuming a generator at a specific point</h4>
+<p>Once a generator has been started by calling its <code>next()</code> method, you can use <code>send()</code>, passing a specific value that will be treated as the result of the last <code>yield</code>. The generator will then return the operand of the subsequent <code>yield</code>.</p>
+<p>You can't start a generator at an arbitrary point; you must start it with <code>next()</code> before you can <code>send()</code> it a specific value.</p>
+<div class="note"><strong>Note:</strong> As a point of interest, calling <code>send(undefined)</code> is equivalent to calling <code>next()</code>. However, starting a newborn generator with any value other than undefined when calling <code>send()</code> will result in a <code>TypeError</code> exception.</div>
+</div><div id="section_5"><span id="Exceptions_in_generators"></span><h4 class="editable">Exceptions in generators</h4>
+<p>You can force a generator to throw an exception by calling its <code>throw()</code> method, passing the exception value it should throw. This exception will be thrown from the current suspended context of the generator, as if the <code>yield</code> that is currently suspended were instead a <code>throw <em>value</em></code> statement.</p>
+<p>If a yield is not encountered during the processing of the thrown exception, then the exception will propagate up through the call to <code>next()</code>, and subsequent calls to <code>next()</code> will result in <code>StopIteration</code> being thrown.</p>
+</div><div id="section_6"><span id="Closing_a_generator"></span><h4 class="editable">Closing a generator</h4>
+<p>Generators have a <code>close()</code> method that forces the generator to close itself. The effects of closing a generator are:</p>
+<ol> <li>Any <code>finally</code> clauses active in the generator function are run.</li> <li>If a <code>finally</code> clause throws any exception other than <code>StopIteration</code>, the exception is propagated to the caller of the <code>close()</code> method.</li> <li>The generator terminates.</li>
+</ol>
+</div><div id="section_7"><span id="Generator_example"></span><h4 class="editable">Generator example</h4>
+<p>This code drives a generator that will yield every 100 loops.</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">var</span><span>&nbsp;gen&nbsp;=&nbsp;generator();&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">function</span><span>&nbsp;driveGenerator()&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(gen.next())&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;window.setTimeout(driveGenerator,&nbsp;0);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;}&nbsp;<span class="keyword">else</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;gen.close();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">function</span><span>&nbsp;generator()&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;<span class="keyword">while</span><span>&nbsp;(i&nbsp;&lt;&nbsp;something)&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**&nbsp;stuff&nbsp;**/</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;++i;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**&nbsp;100&nbsp;loops&nbsp;per&nbsp;yield&nbsp;**/</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;((i&nbsp;%&nbsp;100)&nbsp;==&nbsp;0)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">yield</span><span>&nbsp;</span><span class="keyword">true</span><span>;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;<span class="keyword">yield</span><span>&nbsp;</span><span class="keyword">false</span><span>;&nbsp;&nbsp;</span></span></li><li class=""><span>}&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="js" style="display: none; ">var gen = generator();
+
+function driveGenerator() {
+  if (gen.next()) {
+    window.setTimeout(driveGenerator, 0);	
+  } else {
+    gen.close();	
+  }
+}
+
+function generator() {
+  while (i &lt; something) {
+    /** stuff **/
+
+    ++i;
+    /** 100 loops per yield **/
+    if ((i % 100) == 0) {
+      yield true;
+    } 
+  }
+  yield false;
+}</pre>
+        
+</div></div><div id="section_8"><span id="Iterators"></span><h3 class="editable">Iterators</h3>
+<p>An <em>iterator</em> is a special object that lets you iterate over data.</p>
+<p>In normal usage, iterator objects are "invisible"; you won't need to operate on them explicitly, but will instead use JavaScript's <a title="en/Core JavaScript 1.5 Guide/Statements#Object Manipulation Statements" rel="internal" href="https://developer.mozilla.org/en/JavaScript/Guide/Statements#Object_Manipulation_Statements"><code>for...in</code> and <code>for each...in</code> statements</a> to loop naturally over the keys and/or values of objects.</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">var</span><span>&nbsp;objectWithIterator&nbsp;=&nbsp;getObjectSomehow();&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">for</span><span>&nbsp;(</span><span class="keyword">var</span><span>&nbsp;i&nbsp;</span><span class="keyword">in</span><span>&nbsp;objectWithIterator)&nbsp;&nbsp;</span></span></li><li class=""><span>{&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;console.log(objectWithIterator[i]);&nbsp;&nbsp;</span></li><li class=""><span>}&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="js" style="display: none; ">var objectWithIterator = getObjectSomehow();
+
+for (var i in objectWithIterator)
+{
+  console.log(objectWithIterator[i]);
+}</pre>
+        
+<p>If you are implementing your own iterator object, or have another need to directly manipulate iterators, you'll need to know about the <code>next</code> method, the <code>StopIteration</code> exception, and the <code>__iterator__</code> method.</p>
+<p>You can create an iterator for an object by calling <code>Iterator(<em>objectname</em>)</code>; the iterator for an object is found by calling the object's <code>__iterator__</code> method. If no <code>__iterator__</code> method is present, a default iterator is created. The default iterator yields the object's properties, according to the usual <code>for...in</code> and <code>for each...in</code> model. If you wish to provide a custom iterator, you should override the <code>__iterator__</code> method to return an instance of your custom iterator. To get an object's iterator from script, you should use <code>Iterator(<em>obj</em>)</code> rather than accessing the <code>__iterator__</code> property directly. The former works for Arrays; the latter doesn't.</p>
+<p>Once you have an iterator, you can easily fetch the next item in the object by calling the iterator's <code>next()</code> method. If there is no data left, the <code>StopIteration</code> exception is thrown.</p>
+<p>Here's a simple example of direct iterator manipulation:</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">var</span><span>&nbsp;obj&nbsp;=&nbsp;{name:</span><span class="string">"Jack&nbsp;Bauer"</span><span>,&nbsp;username:</span><span class="string">"JackB"</span><span>,&nbsp;id:12345,&nbsp;agency:</span><span class="string">"CTU"</span><span>,&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;region:<span class="string">"Los&nbsp;Angeles"</span><span>};&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="keyword">var</span><span>&nbsp;it&nbsp;=&nbsp;Iterator(obj);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="keyword">try</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;<span class="keyword">while</span><span>&nbsp;(</span><span class="keyword">true</span><span>)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;print(it.next()&nbsp;+&nbsp;<span class="string">"\n"</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>}&nbsp;<span class="keyword">catch</span><span>&nbsp;(err&nbsp;</span><span class="keyword">if</span><span>&nbsp;err&nbsp;</span><span class="keyword">instanceof</span><span>&nbsp;StopIteration)&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;print(<span class="string">"End&nbsp;of&nbsp;record.\n"</span><span>);&nbsp;&nbsp;</span></span></li><li class=""><span>}&nbsp;<span class="keyword">catch</span><span>&nbsp;(err)&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;print(<span class="string">"Unknown&nbsp;error:&nbsp;"</span><span>&nbsp;+&nbsp;err.description&nbsp;+&nbsp;</span><span class="string">"\n"</span><span>);&nbsp;&nbsp;</span></span></li><li class=""><span>}&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="js" style="display: none; ">var obj = {name:"Jack Bauer", username:"JackB", id:12345, agency:"CTU",
+          region:"Los Angeles"};
+
+var it = Iterator(obj);
+
+try {
+  while (true) {
+    print(it.next() + "\n");
+  }
+} catch (err if err instanceof StopIteration) {
+  print("End of record.\n");
+} catch (err) {
+  print("Unknown error: " + err.description + "\n");
+}</pre>
+        
+<p>The output from this program looks like this:</p>
+<pre class="eval">name,Jack Bauer
+username,JackB
+id,12345
+agency,CTU
+region,Los Angeles
+End of record.
+</pre>
+<p>You can, optionally, specify a second parameter when creating your iterator, which is a boolean value that indicates whether or not you only want the keys returned each time you call its <code>next()</code> method. This parameter is passed in to user-defined <code>__iterator__</code> functions as its single argument. Changing <code>var it = Iterator(obj);</code> to <code>var it = Iterator(obj, true);</code> in the above sample results in the following output:</p>
+<pre>name
+username
+id
+agency
+region
+End of record.
+</pre>
+<p>In both cases, the actual order in which the data is returned may vary based on the implementation. There is no guaranteed ordering of the data.</p>
+<p>Iterators are a handy way to scan through the data in objects, including objects whose content may include data you're unaware of. This can be particularly useful if you need to preserve data your application isn't expecting.</p>
+</div></div><div id="section_9"><span id="Array_comprehensions_(Merge_into_Array_comprehensions)"></span><h2 class="editable">Array comprehensions (Merge into <a title="en/JavaScript/Guide/Predefined_Core_Objects#Array_comprehensions" rel="internal" href="https://developer.mozilla.org/en/JavaScript/Guide/Predefined_Core_Objects#Array_comprehensions">Array comprehensions</a>)</h2>
+<p>Array comprehensions are a use of generators that provides a convenient way to perform powerful initialization of arrays. For example:</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">function</span><span>&nbsp;range(begin,&nbsp;end)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;<span class="keyword">for</span><span>&nbsp;(</span><span class="keyword">let</span><span>&nbsp;i&nbsp;=&nbsp;begin;&nbsp;i&nbsp;&lt;&nbsp;end;&nbsp;++i)&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">yield</span><span>&nbsp;i;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="js" style="display: none; ">function range(begin, end) {
+  for (let i = begin; i &lt; end; ++i) {
+    yield i;
+  }
+}</pre>
+        
+<p><code>range()</code> is a generator that returns all the values between <var>begin</var> and <var>end</var>. Having defined that, we can use it like this:</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">var</span><span>&nbsp;ten_squares&nbsp;=&nbsp;[i&nbsp;*&nbsp;i&nbsp;</span><span class="keyword">for</span><span>&nbsp;each&nbsp;(i&nbsp;</span><span class="keyword">in</span><span>&nbsp;range(0,&nbsp;10))];&nbsp;&nbsp;</span></span></li></ol></div><pre name="code" class="js" style="display: none; ">var ten_squares = [i * i for each (i in range(0, 10))];</pre>
+        
+<p>This pre-initializes a new array, <var>ten_squares</var>, to contain the squares of the values in the range <code>0..9</code>.</p>
+<p>You can use any conditional when initializing the array. If you want to initialize an array to contain the even numbers between 0 and 20, you can use this code:</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">var</span><span>&nbsp;evens&nbsp;=&nbsp;[i&nbsp;</span><span class="keyword">for</span><span>&nbsp;each&nbsp;(i&nbsp;</span><span class="keyword">in</span><span>&nbsp;range(0,&nbsp;21))&nbsp;</span><span class="keyword">if</span><span>&nbsp;(i&nbsp;%&nbsp;2&nbsp;==&nbsp;0)];&nbsp;&nbsp;</span></span></li></ol></div><pre name="code" class="js" style="display: none; ">var evens = [i for each (i in range(0, 21)) if (i % 2 == 0)];</pre>
+        
+<p>Prior to JavaScript 1.7, this would have to be coded something like this:</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">var</span><span>&nbsp;evens&nbsp;=&nbsp;[];&nbsp;&nbsp;</span></span></li><li class=""><span><span class="keyword">for</span><span>&nbsp;(</span><span class="keyword">var</span><span>&nbsp;i=0;&nbsp;i&nbsp;&lt;=&nbsp;20;&nbsp;i++)&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(i&nbsp;%&nbsp;2&nbsp;==&nbsp;0)&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;evens.push(i);&nbsp;&nbsp;</span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="js" style="display: none; ">var evens = [];
+for (var i=0; i &lt;= 20; i++) {
+  if (i % 2 == 0)
+    evens.push(i);
+}</pre>
+        
+<p>Not only is the array comprehension much more compact, but it's actually easier to read, once you're familiar with the concept.</p>
+<div id="section_10"><span id="Scoping_rules"></span><h3 class="editable">Scoping rules</h3>
+<p>Array comprehensions have an implicit block around them, containing everything inside the square brackets, as well as implicit <code>let</code> declarations.</p>
+</div></div><div id="section_11"><span id="Block_scope_with_let_(Merge_into_let_Statement)"></span><h2 class="editable">Block scope with <code>let</code> (Merge into <a title="en/JavaScript/Reference/Statements/let" rel="internal" href="https://developer.mozilla.org/en/JavaScript/Reference/Statements/let"><code>let</code> Statement</a>)</h2>
+<p>There are several ways in which <code>let</code> can be used to manage block scope of data and functions:</p>
+<ul> <li>The <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#let_statement"><strong><code>let</code> statement</strong></a> provides a way to associate values with variables within the scope of a block, without affecting the values of like-named variables outside the block.</li> <li>The <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#let_expressions"><strong><code>let</code> expression</strong></a> lets you establish variables scoped only to a single expression.</li> <li>The <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#let_definitions"><strong><code>let</code> definition</strong></a> defines variables whose scope is constrained to the block in which they're defined. This syntax is very much like the syntax used for <code>var</code>.</li> <li>You can also use <code>let</code> to <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#let-scoped_variables_in_for_loops">establish variables that exist only within the context of a <code>for</code> loop</a>.</li>
+</ul>
+<div id="section_12"><span id="let_statement"></span><h3 class="editable"><code>let</code> statement</h3>
+<p>The <code>let</code> statement provides local scoping for variables. It works by binding zero or more variables in the lexical scope of a single block of code; otherwise, it is exactly the same as a <a title="en/Core_JavaScript_1.5_Reference/Statements/block" rel="internal" href="https://developer.mozilla.org/en/JavaScript/Reference/Statements/block">block statement</a>. Note in particular that the scope of a variable declared inside a <code>let</code> statement using <code>var</code> is still the same as if it had been declared outside the <code>let</code> statement; such variables still have function scoping.</p>
+<p>For example:</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">var</span><span>&nbsp;x&nbsp;=&nbsp;5;&nbsp;&nbsp;</span></span></li><li class=""><span><span class="keyword">var</span><span>&nbsp;y&nbsp;=&nbsp;0;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="keyword">let</span><span>&nbsp;(x&nbsp;=&nbsp;x+10,&nbsp;y&nbsp;=&nbsp;12)&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;console.log(x+y);&nbsp;<span class="comment">//&nbsp;27</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>console.log(x&nbsp;+&nbsp;y);&nbsp;<span class="comment">//&nbsp;5</span><span>&nbsp;&nbsp;</span></span></li></ol></div><pre name="code" class="js" style="display: none; ">var x = 5;
+var y = 0;
+
+let (x = x+10, y = 12) {
+  console.log(x+y); // 27
+}
+
+console.log(x + y); // 5</pre>
+        
+<p>The rules for the code block are the same as for any other code block in JavaScript. It may have its own local variables established using the <code>let</code> declarations.</p>
+<div class="note"><strong>Note:</strong> When using the <code>let</code> statement syntax, the parentheses following <code>let</code> are required. Failure to include them will result in a syntax error.</div>
+<div id="section_13"><span id="Scoping_rules_2"></span><h4 class="editable">Scoping rules</h4>
+<p>The scope of variables defined using <code>let</code> is the <code>let</code> block itself, as well as any inner blocks contained inside it, unless those blocks define variables by the same names.</p>
+</div></div><div id="section_14"><span id="let_expressions"></span><h3 class="editable"><code>let</code> expressions</h3>
+<p>You can use <code>let</code> to establish variables that are scoped only to a single expression:</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">var</span><span>&nbsp;x&nbsp;=&nbsp;5;&nbsp;&nbsp;</span></span></li><li class=""><span><span class="keyword">var</span><span>&nbsp;y&nbsp;=&nbsp;0;&nbsp;&nbsp;</span></span></li><li class="alt"><span>console.log(<span class="keyword">let</span><span>(x&nbsp;=&nbsp;x&nbsp;+&nbsp;10,&nbsp;y&nbsp;=&nbsp;12)&nbsp;x&nbsp;+&nbsp;y);&nbsp;&nbsp;</span></span></li><li class=""><span>console.log(x&nbsp;+&nbsp;y);&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="js" style="display: none; ">var x = 5;
+var y = 0;
+console.log(let(x = x + 10, y = 12) x + y);
+console.log(x + y);</pre>
+        
+<p>The resulting output is:</p>
+<pre>27
+5
+</pre>
+<p>In this case, the binding of the values of <var>x</var> and <var>y</var> to <code>x+10</code> and <code>12</code> are scoped solely to the expression <code>x + y&nbsp;+&nbsp;"&lt;br&gt;\n"</code>.</p>
+<div id="section_15"><span id="Scoping_rules_3"></span><h4 class="editable">Scoping rules</h4>
+<p>Given a <code>let</code> expression:</p>
+<pre class="eval">let (<var>decls</var>) <var style="color: blue;">expr</var>
+</pre>
+<p>There is an implicit block created around <var style="color: blue;">expr</var>.</p>
+</div></div><div id="section_16"><span id="let_definitions"></span><h3 class="editable"><code>let</code> definitions</h3>
+<p>The <code>let</code> keyword can also be used to define variables inside a block.</p>
+<div class="note"><strong>Note:</strong> If you have more interesting examples of ways to use <code>let</code> definitions, please consider adding them here.</div>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">if</span><span>&nbsp;(x&nbsp;&gt;&nbsp;y)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;<span class="keyword">let</span><span>&nbsp;gamma&nbsp;=&nbsp;12.7&nbsp;+&nbsp;y;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;i&nbsp;=&nbsp;gamma&nbsp;*&nbsp;x;&nbsp;&nbsp;</span></li><li class=""><span>}&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="js" style="display: none; ">if (x &gt; y) {
+  let gamma = 12.7 + y;
+  i = gamma * x;
+}</pre>
+        
+<p>You can use <code>let</code> definitions to alias pseudo-namespaced code in extensions. (See <a title="en/Security_best_practices_in_extensions" rel="internal" href="https://developer.mozilla.org/en/Security_best_practices_in_extensions">Security best practices in extensions</a>.)</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">let</span><span>&nbsp;Cc&nbsp;=&nbsp;Components.classes,&nbsp;Ci&nbsp;=&nbsp;Components.interfaces;&nbsp;&nbsp;</span></span></li></ol></div><pre name="code" class="js" style="display: none; ">let Cc = Components.classes, Ci = Components.interfaces;</pre>
+        
+<p><code>let</code> statements, expressions and definitions sometimes make the code cleaner when inner functions are used.</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">var</span><span>&nbsp;list&nbsp;=&nbsp;document.getElementById(</span><span class="string">"list"</span><span>);&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">for</span><span>&nbsp;(</span><span class="keyword">var</span><span>&nbsp;i&nbsp;=&nbsp;1;&nbsp;i&nbsp;&lt;=&nbsp;5;&nbsp;i++)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;<span class="keyword">var</span><span>&nbsp;item&nbsp;=&nbsp;document.createElement(</span><span class="string">"LI"</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;item.appendChild(document.createTextNode(<span class="string">"Item&nbsp;"</span><span>&nbsp;+&nbsp;i));&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;<span class="keyword">let</span><span>&nbsp;j&nbsp;=&nbsp;i;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;item.onclick&nbsp;=&nbsp;<span class="keyword">function</span><span>&nbsp;(ev)&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;alert(<span class="string">"Item&nbsp;"</span><span>&nbsp;+&nbsp;j&nbsp;+&nbsp;</span><span class="string">"&nbsp;is&nbsp;clicked."</span><span>);&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;};&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;list.appendChild(item);&nbsp;&nbsp;</span></li><li class=""><span>}&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="js" style="display: none; ">var list = document.getElementById("list");
+
+for (var i = 1; i &lt;= 5; i++) {
+  var item = document.createElement("LI");
+  item.appendChild(document.createTextNode("Item " + i));
+
+  let j = i;
+  item.onclick = function (ev) {
+    alert("Item " + j + " is clicked.");
+  };
+  list.appendChild(item);
+}</pre>
+        
+<p>The example above works as intended because the five instances of the (anonymous) inner function refer to five different instances of variable <code>j</code>. Note that it does not work as intended if you replace <code>let</code> by <code>var</code> or if you remove the variable <code>j</code> and simply use the variable <code>i</code> in the inner function.</p>
+<div id="section_17"><span id="Scoping_rules_4"></span><h4 class="editable">Scoping rules</h4>
+<p>Variables declared by <code>let</code> have as their scope the block in which they are defined, as well as in any sub-blocks in which they aren't redefined. In this way, <code>let</code> works very much like <code>var</code>. The main difference is that the scope of a <code>var</code> variable is the entire enclosing function:</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">function</span><span>&nbsp;varTest()&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;<span class="keyword">var</span><span>&nbsp;x&nbsp;=&nbsp;31;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(</span><span class="keyword">true</span><span>)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">var</span><span>&nbsp;x&nbsp;=&nbsp;71;&nbsp;&nbsp;</span><span class="comment">//&nbsp;same&nbsp;variable!</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;alert(x);&nbsp;&nbsp;<span class="comment">//&nbsp;71</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;alert(x);&nbsp;&nbsp;<span class="comment">//&nbsp;71</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="keyword">function</span><span>&nbsp;letTest()&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;<span class="keyword">let</span><span>&nbsp;x&nbsp;=&nbsp;31;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(</span><span class="keyword">true</span><span>)&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span><span>&nbsp;x&nbsp;=&nbsp;71;&nbsp;&nbsp;</span><span class="comment">//&nbsp;different&nbsp;variable</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;alert(x);&nbsp;&nbsp;<span class="comment">//&nbsp;71</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;alert(x);&nbsp;&nbsp;<span class="comment">//&nbsp;31</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="js" style="display: none; ">function varTest() {
+  var x = 31;
+  if (true) {
+    var x = 71;  // same variable!
+    alert(x);  // 71
+  }
+  alert(x);  // 71
+}
+
+function letTest() {
+  let x = 31;
+  if (true) {
+    let x = 71;  // different variable
+    alert(x);  // 71
+  }
+  alert(x);  // 31
+}</pre>
+        
+<p>The expression to the right of the equal sign is inside the block. This is different from how <code>let</code>-expressions and <code>let</code>-statements are scoped:</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">function</span><span>&nbsp;letTests()&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;<span class="keyword">let</span><span>&nbsp;x&nbsp;=&nbsp;10;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;<span class="comment">//&nbsp;let-statement</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;<span class="keyword">let</span><span>&nbsp;(x&nbsp;=&nbsp;x&nbsp;+&nbsp;20)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;alert(x);&nbsp;&nbsp;<span class="comment">//&nbsp;30</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;<span class="comment">//&nbsp;let-expression</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;alert(<span class="keyword">let</span><span>&nbsp;(x&nbsp;=&nbsp;x&nbsp;+&nbsp;20)&nbsp;x);&nbsp;&nbsp;</span><span class="comment">//&nbsp;30</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;<span class="comment">//&nbsp;let-definition</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span><span>&nbsp;x&nbsp;=&nbsp;x&nbsp;+&nbsp;20;&nbsp;&nbsp;</span><span class="comment">//&nbsp;x&nbsp;here&nbsp;evaluates&nbsp;to&nbsp;undefined</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;alert(x);&nbsp;&nbsp;<span class="comment">//&nbsp;undefined&nbsp;+&nbsp;20&nbsp;==&gt;&nbsp;NaN</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="js" style="display: none; ">function letTests() {
+  let x = 10;
+
+  // let-statement
+  let (x = x + 20) {
+    alert(x);  // 30
+  }
+
+  // let-expression
+  alert(let (x = x + 20) x);  // 30
+
+  // let-definition
+  {
+    let x = x + 20;  // x here evaluates to undefined
+    alert(x);  // undefined + 20 ==&gt; NaN
+  }
+}</pre>
+        
+<p>At the top level of programs and functions, <code>let</code> behaves exactly like <code>var</code> does. For example:</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">var</span><span>&nbsp;x&nbsp;=&nbsp;</span><span class="string">'global'</span><span>;&nbsp;&nbsp;</span></span></li><li class=""><span><span class="keyword">let</span><span>&nbsp;y&nbsp;=&nbsp;</span><span class="string">'global'</span><span>;&nbsp;&nbsp;</span></span></li><li class="alt"><span>console.log(<span class="keyword">this</span><span>.x);&nbsp;&nbsp;</span></span></li><li class=""><span>console.log(<span class="keyword">this</span><span>.y);&nbsp;&nbsp;</span></span></li></ol></div><pre name="code" class="js" style="display: none; ">var x = 'global';
+let y = 'global';
+console.log(this.x);
+console.log(this.y);</pre>
+        
+<p>The output displayed by this code will display "global" twice.</p>
+<div class="note"><strong>Note:</strong> The global scoping rules of <code>let</code> definitions are likely to change in ES6.</div>
+</div></div><div id="section_18"><span id="let-scoped_variables_in_for_loops"></span><h3 class="editable"><code>let</code>-scoped variables in <code>for</code> loops</h3>
+<p>You can use the <code>let</code> keyword to bind variables locally in the scope of <code>for</code> loops. This is different from the var keyword in the head of a for loop, which makes the variables visible in the whole function containing the loop.</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">var</span><span>&nbsp;i=0;&nbsp;&nbsp;</span></span></li><li class=""><span><span class="keyword">for</span><span>&nbsp;(&nbsp;</span><span class="keyword">let</span><span>&nbsp;i=i&nbsp;;&nbsp;i&nbsp;&lt;&nbsp;10&nbsp;;&nbsp;i++&nbsp;)&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;console.log(i);&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">for</span><span>&nbsp;(&nbsp;</span><span class="keyword">let</span><span>&nbsp;[name,value]&nbsp;</span><span class="keyword">in</span><span>&nbsp;Iterator(obj)&nbsp;)&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;console.log(<span class="string">"Name:&nbsp;"</span><span>&nbsp;+&nbsp;name&nbsp;+&nbsp;</span><span class="string">",&nbsp;Value:&nbsp;"</span><span>&nbsp;+&nbsp;value);&nbsp;&nbsp;</span></span></li></ol></div><pre name="code" class="js" style="display: none; ">var i=0;
+for ( let i=i ; i &lt; 10 ; i++ )
+  console.log(i);
+
+for ( let [name,value] in Iterator(obj) )
+  console.log("Name: " + name + ", Value: " + value);</pre>
+        
+<div id="section_19"><span id="Scoping_rules_5"></span><h4 class="editable">Scoping rules</h4>
+<pre class="eval">for (let <var>expr1</var>; <var style="color: blue;">expr2</var>; <var style="color: blue;">expr3</var>) <var style="color: blue;">statement</var>
+</pre>
+<p>In this example, <var style="color: blue;">expr2</var>, <var style="color: blue;">expr3</var>, and <var style="color: blue;">statement</var> are enclosed in an implicit block that contains the block local variables declared by <code>let <var>expr1</var></code>. This is demonstrated in the first loop above.</p>
+<pre class="eval">for (let <var>expr1</var> in <var>expr2</var>) <var style="color: blue;">statement</var>
+for each(let <var>expr1</var> in <var>expr2</var>) <var style="color: blue;">statement</var>
+</pre>
+<p>In both these cases, there are implicit blocks containing each <var style="color: blue;">statement</var>. The first of these is shown in the second loop above.</p>
+</div></div></div><div id="section_20"><span id="Destructuring_assignment_(Merge_into_own_page.2Fsection)"></span><h2 class="editable">Destructuring assignment (Merge into own page/section)</h2>
+<p>Destructuring assignment makes it possible to extract data from arrays or objects using a syntax that mirrors the construction of array and object literals.</p>
+<p>The object and array literal expressions provide an easy way to create ad-hoc packages of data. Once you've created these packages of data, you can use them any way you want to. You can even return them from functions.</p>
+<p>One particularly useful thing you can do with destructuring assignment is to read an entire structure in a single statement, although there are a number of interesting things you can do with them, as shown in the section full of examples that follows.</p>
+<p>This capability is similar to features present in languages such as Perl and Python.</p>
+<div id="section_21"><span id="Examples"></span><h3 class="editable">Examples</h3>
+<p>Destructuring assignment is best explained through the use of examples, so here are a few for you to read over and learn from.</p>
+<div id="section_22"><span id="Avoiding_temporary_variables"></span><h4 class="editable">Avoiding temporary variables</h4>
+<p>You can use destructuring assignment, for example, to swap values:</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">var</span><span>&nbsp;a&nbsp;=&nbsp;1;&nbsp;&nbsp;</span></span></li><li class=""><span><span class="keyword">var</span><span>&nbsp;b&nbsp;=&nbsp;3;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>[a,&nbsp;b]&nbsp;=&nbsp;[b,&nbsp;a];&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="js" style="display: none; ">var a = 1;
+var b = 3;
+
+[a, b] = [b, a];</pre>
+        
+<p>After executing this code, <var>b</var> is 1 and <var>a</var> is 3. Without destructuring assignment, swapping two values requires a temporary variable (or, in some low-level languages, the <a class="external" rel="external" href="http://en.wikipedia.org/wiki/XOR_swap" title="http://en.wikipedia.org/wiki/XOR_swap" target="_blank">XOR-swap trick</a>).</p>
+<p>Similarly, it can be used to rotate three or more variables:</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">var</span><span>&nbsp;a&nbsp;=&nbsp;</span><span class="string">'o'</span><span>,&nbsp;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;b&nbsp;=&nbsp;<span class="string">"&lt;span&nbsp;style='color:green;'&gt;o&lt;/span&gt;"</span><span>,&nbsp;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;c&nbsp;=&nbsp;<span class="string">'o'</span><span>,&nbsp;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;<span class="string">'o'</span><span>,&nbsp;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;e&nbsp;=&nbsp;<span class="string">'o'</span><span>,&nbsp;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;=&nbsp;<span class="string">"&lt;span&nbsp;style='color:blue;'&gt;o&lt;/span&gt;"</span><span>,&nbsp;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;g&nbsp;=&nbsp;<span class="string">'o'</span><span>,&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;=&nbsp;<span class="string">'o'</span><span>;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="keyword">for</span><span>&nbsp;(&nbsp;</span><span class="keyword">var</span><span>&nbsp;lp=0;&nbsp;lp&nbsp;&lt;&nbsp;40;&nbsp;lp++&nbsp;)&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;[a,&nbsp;b,&nbsp;c,&nbsp;d,&nbsp;e,&nbsp;f,&nbsp;g,&nbsp;h]&nbsp;=&nbsp;[b,&nbsp;c,&nbsp;d,&nbsp;e,&nbsp;f,&nbsp;g,&nbsp;h,&nbsp;a];&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;document.write(a+<span class="string">''</span><span>+b+</span><span class="string">''</span><span>+c+</span><span class="string">''</span><span>+d+</span><span class="string">''</span><span>+e+</span><span class="string">''</span><span>+f+</span><span class="string">''</span><span>+g+</span><span class="string">''</span><span>+h+</span><span class="string">''</span><span>+</span><span class="string">"&lt;br&nbsp;/&gt;"</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>}&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="js" style="display: none; ">var a = 'o', 
+    b = "&lt;span style='color:green;'&gt;o&lt;/span&gt;", 
+    c = 'o', 
+    d = 'o', 
+    e = 'o', 
+    f = "&lt;span style='color:blue;'&gt;o&lt;/span&gt;", 
+    g = 'o',
+    h = 'o';
+
+for ( var lp=0; lp &lt; 40; lp++ ) {
+
+  [a, b, c, d, e, f, g, h] = [b, c, d, e, f, g, h, a];
+
+  document.write(a+''+b+''+c+''+d+''+e+''+f+''+g+''+h+''+"&lt;br /&gt;");
+
+}</pre>
+        
+<p>After executing this code, a visual colorful display of the variable rotation will be displayed.</p>
+<p>Returning to our Fibonacci generator example from above, we can eliminate the temporary "t" variable by computing the new values of "i" and "j" in a single group-assignment statement:</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">function</span><span>&nbsp;fib()&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;<span class="keyword">var</span><span>&nbsp;i&nbsp;=&nbsp;0,&nbsp;j&nbsp;=&nbsp;1;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;<span class="keyword">while</span><span>&nbsp;(</span><span class="keyword">true</span><span>)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">yield</span><span>&nbsp;i;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;[i,&nbsp;j]&nbsp;=&nbsp;[j,&nbsp;i&nbsp;+&nbsp;j];&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">var</span><span>&nbsp;g&nbsp;=&nbsp;fib();&nbsp;&nbsp;</span></span></li><li class=""><span><span class="keyword">for</span><span>&nbsp;(</span><span class="keyword">let</span><span>&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;10;&nbsp;i++)&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;print(g.next());&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="js" style="display: none; ">function fib() {
+  var i = 0, j = 1;
+  while (true) {
+    yield i;
+    [i, j] = [j, i + j];
+  }
+}
+
+var g = fib();
+for (let i = 0; i &lt; 10; i++)
+  print(g.next());</pre>
+        
+</div><div id="section_23"><span id="Multiple-value_returns"></span><h4 class="editable">Multiple-value returns</h4>
+<p>Thanks to destructuring assignment, functions can return multiple values. While it's always been possible to return an array from a function, this provides an added degree of flexibility.</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">function</span><span>&nbsp;f()&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;[1,&nbsp;2];&nbsp;&nbsp;</span></span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="js" style="display: none; ">function f() {
+  return [1, 2];
+}</pre>
+        
+<p>As you can see, returning results is done using an array-like notation, with all the values to return enclosed in brackets. You can return any number of results in this way. In this example, <code>f()</code> returns the values <code>[1, 2]</code> as its output.</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">var</span><span>&nbsp;a,&nbsp;b;&nbsp;&nbsp;</span></span></li><li class=""><span>[a,&nbsp;b]&nbsp;=&nbsp;f();&nbsp;&nbsp;</span></li><li class="alt"><span>console.log(<span class="string">"A&nbsp;is&nbsp;"</span><span>&nbsp;+&nbsp;a&nbsp;+&nbsp;</span><span class="string">"&nbsp;B&nbsp;is&nbsp;"</span><span>&nbsp;+&nbsp;b);&nbsp;&nbsp;</span></span></li></ol></div><pre name="code" class="js" style="display: none; ">var a, b;
+[a, b] = f();
+console.log("A is " + a + " B is " + b);</pre>
+        
+<p>The statement <code>[a, b] = f()</code> assigns the results of the function to the variables in brackets, in order: <var>a</var> is set to 1 and <var>b</var> is set to 2.</p>
+<p>You can also retrieve the return values as an array:</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">var</span><span>&nbsp;a&nbsp;=&nbsp;f();&nbsp;&nbsp;</span></span></li><li class=""><span>console.log(<span class="string">"A&nbsp;is&nbsp;"</span><span>&nbsp;+&nbsp;a);&nbsp;&nbsp;</span></span></li></ol></div><pre name="code" class="js" style="display: none; ">var a = f();
+console.log("A is " + a);</pre>
+        
+<p>In this case, <var>a</var> is an array containing the values 1 and 2.</p>
+</div><div id="section_24"><span id="Looping_across_objects"></span><h4 class="editable">Looping across objects</h4>
+<p>You can also use destructuring assignment to pull data out of an object:</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">let</span><span>&nbsp;obj&nbsp;=&nbsp;{&nbsp;width:&nbsp;3,&nbsp;length:&nbsp;1.5,&nbsp;color:&nbsp;</span><span class="string">"orange"</span><span>&nbsp;};&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">for</span><span>&nbsp;(</span><span class="keyword">let</span><span>&nbsp;[name,&nbsp;value]&nbsp;</span><span class="keyword">in</span><span>&nbsp;Iterator(obj))&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;console.log(<span class="string">"Name:&nbsp;"</span><span>&nbsp;+&nbsp;name&nbsp;+&nbsp;</span><span class="string">",&nbsp;Value:&nbsp;"</span><span>&nbsp;+&nbsp;value);&nbsp;&nbsp;</span></span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="js" style="display: none; ">let obj = { width: 3, length: 1.5, color: "orange" };
+
+for (let [name, value] in Iterator(obj)) {
+  console.log("Name: " + name + ", Value: " + value);
+}</pre>
+        
+<p>This loops over all the key/value pairs in the object <var>obj</var> and displays their names and values. In this case, the output looks like the following:</p>
+<pre class="eval">Name: width, Value: 3
+Name: length, Value: 1.5
+Name: color, Value: orange
+</pre>
+<p>The <code>Iterator()</code> around <code>obj</code> is not necessary in JavaScript 1.7; however, it is needed for <a title="en/New_in_JavaScript_1.8" rel="internal" href="https://developer.mozilla.org/en/JavaScript/New_in_JavaScript/1.8">JavaScript 1.8</a>. This is to allow destructuring assignment with arrays (see <a rel="external" href="https://bugzilla.mozilla.org/show_bug.cgi?id=366941" class="external" title="">
+bug 366941</a>
+).</p>
+</div><div id="section_25"><span id="Looping_across_values_in_an_array_of_objects"></span><h4 class="editable">Looping across values in an array of objects</h4>
+<p>You can loop over an array of objects, pulling out fields of interest from each object:</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">var</span><span>&nbsp;people&nbsp;=&nbsp;[&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;<span class="string">"Mike&nbsp;Smith"</span><span>,&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;family:&nbsp;{&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mother:&nbsp;<span class="string">"Jane&nbsp;Smith"</span><span>,&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;father:&nbsp;<span class="string">"Harry&nbsp;Smith"</span><span>,&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sister:&nbsp;<span class="string">"Samantha&nbsp;Smith"</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;age:&nbsp;35&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;},&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;<span class="string">"Tom&nbsp;Jones"</span><span>,&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;family:&nbsp;{&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mother:&nbsp;<span class="string">"Norah&nbsp;Jones"</span><span>,&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;father:&nbsp;<span class="string">"Richard&nbsp;Jones"</span><span>,&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;brother:&nbsp;<span class="string">"Howard&nbsp;Jones"</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;age:&nbsp;25&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>];&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="keyword">for</span><span>&nbsp;each&nbsp;(</span><span class="keyword">let</span><span>&nbsp;{name:&nbsp;n,&nbsp;family:&nbsp;{&nbsp;father:&nbsp;f&nbsp;}&nbsp;}&nbsp;</span><span class="keyword">in</span><span>&nbsp;people)&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;console.log(<span class="string">"Name:&nbsp;"</span><span>&nbsp;+&nbsp;n&nbsp;+&nbsp;</span><span class="string">",&nbsp;Father:&nbsp;"</span><span>&nbsp;+&nbsp;f);&nbsp;&nbsp;</span></span></li><li class=""><span>}&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="js" style="display: none; ">var people = [
+  {
+    name: "Mike Smith",
+    family: {
+      mother: "Jane Smith",
+      father: "Harry Smith",
+      sister: "Samantha Smith"
+    },
+    age: 35
+  },
+  {
+    name: "Tom Jones",
+    family: {
+      mother: "Norah Jones",
+      father: "Richard Jones",
+      brother: "Howard Jones"
+    },
+    age: 25
+  }
+];
+
+for each (let {name: n, family: { father: f } } in people) {
+  console.log("Name: " + n + ", Father: " + f);
+}</pre>
+        
+<p>This pulls the <var>name</var> field into <var>n</var> and the <var>family.father</var> field into <var>f</var>, then prints them. This is done for each object in the <var>people</var> array. The output looks like this:</p>
+<pre>Name: Mike Smith, Father: Harry Smith
+Name: Tom Jones, Father: Richard Jones</pre>
+</div><div id="section_26"><span id="Pulling_fields_from_objects_passed_as_function_parameter"></span><h4 class="editable">Pulling fields from objects passed as function parameter</h4>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">function</span><span>&nbsp;userId({id})&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;id;&nbsp;&nbsp;</span></span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">function</span><span>&nbsp;whois({displayName:&nbsp;displayName,&nbsp;fullName:&nbsp;{firstName:&nbsp;name}})&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;console.log(displayName&nbsp;+&nbsp;<span class="string">"&nbsp;is&nbsp;"</span><span>&nbsp;+&nbsp;name);&nbsp;&nbsp;</span></span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">var</span><span>&nbsp;user&nbsp;=&nbsp;{id:&nbsp;42,&nbsp;displayName:&nbsp;</span><span class="string">"jdoe"</span><span>,&nbsp;fullName:&nbsp;{firstName:&nbsp;</span><span class="string">"John"</span><span>,&nbsp;lastName:&nbsp;</span><span class="string">"Doe"</span><span>}};&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>console.log(<span class="string">"userId:&nbsp;"</span><span>&nbsp;+&nbsp;userId(user));&nbsp;&nbsp;</span></span></li><li class=""><span>whois(user);&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="js" style="display: none; ">function userId({id}) {
+  return id;
+}
+
+function whois({displayName: displayName, fullName: {firstName: name}})
+  console.log(displayName + " is " + name);
+}
+
+var user = {id: 42, displayName: "jdoe", fullName: {firstName: "John", lastName: "Doe"}};
+
+console.log("userId: " + userId(user));
+whois(user);</pre>
+        
+<p>This pulls the <code>id</code>, <code>displayName</code> and<span class="Apple-converted-space">&nbsp;</span><code>firstName</code><span class="Apple-converted-space">&nbsp;</span>from the user object and prints them.</p>
+</div><div id="section_27"><span id="Ignoring_some_returned_values"></span><h4 class="editable">Ignoring some returned values</h4>
+<p>You can also ignore return values that you're not interested in:</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">function</span><span>&nbsp;f()&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;[1,&nbsp;2,&nbsp;3];&nbsp;&nbsp;</span></span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">var</span><span>&nbsp;[a,&nbsp;,&nbsp;b]&nbsp;=&nbsp;f();&nbsp;&nbsp;</span></span></li><li class=""><span>console.log(<span class="string">"A&nbsp;is&nbsp;"</span><span>&nbsp;+&nbsp;a&nbsp;+&nbsp;</span><span class="string">"&nbsp;B&nbsp;is&nbsp;"</span><span>&nbsp;+&nbsp;b);&nbsp;&nbsp;</span></span></li></ol></div><pre name="code" class="js" style="display: none; ">function f() {
+  return [1, 2, 3];
+}
+
+var [a, , b] = f();
+console.log("A is " + a + " B is " + b);</pre>
+        
+<p>After running this code, a is 1 and b is 3. The value 2 is ignored. You can ignore any (or all) returned values this way. For example:</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span>[,,]&nbsp;=&nbsp;f();&nbsp;&nbsp;</span></span></li></ol></div><pre name="code" class="js" style="display: none; ">[,,] = f();</pre>
+        
+</div><div id="section_28"><span id="Pulling_values_from_a_regular_expression_match"></span><h4 class="editable">Pulling values from a regular expression match</h4>
+<p>When the regular expression <code><a title="en/Core_JavaScript_1.5_Reference/Global_Objects/RegExp/exec" rel="internal" href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/RegExp/exec"> exec()</a></code> method finds a match, it returns an array containing first the entire matched portion of the string and then the portions of the string that matched each parenthesized group in the regular expression. Destructuring assignment allows you to pull the parts out of this array easily, ignoring the full match if it is not needed.</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="comment">//&nbsp;Simple&nbsp;regular&nbsp;expression&nbsp;to&nbsp;match&nbsp;http&nbsp;/&nbsp;https&nbsp;/&nbsp;ftp-style&nbsp;URLs.</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span><span class="keyword">var</span><span>&nbsp;parsedURL&nbsp;=&nbsp;/^(\w+)\:\/\/([^\/]+)\/(.*)$/.exec(url);&nbsp;&nbsp;</span></span></li><li class="alt"><span><span class="keyword">if</span><span>&nbsp;(!parsedURL)&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li class="alt"><span><span class="keyword">var</span><span>&nbsp;[,&nbsp;protocol,&nbsp;fullhost,&nbsp;fullpath]&nbsp;=&nbsp;parsedURL;&nbsp;&nbsp;</span></span></li></ol></div><pre name="code" class="js" style="display: none; ">// Simple regular expression to match http / https / ftp-style URLs.
+var parsedURL = /^(\w+)\:\/\/([^\/]+)\/(.*)$/.exec(url);
+if (!parsedURL)
+  return null;
+var [, protocol, fullhost, fullpath] = parsedURL;</pre>
+        
+<p></p></div></div></div></div></div>
+            <section class="page-meta">
+                  <section id="page-tags">
+            <h2>Tags <span class="sub">(2)</span></h2>
+              <a href="https://developer.mozilla.org/index.php?title=Special:Tags&pageId=14174" class="disabled" onclick="return false;" id="deki-page-tags-toggleview">Edit tags</a>              <div id="deki-page-tags"><ul class="tags"><li><a href="https://developer.mozilla.org/Special:Tags?tag=JavaScript" title="JavaScript" tagid="3" class="text">JavaScript</a></li><li><a href="https://developer.mozilla.org/Special:Tags?tag=JavaScript_version_overviews" title="JavaScript_version_overviews" tagid="132" class="text">JavaScript_version_overviews</a></li></ul></div>          </section>
+        
+                  <section id="page-files">
+            <h2>Attachments <span class="sub">(0)</span></h2>
+            <div id="pageFiles"><div class="nofiles">&nbsp;</div></div>            <div id="deki-image-gallery-lite"><table class="table empty" width="100%" cellspacing="0" cellpadding="0" border="0"><colgroup><col width="33%"><col width="33%"><col width="33%"></colgroup><tbody><tr class="bg1"><th class="col1" colspan="3">Images 0</th></tr><tr class="bg2"><td class="col1 empty" colspan="3">No images to display in the gallery.</td></tr></tbody></table></div>            <p class="add"><a title="Attach file" class="disabled ">Attach file</a></p>
+          </section>
+        
+                        
+        </section>
+        </div>
+
+    </article>
+
+    <p class="last-mod hideforedit">
+      Page last modified <a href="https://developer.mozilla.org/index.php?title=en/JavaScript/New_in_JavaScript/1.7&action=history" title="05:55, 18 Feb 2012">05:55, 18 Feb 2012</a> by <a href="https://developer.mozilla.org/User:leobalter" class="link-user" rel="internal">leobalter</a>    </p>
+
+  </div><!-- /#content-main -->
+
+</div><!-- /.wrap -->
+</section><!-- /#content -->
+
+
+
+<footer id="site-info" class="footer" role="contentinfo">
+<div class="wrap">
+  <div id="legal">
+    <img src="./New in JavaScript 1.7 - MDN_files/mdn-logo-tiny.png" alt="" width="42" height="48">
+    <p id="copyright">© 2012 Mozilla Developer Network</p>
+    <p>Content is available under <a href="https://developer.mozilla.org/Project:Copyrights">these licenses</a> • <a href="https://developer.mozilla.org/Project:en/About">About MDN</a> • <a href="http://www.mozilla.org/about/policies/privacy-policy.html">Privacy Policy</a> • <a href="https://developer.mozilla.org/Project:en/Using_the_Mozilla_Developer_Center">Help</a></p>
+  </div>
+      <ul class="user-state signed-out superfish" data-browserid-header-signin-html="/en-US/users/browserid_header_signin_html" style="display: block; ">    <li class="user-signin menu">
+      <form class="browserid" action="https://developer.mozilla.org/en-US/users/browserid_verify" method="POST"><div style="display:none;"><input type="hidden" id="csrfmiddlewaretoken" name="csrfmiddlewaretoken" value="021a63c7d35d846bf62402e942f60742"></div>
+        <input id="next" name="next" type="hidden" value="/En/New_in_JavaScript_1.7">
+        <input required="required" type="hidden" name="assertion" id="id_assertion">
+                        <a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" target="_blank" class="browserid-signin toggle" aria-haspopup="true" title="Sign in with BrowserID">Sign in</a> 
+                <div class="browserid-info sub-menu" aria-hidden="true">
+                <h3>What's this?</h3> <p>MDN has switched to <a href="https://browserid.org/" target="_blank" rel="external">BrowserID</a>, a safe and simple way to sign in with just your e-mail address. <a href="http://identity.mozilla.com/post/12950196039/deploying-browserid-at-mozilla" rel="external">Learn more about why Mozilla is using BrowserID</a>.</p> <p><strong>Returning members:</strong> sign in with BrowserID and you'll be connected to your MDN profile (all your information is still here).</p> <p><strong>New members:</strong> sign in with BrowserID first, then you'll be able to set up your new MDN profile.</p>          <p><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" target="_blank" class="browserid-signin" title="Sign in with BrowserID">Sign in</a></p>
+        </div>
+              </form>
+    </li></ul>
+  </div>
+</footer>
+
+
+			
+<div class="ui-msg-wrap" id="MTMessage" style="display: none;">
+	<div class="ui-msg ui-errormsg" id="MTMessageStyle">
+		<div class="ui-msg-opt">
+			<ul>
+				<li><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" class="dismiss" onclick="return MTMessage.Hide();">dismiss message</a></li>
+				<li><a href="https://developer.mozilla.org/En/New_in_JavaScript_1.7#" class="details" id="MTMessageDetailsLink" onclick="return MTMessage.ShowDetails(this);">view details</a></li>
+			</ul>
+			<div class="ui-msg-autoclose">
+				<span id="MTMessageUnpaused" style="display: inline;">Message will close by itself in <span id="MTMessageTimer"></span> seconds</span>
+				<span id="MTMessagePaused" style="display: none;">Message timer has been stopped</span>
+			</div>
+		</div>
+		<div class="ui-msg-header" id="MTMessageHeader"></div>
+		<div class="ui-msg-desc" id="MTMessageDesc"></div>
+		<div class="ui-msg-desc" id="MTMessageDetails" style="display: none;">
+			<p>Viewing Details:</p>
+		</div>
+	</div>
+</div>
+<!-- Served by pm-dekiwiki02.mozilla.org in 0.70 secs. -->
+<!--
+	Verb      Path                                              Time(ms)       API Stats
+	GET       /deki/site/settings                                  26.30       request-time-ms=24; mysql-queries=2; mysql-time-ms=22; cache-ratio=0.00; cache-hit=0; cache-miss=-1; cache-del=0; cache-ins=1;
+	GET       /deki/users/=Anonymous                               13.32       request-time-ms=11; mysql-queries=4; mysql-time-ms=10; cache-ratio=-0.67; cache-hit=2; cache-miss=-5; cache-del=0; cache-ins=5;
+	GET       /deki/license                                         9.36       request-time-ms=6; mysql-queries=2; mysql-time-ms=5; cache-ratio=-0.50; cache-hit=1; cache-miss=-3; cache-del=0; cache-ins=3;
+	GET       /deki/pages/57463/contents                          172.89       request-time-ms=171; mysql-queries=28; mysql-time-ms=81; cache-ratio=4.50; cache-hit=45; cache-miss=-35; cache-del=0; cache-ins=35;
+	GET       /deki/pages/57463                                    80.99       request-time-ms=76; mysql-queries=23; mysql-time-ms=61; cache-ratio=14.50; cache-hit=29; cache-miss=-27; cache-del=0; cache-ins=27;
+	GET       /deki/pages/14174/info                               10.56       request-time-ms=9; mysql-queries=3; mysql-time-ms=8; cache-ratio=-0.67; cache-hit=2; cache-miss=-5; cache-del=0; cache-ins=5;
+	          /deki/pages/14174/security                           17.26       
+	GET       /deki/pages/14174/tags                               15.77       request-time-ms=14; mysql-queries=5; mysql-time-ms=13; cache-ratio=-0.75; cache-hit=3; cache-miss=-7; cache-del=0; cache-ins=7;
+	GET       /deki/site/properties                                27.36       request-time-ms=25; mysql-queries=4; mysql-time-ms=23; cache-ratio=-0.25; cache-hit=1; cache-miss=-5; cache-del=0; cache-ins=5;
+	GET       /deki/site/properties/urn%253Aui.deki.mindtouch.com%2523html.mdn.Transitional    18.82       request-time-ms=17; mysql-queries=3; mysql-time-ms=16; cache-ratio=-0.50; cache-hit=1; cache-miss=-3; cache-del=0; cache-ins=3;
+	GET       /deki/site/nav/=en%252FJavaScript%252FNew%2Bin%2BJavaScript%252F1.7/full   219.08       request-time-ms=217; mysql-queries=6; mysql-time-ms=215; cache-ratio=-6.00; cache-hit=6; cache-miss=-7; cache-del=0; cache-ins=7;
+	GET       /deki/pages/14174/tags                               16.82       request-time-ms=15; mysql-queries=5; mysql-time-ms=14; cache-ratio=-0.75; cache-hit=3; cache-miss=-7; cache-del=0; cache-ins=7;
+	                                                             =======
+	                                                     Total:   628.53      
+	                                                     Ideal:   611.72      
+-->
+ 
+<div id="popupMessage"></div> <div id="popupMask"></div>
+<div id="menuFiller"></div>
+<div id="bodyHeight"></div>
+
+<script src="./New in JavaScript 1.7 - MDN_files/include.js"></script>
+<script src="./New in JavaScript 1.7 - MDN_files/jsapi"></script>
+<script src="./New in JavaScript 1.7 - MDN_files/javascript.min.js"></script><script src="./New in JavaScript 1.7 - MDN_files/saved_resource" type="text/javascript"></script><script src="./New in JavaScript 1.7 - MDN_files/default+en.I.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    // If found, wire up the BrowserID sign in button
+    function bindBrowserIDSignin() {
+      $('.browserid-signin').click(function (e) {
+        if ( !$(this).hasClass('toggle') ) {
+          navigator.id.getVerifiedEmail(function(assertion) {
+              if (!assertion) { return; }
+              $('input[name="assertion"]').val(assertion.toString());
+              $('form.browserid').first().submit();
+          });
+          return false;
+        }
+      });
+    }
+    $(document).ready(function(){
+        $('ul.signed-out').hide();
+        $('ul.signed-out').load($('ul.signed-out').attr('data-browserid-header-signin-html'), function() {
+          $('.toggle', $(this)).click(function() {
+            $(this).siblings(".sub-menu").slideToggle(150).removeAttr("aria-hidden");
+            return false;
+          });
+          bindBrowserIDSignin();
+        });
+        $('ul.signed-out').show();
+    });
+  </script>
+
+ 
+<script type="text/javascript">
+//<![CDATA[
+var _tag=new WebTrends();
+_tag.dcsGetId();
+// Add custom parameters here.
+//_tag.DCSext.param_name=param_value;
+_tag.dcsCollect();
+//]]>>
+</script>
+<noscript>
+&lt;div&gt;&lt;img alt="DCSIMG" id="DCSIMG" width="1" height="1" src="https://statse.webtrendslive.com/dcs8yrjuavz5bdaun34r2o8bi_8o8x/njs.gif?dcsuri=/nojavascript&amp;amp;WT.js=No&amp;amp;WT.tv=8.6.2"/&gt;&lt;/div&gt;
+</noscript>
+<!-- END OF SmartSource Data Collector TAG -->
+
+<script type="text/javascript">/*<![CDATA[*/$(function(){dp.SyntaxHighlighter.HighlightAll('code');});/*]]>*/</script> 
+
+
+</body></html>

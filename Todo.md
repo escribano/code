@@ -2,6 +2,8 @@
 
 ### dispositio
 
+tar -ztvf `npm pack`
+
 npm uninstall meta && npm install `npm pack ~/code/escribano/meta` && make runlocal
 
 npm uninstall meta && npm install `npm pack ~/code/escribano/meta`

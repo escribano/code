@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<!-- saved from url=(0075)https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get -->
+<html lang="en" dir="ltr" id="developer-mozilla-org"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>get - MDN</title>
+
+<meta charset="utf-8">
+
+<meta name="viewport" content="initial-scale=1.0, width=device-width">
+<meta name="MSSmartTagsPreventParsing" content="true">
+<meta name="Copyright" content="Copyright (c) 2005-2012 Mozilla.">
+<meta name="Rating" content="General">
+
+<link rel="home" href="https://developer.mozilla.org/">
+<link rel="copyright" href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#copyright">
+<meta name="robots" content="index,follow">
+<link rel="shortcut icon" href="https://developer.mozilla.org/favicon.ico">
+<link rel="alternate" type="application/rss+xml" title="What&#39;s new feed" href="https://developer.mozilla.org/index.php?title=Special:Recentchanges&feed=rss">
+<link rel="alternate" type="application/rss+xml" title="Page and subpages changes feed" href="https://developer.mozilla.org/index.php?title=Special:Article&type=feed&feedtype=subpagechanges&pageid=32846">
+<link rel="alternate" type="application/rss+xml" title="Page changes feed" href="https://developer.mozilla.org/index.php?title=Special:Article&type=feed&pageid=32846">
+<meta name="generator" content="MindTouch">
+<link rel="search" type="application/opensearchdescription+xml" title="MDN Search" href="https://developer.mozilla.org/deki/gui/opensearch.php?type=description">
+<link rel="stylesheet" type="text/css" media="screen" href="./get - MDN_files/css.php"> <!--[if IE 7]><style type="text/css">@import "/skins/common/_ie7.css";</style><![endif]--><!--[if IE 6]><style type="text/css">@import "/skins/common/_ie.css";</style><![endif]--><link rel="stylesheet" type="text/css" media="print" href="./get - MDN_files/print.css">
+<link rel="stylesheet" type="text/css" media="screen,projection" href="./get - MDN_files/css(1).php">
+<!--[if lte IE 7]><link rel="stylesheet" type="text/css" media="all" href="/skins/mdn/Transitional/ie7.css"><![endif]-->
+<!--[if lte IE 6]><link rel="stylesheet" type="text/css" media="all" href="/skins/mdn/Transitional/ie6.css"><![endif]-->
+<link rel="stylesheet" type="text/css" media="print" href="./get - MDN_files/print(1).css">
+
+<script type="text/javascript">CKEDITOR_BASEPATH = "/deki/plugins/page_editor_ckeditor/ckeditor/";</script>
+<script type="text/javascript" src="./get - MDN_files/js.php"></script><script type="text/javascript">var _starttime = new Date().getTime();</script>
+
+<!--[if IE]>
+<meta http-equiv="imagetoolbar" content="no">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<script src="/skins/mdn/Transitional/js/html5.js"></script>
+<![endif]-->
+
+	<script type="text/javascript">
+
+		var aLt = aLt || [];aLt["attach-no-description"] = 'No description'; aLt["cancel"] = 'Cancel'; aLt["close"] = 'Close'; aLt["comment-delete"] = 'Are you sure you want to delete this comment?'; aLt["contentrating-title-popup"] = 'Thanks for your feedback'; aLt["error"] = 'Error'; aLt["error-permission-denied"] = 'Permission denied'; aLt["error-permission-details"] = 'Your account does not have sufficient permissions to perform that action.'; aLt["gallery-close"] = 'close'; aLt["gallery-next"] = 'next'; aLt["gallery-prev"] = 'prev'; aLt["internal-error"] = 'Sorry, but there was an internal problem - please try again soon.'; aLt["js-label_cancel"] = 'Cancel'; aLt["js-label_save"] = 'Save'; aLt["js-tooltip_cancel"] = 'Exit Without Saving Changes'; aLt["js-tooltip_save"] = 'Save and Exit (Alt+S)'; aLt["ldap-provide-credentials"] = 'Please provide external service login credentials.'; aLt["loading"] = 'Loading...'; aLt["menu-confirm-delete"] = 'Are you sure you want to delete this file?'; aLt["menu-delete-file"] = 'Delete'; aLt["menu-edit-description"] = 'Edit description'; aLt["menu-move-file"] = 'Move'; aLt["menu-previous-versions"] = 'Previous versions'; aLt["menu-view-original"] = 'View original'; aLt["ready"] = 'Ready'; aLt["remove-tag"] = 'Remove tag'; aLt["restore-tag"] = 'Restore tag'; aLt["adding-tags"] = 'Adding Tags...'; aLt["save"] = 'Save'; aLt["submit"] = 'Submit'; aLt["wikibits-attach-another"] = 'Attach another file'; aLt["wikibits-attach-file"] = 'Attach File'; aLt["wikibits-cant-attach-editing"] = 'Sorry, you can\'t attach files while editing a page. Please close the editor first.'; aLt["wikibits-edit-section"] = 'Edit section'; aLt["wikibits-remove-file"] = 'Remove file'; aLt["advanced-search"] = 'Advanced Search'; aLt["standard-search"] = 'Standard Search';  var wfMsg = wfMsg || function (key) { return aLt[key] ? aLt[key] : 'MISSING: ' + key; };
+	//hook in menu clicking events to the document's body
+	YAHOO.util.Event.addListener(document, "click", function () { DWMenu.BodyClick(); });
+	YAHOO.util.Event.onDOMReady(function () { new clientWindow });
+
+		
+
+			YAHOO.util.Event.onDOMReady(function() {
+			tb_init("a.lightbox, area.lightbox, input.lightbox, a[rel='awesomebox']");//pass where to apply thickbox
+		});
+	
+			YAHOO.util.Event.onDOMReady(function() {
+			MTComments.HookBehavior();
+		});
+		</script>
+<link type="text/css" rel="stylesheet" href="./get - MDN_files/SyntaxHighlighter.css"><script type="text/javascript" src="./get - MDN_files/shCore.js"></script><script type="text/javascript" src="./get - MDN_files/shBrushJScript.js"></script><script type="text/javascript" src="./get - MDN_files/rgbcolor.js"></script>
+<script type="text/javascript" src="./get - MDN_files/nav.js"></script>
+
+<script type="text/javascript">
+
+Deki.BaseHref = 'https://developer.mozilla.org';
+Deki.PageId = 32846;
+Deki.PageTitle = 'en/JavaScript/Reference/Operators/get';
+Deki.PageLanguageCode = 'en';
+Deki.FollowRedirects = 1;
+Deki.PathTpl = '/skins/mdn';
+Deki.PathSkin = '/skins/mdn/Transitional';
+Deki.PathCommon = '/skins/common';
+Deki.UserName = 'Anonymous';
+Deki.Today = '12 Apr 2012';
+Deki.UserIsAnonymous = true;
+Deki.EditorConfigToken = '9997f802';
+Deki.EditorStylesToken = '88bb0e9a';
+Deki.PageEditable = false;
+</script>
+<script type="text/javascript">aLt["commercial-required"] = 'Gather feedback on your content with <strong>community scoring</strong> - these ratings weight results in adaptive search. Through curation analytics, ratings are used to highlight pages in need of attention. <a href="http://www.mindtouch.com/redir/mindtouch-tcs/">Learn more on enabling these capabilities with MindTouch 2010.</a>';aLt["login-required"] = 'You must be <a href="/index.php?title=Special:Userlogin&returntotitle=en%2FJavaScript%2FReference%2FOperators%2Fget">logged in</a> to perform that action';</script><link href="./get - MDN_files/custom_css.php" rel="stylesheet" type="text/css"> 
+ 
+</head>
+
+<body id="docs" class="section-docs en ltr yui-skin-sam PageDW-enJavaScriptReferenceOperatorsget hasJS" role="document">
+<!--[if lte IE 8]>
+<noscript><div class="global-notice">
+<p><strong>Warning:</strong> The Mozilla Developer Network website employs emerging web standards that may not be fully supported in some versions of MicroSoft Internet Explorer. You can improve your experience of this website by enabling JavaScript.</p>
+</div></noscript>
+<![endif]-->
+<noscript>&lt;div class="noscript"&gt;This application requires Javascript to be enabled.&lt;/div&gt;</noscript>
+<header id="masthead" role="banner">
+  <div class="wrap">
+  
+    <div id="branding">
+      <h1 id="logo"><a href="https://developer.mozilla.org/"><img src="./get - MDN_files/mdn-logo-sm.png" alt="" title="" width="62" height="71"> Mozilla Developer Network</a></h1>
+    </div>
+    
+    <a id="moz-tab" href="http://mozilla.org/">Mozilla</a>
+
+    <nav id="nav" role="menubar">
+      <ul id="nav-main">
+        <li id="nav-main-topics" class="menu"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#nav-sub-topics" aria-haspopup="true" class="toggle" title="Explore other parts of MDN">Topics</a>
+          <ul id="nav-sub-topics" class="sub-menu" aria-hidden="true" style="display: none; ">
+            <li id="nav-sub-web"><a href="https://developer.mozilla.org/web">Web</a></li>
+            <li id="nav-sub-apps"><a href="https://developer.mozilla.org/apps">Apps</a></li>
+            <li id="nav-sub-mobile"><a href="https://developer.mozilla.org/mobile">Mobile</a></li>
+            <li id="nav-sub-addons"><a href="https://developer.mozilla.org/addons">Add-ons</a></li>
+            <li id="nav-sub-mozilla"><a href="https://developer.mozilla.org/mozilla">Mozilla</a></li>
+          </ul>
+        </li>
+        <li id="nav-main-docs" class="menu"><a href="https://developer.mozilla.org/docs" class="docs toggle" aria-haspopup="true" aria-labelledby="nav-main-docs">Docs</a>
+          <div id="nav-sub-docs" class="sub-menu" aria-hidden="true" style="display: none; ">
+            <ul>
+              <li>
+                <ul>
+                  <li><a href="https://developer.mozilla.org/en/HTML">HTML</a></li>
+                  <li><a href="https://developer.mozilla.org/en/DOM">DOM</a></li>
+                  <li><a href="https://developer.mozilla.org/en/Using_audio_and_video_in_Firefox">Video</a></li>
+                  <li><a href="https://developer.mozilla.org/en/Using_audio_and_video_in_Firefox">Audio</a></li>
+                  <li><a href="https://developer.mozilla.org/en/SVG">SVG</a></li>
+                  <li><a href="https://developer.mozilla.org/en/WebGL">WebGL</a></li>
+                </ul>
+              </li>
+              <li>
+                <ul>
+                  <li><a href="https://developer.mozilla.org/en/HTML/HTML5">HTML5</a></li>
+                  <li><a href="https://developer.mozilla.org/en/WebSockets">WebSockets</a></li>
+                  <li><a href="https://developer.mozilla.org/en/Offline_resources_in_Firefox">Offline Cache</a></li>
+                  <li><a href="https://developer.mozilla.org/en/DOM/Storage">Local Storage</a></li>
+                  <li><a href="https://developer.mozilla.org/en/IndexedDB">IndexedDB</a></li>
+                  <li><a href="https://developer.mozilla.org/en/Using_files_from_web_applications">File API</a></li>
+                </ul>
+              </li>
+              <li>
+                <ul>
+                  <li><a href="https://developer.mozilla.org/en/CSS">CSS</a></li>
+                  <li><a href="https://developer.mozilla.org/en/Using_gradients">Gradients</a></li>
+                  <li><a href="https://developer.mozilla.org/en/CSS/Using_CSS_transforms">Transforms</a></li>
+                  <li><a href="https://developer.mozilla.org/en/CSS/CSS_transitions">Transitions</a></li>
+                  <li><a href="https://developer.mozilla.org/en/CSS/CSS_animations">Animations</a></li>
+                  <li><a href="https://developer.mozilla.org/en/CSS/Media_queries">Media Queries</a></li>
+                </ul>
+              </li>
+              <li>
+                <ul>
+                  <li><a href="https://developer.mozilla.org/en/JavaScript">JavaScript</a></li>
+                  <li><a href="https://developer.mozilla.org/en/Ajax">Ajax</a></li>
+                  <li><a href="https://developer.mozilla.org/en/HTML/Canvas">Canvas</a></li>
+                  <li><a href="https://developer.mozilla.org/en/Using_geolocation">Geolocation</a></li>
+                  <li><a href="https://developer.mozilla.org/en/DragDrop/Drag_and_Drop">Drag &amp; Drop</a></li>
+                  <li><a href="https://developer.mozilla.org/en/Using_web_workers">Web Workers</a></li>
+                </ul>
+              </li>
+            </ul>
+            <p><a href="https://developer.mozilla.org/docs">More docs…</a></p>
+          </div>
+        </li>
+        <li id="nav-main-demos"><a href="https://developer.mozilla.org/demos" class="demos">Demos</a></li>
+        <li id="nav-main-learning"><a href="https://developer.mozilla.org/learn" class="learning">Learning</a></li>
+        <li id="nav-main-community" class="menu"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#nav-sub-community" class="community toggle" aria-haspopup="true" aria-labelledby="nav-main-community">Community</a>
+          <ul id="nav-sub-community" class="sub-menu" aria-hidden="true" style="display: none; ">
+            <li><a href="https://developer.mozilla.org/events">Events</a></li>
+            <li><a href="https://developer.mozilla.org/discussions">Discussions</a></li>
+            <li><a href="https://developer.mozilla.org/promote">Promote</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    
+          <ul class="user-state signed-out superfish" data-browserid-header-signin-html="/en-US/users/browserid_header_signin_html" style="display: block; ">    <li class="user-signin menu">
+      <form class="browserid" action="https://developer.mozilla.org/en-US/users/browserid_verify" method="POST"><div style="display:none;"><input type="hidden" id="csrfmiddlewaretoken" name="csrfmiddlewaretoken" value="021a63c7d35d846bf62402e942f60742"></div>
+        <input id="next" name="next" type="hidden" value="/en/JavaScript/Reference/Operators/Special/get">
+        <input required="required" type="hidden" name="assertion" id="id_assertion">
+                        <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#" target="_blank" class="browserid-signin toggle" aria-haspopup="true" title="Sign in with BrowserID">Sign in</a> 
+                <div class="browserid-info sub-menu" aria-hidden="true" style="display: none; ">
+                <h3>What's this?</h3> <p>MDN has switched to <a href="https://browserid.org/" target="_blank" rel="external">BrowserID</a>, a safe and simple way to sign in with just your e-mail address. <a href="http://identity.mozilla.com/post/12950196039/deploying-browserid-at-mozilla" rel="external">Learn more about why Mozilla is using BrowserID</a>.</p> <p><strong>Returning members:</strong> sign in with BrowserID and you'll be connected to your MDN profile (all your information is still here).</p> <p><strong>New members:</strong> sign in with BrowserID first, then you'll be able to set up your new MDN profile.</p>          <p><a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#" target="_blank" class="browserid-signin" title="Sign in with BrowserID">Sign in</a></p>
+        </div>
+              </form>
+    </li></ul>
+        
+    <form id="site-search" method="get" action="https://developer.mozilla.org/search">
+      <p>
+        <input type="text" role="search" placeholder="Search MDN" id="q" name="q">
+        <noscript>&lt;button type="submit"&gt;Search&lt;/button&gt;</noscript>
+      </p>
+      
+      <div id="site-search-gg"><div class="gsc-branding"><table cellspacing="0" cellpadding="0" class="gsc-branding"><tbody><tr><td class="gsc-branding-text"><div class="gsc-branding-text">powered by</div></td><td class="gsc-branding-img-noclear"><img src="./get - MDN_files/small-logo.png" class="gsc-branding-img-noclear"></td></tr></tbody></table></div></div>
+    </form>
+
+  </div>
+</header>
+
+
+<section id="nav-toolbar">
+<div class="wrap">
+
+<nav id="tool-menus">
+  <ul id="tools" class="superfish">
+    <li class="menu">
+      <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#site-tools" class="toggle">Site tools</a>
+      <ul id="site-tools" class="sub-menu" role="navigation" style="visibility: hidden; display: none; " aria-hidden="true">
+         
+        <li class="site-recent">	<a href="https://developer.mozilla.org/Special:Recentchanges" title="Recent changes">Recent changes</a>
+</li>
+        <li class="site-rss">	<a href="https://developer.mozilla.org/Special:ListRss" title="RSS feeds">RSS feeds</a>
+</li>
+      	<li class="siteListusers"><a href="https://developer.mozilla.org/User:" title="Users">Users</a></li>
+              <li class="site-templates">	<a href="https://developer.mozilla.org/Template:" title="Templates">Templates</a>
+</li>
+              <li class="site-map">	<a href="https://developer.mozilla.org/Special:Sitemap" title="Sitemap">Sitemap</a>
+</li>
+        <li class="site-popular">	<a href="https://developer.mozilla.org/Special:Popularpages" title="Popular pages">Popular pages</a>
+</li>
+      	<li class="siteAbout"><a href="https://developer.mozilla.org/Special:About" title="About MDN">About MDN</a></li>
+      </ul>
+    </li>
+    <li class="menu">
+      <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#page-tools" class="toggle">This page</a>
+      <ul id="page-tools" class="sub-menu" role="navigation" style="visibility: hidden; display: none; " aria-hidden="true">
+                                <li class="page-new"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#" title="New page" class="disabled ">New sub-page</a></li>
+                    <li class="page-history"><a href="https://developer.mozilla.org/index.php?title=en/JavaScript/Reference/Operators/get&action=history" title="Page history">History</a></li>
+                    <li class="page-talk">	<a href="https://developer.mozilla.org/Talk:en/JavaScript/Reference/Operators/get" title="Talk page">Talk page</a>
+</li>
+                                                        <li class="page-print">	<a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#" onclick="return window.print();" title="Print page">Print page</a>
+</li>
+            <li class="page-backlinks"><a href="https://developer.mozilla.org/index.php?title=Special:Article&type=backlinks&pageid=32846">Pages that link here</a></li>      </ul>
+    </li>
+    </ul>
+</nav>
+
+  <nav class="crumbs" role="navigation">
+    <ol>
+      <li class="crumb-one"><a href="https://developer.mozilla.org/">MDN</a></li>
+      <li class="crumb-two"><a href="https://developer.mozilla.org/docs">Docs</a></li>
+    <li class="first"><a href="https://developer.mozilla.org/" class="deki-ns">MDN</a></li>
+<li class="second"><a href="https://developer.mozilla.org/en" class="deki-ns">MDN</a></li>
+<li><a href="https://developer.mozilla.org/en/JavaScript" class="deki-ns">JavaScript</a></li>
+<li><a href="https://developer.mozilla.org/en/JavaScript/Reference" class="deki-ns">JavaScript Reference</a></li>
+<li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators" class="deki-ns">Operators</a></li>
+<li class="last"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/get" class="deki-ns current">get</a></li> 
+    </ol>
+  </nav>
+
+</div>
+</section>
+
+<section id="content">
+<div class="wrap">
+  <div id="content-main" class="full">
+
+    <div id="sessionMsg"><div class="inner"><ul></ul></div></div>
+        
+    <article class="article PageDW-enJavaScriptReferenceOperatorsget" role="main">
+            
+            <div class="page-title hideforedit">
+              <h1 class="first" id="title">get</h1>            
+              <span class="page-moved"><a class="pageMoved" href="https://developer.mozilla.org/index.php?title=en/JavaScript/Reference/Operators/Special/get&redirect=no">Redirected from en/JavaScript/Reference/Operators/Special/get</a></span>
+      
+              <ul id="page-buttons">
+          <li class="page-edit"><a href="https://developer.mozilla.org/index.php?title=Special:Userlogin&returntotitle=en%2FJavaScript%2FReference%2FOperators%2Fget" class="disabled" title="Log in or sign up to edit this page">Edit</a></li>
+          <li class="page-watch"><a href="https://developer.mozilla.org/index.php?title=Special:Userlogin&returntotitle=en%2FJavaScript%2FReference%2FOperators%2Fget" class="disabled" title="Log in or sign up to add this page to your watch list">Watch</a></li>
+        </ul> 
+            </div>
+      
+    <div class="page-content boxed">
+
+     
+      <div id="article-nav" class="hideforedit">      
+              <div class="page-toc">
+          <h2>Table of contents</h2>
+          <ol style="list-style-type:none; margin-left:0px; padding-left:0px;"><li><span>1.</span> <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#Summary" rel="internal">Summary</a></li><li><span>2.</span> <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#Syntax" rel="internal">Syntax</a></li><li><span>3.</span> <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#Parameters" rel="internal">Parameters</a></li><li><span>4.</span> <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#Description" rel="internal">Description</a></li><li><span>5.</span> <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#Examples" rel="internal">Examples</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>5.1.</span> <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#Defining_a_getter_with_the_get_operator" rel="internal">Defining a getter with the get operator</a></li><li><span>5.2.</span> <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#Deleting_a_getter_using_the_delete_operator" rel="internal">Deleting a getter using the delete operator</a></li></ol></li><li><span>6.</span> <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#Browser_compatibility" rel="internal">Browser compatibility</a></li><li><span>7.</span> <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#See_also" rel="internal">See also</a></li></ol>        </div>
+      
+        <ul class="page-anchors">
+          <li class="anchor-tags"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#page-tags" title="Jump to tags for this article">Tags</a></li>
+          <li class="anchor-files"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#page-files" title="Jump to files for this article">Files</a></li>
+        </ul>
+
+              <div id="deki-page-alerts" class="disabled">
+				<div class="toggle">
+					<a href="javascript:void(0);" class="off">
+						<span>Page Notifications</span>
+						<span class="status">Off</span>
+					</a>
+				</div></div>      
+      
+      </div> 
+    
+            
+      <div id="page-top"><div id="pageToc"><div class="pageToc"><h5>Table of contents</h5><ol style="list-style-type:none; margin-left:0px; padding-left:0px;"><li><span>1.</span> <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#Summary" rel="internal">Summary</a></li><li><span>2.</span> <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#Syntax" rel="internal">Syntax</a></li><li><span>3.</span> <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#Parameters" rel="internal">Parameters</a></li><li><span>4.</span> <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#Description" rel="internal">Description</a></li><li><span>5.</span> <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#Examples" rel="internal">Examples</a><ol style="list-style-type:none; margin-left:0px; padding-left:15px;"><li><span>5.1.</span> <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#Defining_a_getter_with_the_get_operator" rel="internal">Defining a getter with the get operator</a></li><li><span>5.2.</span> <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#Deleting_a_getter_using_the_delete_operator" rel="internal">Deleting a getter using the delete operator</a></li></ol></li><li><span>6.</span> <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#Browser_compatibility" rel="internal">Browser compatibility</a></li><li><span>7.</span> <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#See_also" rel="internal">See also</a></li></ol></div></div><div class="pageText" id="pageText">
+<div id="section_1"><span id="Summary"></span><h2 class="editable">Summary</h2>
+<p>Binds an object property to a function that will be called when that property is looked up.</p>
+</div><div id="section_2"><span id="Syntax"></span><h2 class="editable">Syntax</h2>
+<p><code>{get <em>prop</em>() { .&nbsp;.&nbsp;. } }</code></p>
+</div><div id="section_3"><span id="Parameters"></span><h2 class="editable">Parameters</h2>
+<dl> <dt><code>prop</code></dt> <dd>the name of the property to bind to the given function</dd>
+</dl>
+</div><div id="section_4"><span id="Description"></span><h2 class="editable">Description</h2>
+<p>Sometimes it is desirable to allow access to a property that returns a dynamically computed value, or you may want reflect the status of an internal variable without requiring the use of explicit method calls. In JavaScript, this can be accomplished with the use of a getter. It is not possible to simultaneously have a getter bound to a property and have that property actually hold a value, although it is possible to use a getter and a setter in conjunction to create a type of pseudo-property.</p>
+
+<div style="border: 0px none ; margin: 10px 0px; padding: 0px 10px; background-color: rgb(254, 244, 156); text-align: center;"><p style="margin: 4px 0px; font-weight: bold;"><a rel="custom" href="https://developer.mozilla.org/en/JavaScript/New_in_JavaScript/1.8.5">JavaScript 1.8.5</a> note</p><p style="margin: 4px 0px;"></p><p style="text-align: left;">Starting in JavaScript 1.8.5, the <code>get</code> operator:</p>
+  <ul style="text-align: left;">
+    <li>can have an identifier which is either a number or a string;</li>
+    <li>must have exactly zero parameters (see 
+      <a href="http://whereswalden.com/2010/08/22/incompatible-es5-change-literal-getter-and-setter-functions-must-now-have-exactly-zero-or-one-arguments/" class="external" rel="external nofollow" target="_blank">Incompatible <abbr title="ECMAScript 5th edition">ES5</abbr> change: literal getter and setter functions must now have exactly zero or one arguments</a>
+      for more information);</li>
+    <li>must not appear in an object literal with another <code>get</code>
+      or with a data entry for the same property (<code>{ get x() { }, get x() { } }</code>
+      and <code>{ x: ..., get x() { } }</code> are forbidden).</li>
+  </ul><p></p></div>
+<p>A getter can be removed using the <code><a title="en/Core_JavaScript_1.5_Reference/Operators/Special_Operators/delete_Operator" rel="internal" href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/delete">delete</a></code> operator.</p>
+</div><div id="section_5"><span id="Examples"></span><h2 class="editable">Examples</h2>
+<div id="section_6"><span id="Example:_Defining_a_getter_with_the_get_operator"></span><span id="Defining_a_getter_with_the_get_operator"></span><h3 class="editable">Defining a getter with the <code>get</code> operator</h3>
+<p>This will create a pseudo-property <code>latest</code> of object <code>o</code> that will return the most recent entry into <code>o.log</code>:</p>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">var</span><span>&nbsp;o&nbsp;=&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;get&nbsp;latest&nbsp;()&nbsp;{&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(</span><span class="keyword">this</span><span>.log.length&nbsp;&gt;&nbsp;0)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="keyword">this</span><span>.log[</span><span class="keyword">this</span><span>.log.length&nbsp;-&nbsp;1];&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;},&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;log:&nbsp;[]&nbsp;&nbsp;</span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="js" style="display: none; ">var o = {
+  get latest () {
+    if (this.log.length &gt; 0) {
+      return this.log[this.log.length - 1];
+    }
+    else {
+      return null;
+    }
+  },
+  log: []
+}</pre>
+        
+<p>Note that attempting to assign a value to <code>latest</code> will not change it.</p>
+</div><div id="section_7"><span id="Example:_Deleting_a_getter_using_the_delete_operator"></span><span id="Deleting_a_getter_using_the_delete_operator"></span><h3 class="editable">Deleting a getter using the <code>delete</code> operator</h3>
+
+          <div class="dp-highlighter"><div class="bar"><div class="tools"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-c"><li class="alt"><span><span class="keyword">delete</span><span>&nbsp;o.latest;&nbsp;&nbsp;</span></span></li></ol></div><pre name="code" class="js" style="display: none; ">delete o.latest;</pre>
+         </div></div><div id="section_8"><span id="Browser_compatibility"></span><h2 class="editable">Browser compatibility</h2>
+<p>Based on <a class=" external" rel="external" href="http://robertnyman.com/javascript/javascript-getters-setters.html#regular-getters-and-setters" title="http://robertnyman.com/javascript/javascript-getters-setters.html#regular-getters-and-setters" target="_blank">Robert Nyman's page</a></p>
+<p>No support (notably in IE6-8) means that the script will trigger a syntax error.</p>
+<p>
+<script type="text/javascript">/*<![CDATA[*/
+        $(function() {
+            $('.htab').append($('#compat-desktop'));
+            $('.htab').append($('#compat-mobile'));
+            var $items = $('.htab>ul>li');
+            $items.click(function() {
+                $items.removeClass('selected');
+                $(this).addClass('selected');
+
+                var index = $items.index($(this));
+                $('.htab>div').hide().eq(index).show();
+            }).eq(0).click();
+        });
+    /*]]>*/</script>
+</p><div class="htab"><a name="AutoCompatibilityTable"></a>
+<ul> <li class="selected">Desktop</li> <li>Mobile</li>
+</ul>
+<div id="compat-desktop" style="display: block; ">
+<table class="compat-table"> <tbody> <tr> <th>Feature</th> <th>Firefox (Gecko)</th> <th>Chrome</th> <th>Internet Explorer</th> <th>Opera</th> <th>Safari</th> </tr> <tr> <td>Basic support</td> <td>2.0 (1.8.1)
+</td> <td>1</td> <td>9</td> <td>9.5</td> <td>3</td> </tr> </tbody>
+</table>
+</div><div id="compat-mobile" style="display: none; ">
+<table class="compat-table"> <tbody> <tr> <th>Feature</th> <th>Firefox Mobile (Gecko)</th> <th>Android</th> <th>IE Mobile</th> <th>Opera Mobile</th> <th>Safari Mobile</th> </tr> <tr> <td>Basic support</td> <td><span title="Compatibility unknown; please update this." style="color: rgb(255, 153, 0);">?</span></td> <td><span title="Compatibility unknown; please update this." style="color: rgb(255, 153, 0);">?</span></td> <td><span title="Compatibility unknown; please update this." style="color: rgb(255, 153, 0);">?</span></td> <td><span title="Compatibility unknown; please update this." style="color: rgb(255, 153, 0);">?</span></td> <td><span title="Compatibility unknown; please update this." style="color: rgb(255, 153, 0);">?</span></td> </tr> </tbody>
+</table>
+</div></div><p></p>
+
+</div><div id="section_9"><span id="See_also"></span><h2 class="editable">See also</h2>
+<ul> <li><code><a title="en/JavaScript/Reference/Operators/Special_Operators/delete_Operator" rel="internal" href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/delete">delete</a></code></li> <li><code><a title="en/Core_JavaScript_1.5_Reference/Operators/Special_Operators/set_Operator" rel="internal" href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/set">set</a></code></li> <li><code><a title="en/JavaScript/Reference/Global_Objects/Object/defineGetter" rel="internal" href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/defineGetter">__defineGetter__</a></code></li> <li><code><a title="en/JavaScript/Reference/Global_Objects/Object/defineSetter" rel="internal" href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/defineSetter">__defineSetter__</a></code></li> <li><a title="en/JavaScript/Guide/Working with Objects#Defining Getters and Setters" rel="internal" href="https://developer.mozilla.org/en/JavaScript/Guide/Working_with_Objects#Defining_Getters_and_Setters">Defining Getters and Setters</a> in JavaScript Guide</li>
+</ul></div></div></div>
+            <section class="page-meta">
+                  <section id="page-tags">
+            <h2>Tags <span class="sub">(3)</span></h2>
+              <a href="https://developer.mozilla.org/index.php?title=Special:Tags&pageId=32846" class="disabled" onclick="return false;" id="deki-page-tags-toggleview">Edit tags</a>              <div id="deki-page-tags"><ul class="tags"><li><a href="https://developer.mozilla.org/Special:Tags?tag=ECMAScript5" title="ECMAScript5" tagid="2096" class="text">ECMAScript5</a></li><li><a href="https://developer.mozilla.org/Special:Tags?tag=JavaScript" title="JavaScript" tagid="3" class="text">JavaScript</a></li><li><a href="https://developer.mozilla.org/Special:Tags?tag=getter" title="getter" tagid="1593" class="text">getter</a></li></ul></div>          </section>
+        
+                  <section id="page-files">
+            <h2>Attachments <span class="sub">(0)</span></h2>
+            <div id="pageFiles"><div class="nofiles">&nbsp;</div></div>            <div id="deki-image-gallery-lite"><table class="table empty" width="100%" cellspacing="0" cellpadding="0" border="0"><colgroup><col width="33%"><col width="33%"><col width="33%"></colgroup><tbody><tr class="bg1"><th class="col1" colspan="3">Images 0</th></tr><tr class="bg2"><td class="col1 empty" colspan="3">No images to display in the gallery.</td></tr></tbody></table></div>            <p class="add"><a title="Attach file" class="disabled ">Attach file</a></p>
+          </section>
+        
+                        
+        </section>
+        </div>
+
+    </article>
+
+    <p class="last-mod hideforedit">
+      Page last modified <a href="https://developer.mozilla.org/index.php?title=en/JavaScript/Reference/Operators/get&action=history" title="21:15, 20 Apr 2011">21:15, 20 Apr 2011</a> by <a href="https://developer.mozilla.org/User:dbruant" class="link-user" rel="internal">dbruant</a>    </p>
+
+  </div><!-- /#content-main -->
+
+</div><!-- /.wrap -->
+</section><!-- /#content -->
+
+
+
+<footer id="site-info" class="footer" role="contentinfo">
+<div class="wrap">
+  <div id="legal">
+    <img src="./get - MDN_files/mdn-logo-tiny.png" alt="" width="42" height="48">
+    <p id="copyright">© 2012 Mozilla Developer Network</p>
+    <p>Content is available under <a href="https://developer.mozilla.org/Project:Copyrights">these licenses</a> • <a href="https://developer.mozilla.org/Project:en/About">About MDN</a> • <a href="http://www.mozilla.org/about/policies/privacy-policy.html">Privacy Policy</a> • <a href="https://developer.mozilla.org/Project:en/Using_the_Mozilla_Developer_Center">Help</a></p>
+  </div>
+      <ul class="user-state signed-out superfish" data-browserid-header-signin-html="/en-US/users/browserid_header_signin_html" style="display: block; ">    <li class="user-signin menu">
+      <form class="browserid" action="https://developer.mozilla.org/en-US/users/browserid_verify" method="POST"><div style="display:none;"><input type="hidden" id="csrfmiddlewaretoken" name="csrfmiddlewaretoken" value="021a63c7d35d846bf62402e942f60742"></div>
+        <input id="next" name="next" type="hidden" value="/en/JavaScript/Reference/Operators/Special/get">
+        <input required="required" type="hidden" name="assertion" id="id_assertion">
+                        <a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#" target="_blank" class="browserid-signin toggle" aria-haspopup="true" title="Sign in with BrowserID">Sign in</a> 
+                <div class="browserid-info sub-menu" aria-hidden="true" style="display: none; ">
+                <h3>What's this?</h3> <p>MDN has switched to <a href="https://browserid.org/" target="_blank" rel="external">BrowserID</a>, a safe and simple way to sign in with just your e-mail address. <a href="http://identity.mozilla.com/post/12950196039/deploying-browserid-at-mozilla" rel="external">Learn more about why Mozilla is using BrowserID</a>.</p> <p><strong>Returning members:</strong> sign in with BrowserID and you'll be connected to your MDN profile (all your information is still here).</p> <p><strong>New members:</strong> sign in with BrowserID first, then you'll be able to set up your new MDN profile.</p>          <p><a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#" target="_blank" class="browserid-signin" title="Sign in with BrowserID">Sign in</a></p>
+        </div>
+              </form>
+    </li></ul>
+  </div>
+</footer>
+
+
+			
+<div class="ui-msg-wrap" id="MTMessage" style="display: none;">
+	<div class="ui-msg ui-errormsg" id="MTMessageStyle">
+		<div class="ui-msg-opt">
+			<ul>
+				<li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#" class="dismiss" onclick="return MTMessage.Hide();">dismiss message</a></li>
+				<li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Operators/Special/get#" class="details" id="MTMessageDetailsLink" onclick="return MTMessage.ShowDetails(this);">view details</a></li>
+			</ul>
+			<div class="ui-msg-autoclose">
+				<span id="MTMessageUnpaused" style="display: inline;">Message will close by itself in <span id="MTMessageTimer"></span> seconds</span>
+				<span id="MTMessagePaused" style="display: none;">Message timer has been stopped</span>
+			</div>
+		</div>
+		<div class="ui-msg-header" id="MTMessageHeader"></div>
+		<div class="ui-msg-desc" id="MTMessageDesc"></div>
+		<div class="ui-msg-desc" id="MTMessageDetails" style="display: none;">
+			<p>Viewing Details:</p>
+		</div>
+	</div>
+</div>
+<!-- Served by pm-dekiwiki03.mozilla.org in 0.78 secs. -->
+<!--
+	Verb      Path                                              Time(ms)       API Stats
+	GET       /deki/site/settings                                  10.33       request-time-ms=7; mysql-queries=1; mysql-time-ms=6; cache-ratio=0.00; cache-hit=0; cache-miss=-1; cache-del=0; cache-ins=1;
+	GET       /deki/users/=Anonymous                               15.64       request-time-ms=13; mysql-queries=4; mysql-time-ms=11; cache-ratio=-0.67; cache-hit=2; cache-miss=-5; cache-del=0; cache-ins=5;
+	GET       /deki/license                                        12.89       request-time-ms=8; mysql-queries=2; mysql-time-ms=6; cache-ratio=-0.50; cache-hit=1; cache-miss=-3; cache-del=0; cache-ins=3;
+	GET       /deki/pages/82748/contents                          148.25       request-time-ms=146; mysql-queries=33; mysql-time-ms=106; cache-ratio=1.58; cache-hit=98; cache-miss=-36; cache-del=0; cache-ins=36;
+	GET       /deki/pages/82748                                    89.55       request-time-ms=85; mysql-queries=23; mysql-time-ms=69; cache-ratio=29.00; cache-hit=29; cache-miss=-28; cache-del=0; cache-ins=28;
+	GET       /deki/pages/32846/info                               14.92       request-time-ms=13; mysql-queries=3; mysql-time-ms=11; cache-ratio=-0.67; cache-hit=2; cache-miss=-5; cache-del=0; cache-ins=5;
+	          /deki/pages/32846/security                           39.51       
+	GET       /deki/pages/32846/tags                               26.17       request-time-ms=24; mysql-queries=5; mysql-time-ms=22; cache-ratio=-0.75; cache-hit=3; cache-miss=-7; cache-del=0; cache-ins=7;
+	GET       /deki/site/properties                                38.68       request-time-ms=36; mysql-queries=4; mysql-time-ms=33; cache-ratio=-0.25; cache-hit=1; cache-miss=-5; cache-del=0; cache-ins=5;
+	GET       /deki/site/properties/urn%253Aui.deki.mindtouch.com%2523html.mdn.Transitional    22.16       request-time-ms=20; mysql-queries=3; mysql-time-ms=19; cache-ratio=-0.50; cache-hit=1; cache-miss=-3; cache-del=0; cache-ins=3;
+	GET       /deki/site/nav/=en%252FJavaScript%252FReference%252FOperators%252Fget/full   228.28       request-time-ms=226; mysql-queries=6; mysql-time-ms=222; cache-ratio=-6.00; cache-hit=6; cache-miss=-7; cache-del=0; cache-ins=7;
+	GET       /deki/pages/32846/tags                               26.10       request-time-ms=24; mysql-queries=5; mysql-time-ms=22; cache-ratio=-0.75; cache-hit=3; cache-miss=-7; cache-del=0; cache-ins=7;
+	                                                             =======
+	                                                     Total:   672.47      
+	                                                     Ideal:   646.37      
+-->
+ 
+<div id="popupMessage"></div> <div id="popupMask"></div>
+<div id="menuFiller"></div>
+<div id="bodyHeight"></div>
+
+<script src="./get - MDN_files/include.js"></script>
+<script src="./get - MDN_files/jsapi"></script>
+<script src="./get - MDN_files/javascript.min.js"></script><script src="./get - MDN_files/saved_resource" type="text/javascript"></script><script src="./get - MDN_files/default+en.I.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    // If found, wire up the BrowserID sign in button
+    function bindBrowserIDSignin() {
+      $('.browserid-signin').click(function (e) {
+        if ( !$(this).hasClass('toggle') ) {
+          navigator.id.getVerifiedEmail(function(assertion) {
+              if (!assertion) { return; }
+              $('input[name="assertion"]').val(assertion.toString());
+              $('form.browserid').first().submit();
+          });
+          return false;
+        }
+      });
+    }
+    $(document).ready(function(){
+        $('ul.signed-out').hide();
+        $('ul.signed-out').load($('ul.signed-out').attr('data-browserid-header-signin-html'), function() {
+          $('.toggle', $(this)).click(function() {
+            $(this).siblings(".sub-menu").slideToggle(150).removeAttr("aria-hidden");
+            return false;
+          });
+          bindBrowserIDSignin();
+        });
+        $('ul.signed-out').show();
+    });
+  </script>
+
+ 
+<script type="text/javascript">
+//<![CDATA[
+var _tag=new WebTrends();
+_tag.dcsGetId();
+// Add custom parameters here.
+//_tag.DCSext.param_name=param_value;
+_tag.dcsCollect();
+//]]>>
+</script>
+<noscript>
+&lt;div&gt;&lt;img alt="DCSIMG" id="DCSIMG" width="1" height="1" src="https://statse.webtrendslive.com/dcs8yrjuavz5bdaun34r2o8bi_8o8x/njs.gif?dcsuri=/nojavascript&amp;amp;WT.js=No&amp;amp;WT.tv=8.6.2"/&gt;&lt;/div&gt;
+</noscript>
+<!-- END OF SmartSource Data Collector TAG -->
+
+<script type="text/javascript">/*<![CDATA[*/$(function(){dp.SyntaxHighlighter.HighlightAll('code');});/*]]>*/</script> 
+
+
+</body></html>

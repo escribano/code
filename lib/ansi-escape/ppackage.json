@@ -1,0 +1,13 @@
+{
+    "name": "ansi-escape",
+    "description": "simplest possible colored console output",
+    "author": "Maximilian Krüger <kruemaxi@googlemail.com> (http://github.com/snd)",
+    "version": "0.1.0",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/snd/ansi-escape.git"
+    },
+    "dependencies": {
+        "underscore": "*"
+    }
+}

@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<!-- saved from url=(0080)http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/ -->
+<html dir="ltr" lang="en"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<title>Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…</title>
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="stylesheet" href="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/style.css" type="text/css" media="screen">
+<link rel="pingback" href="http://javascriptweblog.wordpress.com/xmlrpc.php">
+<meta name="google-site-verification" content="GFQL_ZeMCS7ugiWO25zGQZE5pxnaJJC3mLBScV0d20U">
+<link rel="alternate" type="application/rss+xml" title="JavaScript, JavaScript... » Feed" href="http://javascriptweblog.wordpress.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="JavaScript, JavaScript... » Comments Feed" href="http://javascriptweblog.wordpress.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="JavaScript, JavaScript... » Rethinking JavaScript Object Enumeration Comments Feed" href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/feed/">
+<script src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/quant.js" async="" type="text/javascript"></script><script type="text/javascript">
+/* <![CDATA[ */
+function addLoadEvent(func){var oldonload=window.onload;if(typeof window.onload!='function'){window.onload=func;}else{window.onload=function(){oldonload();func();}}}
+/* ]]> */
+</script>
+<link rel="stylesheet" href="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/global.css" type="text/css">
+<link rel="stylesheet" id="loggedout-subscribe-css" href="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/widget.css" type="text/css" media="all">
+<link rel="stylesheet" id="post-reactions-css" href="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/style(1).css" type="text/css" media="all">
+<script type="text/javascript" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/jquery.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var LoggedOutFollow = {"invalid_email":"Your subscription did not succeed, please try again with a valid email address."};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/widget.js"></script>
+<script type="text/javascript" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/comment-reply.js"></script>
+<link rel="stylesheet" id="highlander-comments-css" href="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/style(2).css" type="text/css" media="all">
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='http://s2.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1352186683g&#038;ver=20110606' type='text/css' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://javascriptweblog.wordpress.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://javascriptweblog.wordpress.com/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Truth, Equality and JavaScript" href="http://javascriptweblog.wordpress.com/2011/02/07/truth-equality-and-javascript/">
+<link rel="next" title="The JavaScript Comma Operator" href="http://javascriptweblog.wordpress.com/2011/04/04/the-javascript-comma-operator/">
+<meta name="generator" content="WordPress.com">
+<link rel="canonical" href="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/Rethinking JavaScript Object Enumeration « JavaScript, JavaScript….html">
+<link rel="shortlink" href="http://wp.me/pQpop-AR">
+<link rel="alternate" type="application/json+oembed" href="http://public-api.wordpress.com/oembed/1.0/?format=json&url=http%3A%2F%2Fjavascriptweblog.wordpress.com%2F2011%2F02%2F28%2Fjavascript-object-keys-finally%2F&for=wpcom-auto-discovery"><link rel="alternate" type="application/xml+oembed" href="http://public-api.wordpress.com/oembed/1.0/?format=xml&url=http%3A%2F%2Fjavascriptweblog.wordpress.com%2F2011%2F02%2F28%2Fjavascript-object-keys-finally%2F&for=wpcom-auto-discovery"><meta property="og:type" content="article">
+<meta property="og:title" content="Rethinking JavaScript Object Enumeration">
+<meta property="og:url" content="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/">
+<meta property="og:description" content="In JavaScript, enumeration across regular (non-Array) Objects is often more painful than it should be. Arrays are merrily dispatched through for and while loops using all manner of crazy, fun techn...">
+<meta property="og:site_name" content="JavaScript, JavaScript...">
+<link rel="shortcut icon" type="image/x-icon" href="http://s2.wp.com/i/favicon.ico?m=1317429109g" sizes="16x16 24x24 32x32 48x48">
+<link rel="icon" type="image/x-icon" href="http://s2.wp.com/i/favicon.ico?m=1317429109g" sizes="16x16 24x24 32x32 48x48">
+<link rel="apple-touch-icon-precomposed" href="http://s0.wp.com/i/webclip.png?m=1352312491g">
+<link rel="openid.server" href="http://javascriptweblog.wordpress.com/?openidserver=1">
+<link rel="openid.delegate" href="http://javascriptweblog.wordpress.com/">
+<link rel="search" type="application/opensearchdescription+xml" href="http://javascriptweblog.wordpress.com/osd.xml" title="JavaScript, JavaScript...">
+<link rel="search" type="application/opensearchdescription+xml" href="http://wordpress.com/opensearch.xml" title="WordPress.com">
+	<style type="text/css">
+	/* <![CDATA[ */
+			/* ]]> */
+	</style>
+	<meta name="application-name" content="JavaScript, JavaScript..."><meta name="msapplication-window" content="width=device-width;height=device-height"><meta name="msapplication-tooltip" content="by Angus Croll"><meta name="msapplication-task" content="name=Subscribe;action-uri=http://javascriptweblog.wordpress.com/feed/;icon-uri=http://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=http://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=http://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=http://s2.wp.com/i/favicon.ico"><link rel="stylesheet" type="text/css" href="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/shThemeDefault.css"><link rel="stylesheet" type="text/css" id="gravatar-card-css" href="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/hovercard.css"><link rel="stylesheet" type="text/css" id="gravatar-card-services-css" href="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/services.css"></head>
+<body class="single single-post postid-2285 single-format-standard highlander-enabled highlander-light">
+	<div id="top-wrap"></div><!-- #top-wrap -->
+			<div id="wrap">
+				<div class="menu"></div>
+				<h1 class="logo">
+					<a href="http://javascriptweblog.wordpress.com/">
+						JavaScript, JavaScript…					</a>
+				</h1>
+				<h3 class="description">
+					by Angus Croll				</h3>
+								<div id="inner-wrap">
+<div class="post-wrapper">
+
+	
+		<div id="post-2285" class="post-2285 post type-post status-publish format-standard hentry category-javascript tag-object-keys-arrays wide-entry-wrapper">
+			<div class="post-date-wrapper">
+					<div class="post-date">
+						<a href="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/Rethinking JavaScript Object Enumeration « JavaScript, JavaScript….html" title="Permalink to Rethinking JavaScript Object Enumeration" rel="bookmark">
+							<span>28</span>
+							Feb 2011						</a>
+					</div><!-- .post-date -->
+				<a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comments" class="comment-left" title="Comment on Rethinking JavaScript Object Enumeration"><span>28</span> Comments</a>			</div><!-- .post-date-wrapper -->
+			<div class="entry-wrapper">
+				<div class="entry">
+					<div class="entry-inner">
+						<h2 class="post-title">
+							Rethinking JavaScript Object&nbsp;Enumeration						</h2>
+						<p>In JavaScript, enumeration across regular (non-Array) Objects is often more painful than it should be. Arrays are merrily dispatched through <code>for</code> and <code>while</code> loops using all manner of <a href="http://javascriptweblog.wordpress.com/2010/10/11/rethinking-javascript-for-loops/" target="">crazy, fun techniques</a>; Objects are forever at the mercy of the pedestrian, one directional <code>for-in</code> loop, without which we can’t even learn the names and length of its own property set. Arrays have access to a plethora of elegant higher order functions (<code>forEach</code>, <code>map</code>, <code>filter</code> etc.); Objects don’t. Until now, that is.<br>
+<strong><span id="more-2285"></span></strong><br>
+Borrowing from Prototype.js, ECMAScript 5 defines two nifty new methods <strong>Object.keys(obj)</strong> and the rather clunkily named <strong>Object.getOwnPropertyNames(obj)</strong>. They already work in the current versions of Chrome and Safari and will be supported in Firefox 4 and IE9.</p>
+<p><span style="font-weight:bold;font-size:18px;">Object.keys(obj)</span></p>
+<p>This method returns an array of all enumerable property names defined by a given object (inherited properties are not considered). Note that the sequence is based on the default <code>for-in</code> looping sequence which may vary slightly between browsers (for full details on <code>for-in</code> sequence see <a href="http://javascriptweblog.wordpress.com/2011/01/04/exploring-javascript-for-in-loops/" target="_blank">this article</a>):  </p>
+<p></p><div id="highlighter_801459" class="syntaxhighlighter  "><div class="bar   "><div class="toolbar"><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#viewSource" title="view source" style="width: 16px; height: 16px; " class="item viewSource">view source</a><div class="item copyToClipboard"><embed width="16" height="16" id="highlighter_801459_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_801459" menu="false" src="http://s2.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf?m=1317429124g"></div><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#printSource" title="print" style="width: 16px; height: 16px; " class="item printSource">print</a><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#about" title="?" style="width: 16px; height: 16px; " class="item about">?</a></div></div><div class="lines no-wrap"><div class="line alt1"><table><tbody><tr><td class="number"><code>1</code></td><td class="content"><code class="comments">//Chrome, Safari, FF4, IE9</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>2</code></td><td class="content"><code class="keyword">var</code> <code class="plain">purchases = {butter: 3.00, soap: 5.95, pineapple: 3.50 };</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>3</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>4</code></td><td class="content"><code class="plain">Object.keys(purchases); </code><code class="comments">//['butter', 'soap', 'pineapple']</code></td></tr></tbody></table></div></div></div><br>
+&nbsp;<br>
+Now we can iterate an object’s properties in any sequence using a <code>for</code> loop…<p></p>
+<p></p><div id="highlighter_780820" class="syntaxhighlighter  "><div class="bar"><div class="toolbar"><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#viewSource" title="view source" style="width: 16px; height: 16px; " class="item viewSource">view source</a><div class="item copyToClipboard"><embed width="16" height="16" id="highlighter_780820_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_780820" menu="false" src="http://s2.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf?m=1317429124g"></div><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#printSource" title="print" style="width: 16px; height: 16px; " class="item printSource">print</a><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#about" title="?" style="width: 16px; height: 16px; " class="item about">?</a></div></div><div class="lines no-wrap"><div class="line alt1"><table><tbody><tr><td class="number"><code>1</code></td><td class="content"><code class="comments">//Chrome, Safari, FF4, IE9</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>2</code></td><td class="content"><code class="keyword">var</code> <code class="plain">keys = Object.keys(purchases), totalCost = 0;</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>3</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>4</code></td><td class="content"><code class="keyword">for</code> <code class="plain">(</code><code class="keyword">var</code> <code class="plain">i=keys.length; i--;) {</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>5</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">totalCost += purchases[keys[i]];</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>6</code></td><td class="content"><code class="plain">}</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>7</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>8</code></td><td class="content"><code class="plain">totalCost; </code><code class="comments">//12.45</code></td></tr></tbody></table></div></div></div><br>
+&nbsp;<br>
+…or a <code>while</code> loop…<p></p>
+<p></p><div id="highlighter_29446" class="syntaxhighlighter  "><div class="bar"><div class="toolbar"><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#viewSource" title="view source" style="width: 16px; height: 16px; " class="item viewSource">view source</a><div class="item copyToClipboard"><embed width="16" height="16" id="highlighter_29446_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_29446" menu="false" src="http://s2.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf?m=1317429124g"></div><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#printSource" title="print" style="width: 16px; height: 16px; " class="item printSource">print</a><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#about" title="?" style="width: 16px; height: 16px; " class="item about">?</a></div></div><div class="lines no-wrap"><div class="line alt1"><table><tbody><tr><td class="number"><code>1</code></td><td class="content"><code class="comments">//Chrome, Safari, FF4, IE9</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>2</code></td><td class="content"><code class="keyword">var</code> <code class="plain">keys = Object.keys(purchases), i=keys.length, totalCost = 0;</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>3</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>4</code></td><td class="content"><code class="keyword">while</code>&nbsp; <code class="plain">(i--) {</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>5</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">totalCost += purchases[keys[i]];</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>6</code></td><td class="content"><code class="plain">}</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>7</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>8</code></td><td class="content"><code class="plain">totalCost; </code><code class="comments">//12.45</code></td></tr></tbody></table></div></div></div><br>
+&nbsp;<br>
+For those browsers that don’t yet implement <code>Object.keys</code> we can apply the following shim (thanks to @jdalton for reminding me to add type checking) :  <p></p>
+<p></p><div id="highlighter_302175" class="syntaxhighlighter  "><div class="bar"><div class="toolbar"><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#viewSource" title="view source" style="width: 16px; height: 16px; " class="item viewSource">view source</a><div class="item copyToClipboard"><embed width="16" height="16" id="highlighter_302175_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_302175" menu="false" src="http://s2.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf?m=1317429124g"></div><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#printSource" title="print" style="width: 16px; height: 16px; " class="item printSource">print</a><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#about" title="?" style="width: 16px; height: 16px; " class="item about">?</a></div></div><div class="lines no-wrap"><div class="line alt1"><table><tbody><tr><td class="number"><code>01</code></td><td class="content"><code class="comments">//all browsers</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>02</code></td><td class="content"><code class="keyword">if</code> <code class="plain">(</code><code class="keyword">typeof</code> <code class="plain">Object.keys != </code><code class="string">'function'</code><code class="plain">) {</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>03</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">Object.keys = </code><code class="keyword">function</code><code class="plain">(obj) {</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>04</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="keyword">if</code> <code class="plain">(</code><code class="keyword">typeof</code> <code class="plain">obj != </code><code class="string">"object"</code> <code class="plain">&amp;&amp; </code><code class="keyword">typeof</code> <code class="plain">obj != </code><code class="string">"function"</code> <code class="plain">|| obj == </code><code class="keyword">null</code><code class="plain">) {</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>05</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="keyword">throw</code> <code class="plain">TypeError(</code><code class="string">"Object.keys called on non-object"</code><code class="plain">);</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>06</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">} </code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>07</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="keyword">var</code> <code class="plain">keys = [];</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>08</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="keyword">for</code> <code class="plain">(</code><code class="keyword">var</code> <code class="plain">p </code><code class="keyword">in</code> <code class="plain">obj) obj.hasOwnProperty(p) &amp;&amp;keys.push(p);</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>09</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="keyword">return</code> <code class="plain">keys;</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>10</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">}</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>11</code></td><td class="content"><code class="plain">}</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>12</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>13</code></td><td class="content"><code class="plain">Object.keys({a:1, b:2, c:3}); </code><code class="comments">//['a', 'b', 'c']</code></td></tr></tbody></table></div></div></div><br>
+&nbsp;<br>
+Now its easy to use an Object with one of the higher order iterators supplied by Array.prototype…<p></p>
+<p></p><div id="highlighter_28142" class="syntaxhighlighter  "><div class="bar"><div class="toolbar"><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#viewSource" title="view source" style="width: 16px; height: 16px; " class="item viewSource">view source</a><div class="item copyToClipboard"><embed width="16" height="16" id="highlighter_28142_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_28142" menu="false" src="http://s2.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf?m=1317429124g"></div><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#printSource" title="print" style="width: 16px; height: 16px; " class="item printSource">print</a><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#about" title="?" style="width: 16px; height: 16px; " class="item about">?</a></div></div><div class="lines no-wrap"><div class="line alt1"><table><tbody><tr><td class="number"><code>01</code></td><td class="content"><code class="keyword">var</code> <code class="plain">thing = {</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>02</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">size: 14, </code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>03</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">color: </code><code class="string">'kind of off-white'</code><code class="plain">, </code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>04</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">greet: </code><code class="keyword">function</code><code class="plain">() {</code><code class="keyword">return</code> <code class="string">"thronk"</code><code class="plain">}</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>05</code></td><td class="content"><code class="plain">};</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>06</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>07</code></td><td class="content"><code class="keyword">var</code> <code class="plain">thingFunctions = Object.keys(thing).filter(</code><code class="keyword">function</code><code class="plain">(e) {</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>08</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="keyword">return</code> <code class="keyword">typeof</code> <code class="plain">thing[e] == </code><code class="string">'function'</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>09</code></td><td class="content"><code class="plain">});</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>10</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>11</code></td><td class="content"><code class="plain">thingFunctions; </code><code class="comments">//["greet"]</code></td></tr></tbody></table></div></div></div><br>
+&nbsp;<br>
+…and we can use the <code>map</code> function to create an <code>Object.values</code> method too (because you know Harmony will be adding it any minute now <img src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/icon_wink.gif" alt=";-)" class="wp-smiley">  )<p></p>
+<p></p><div id="highlighter_956647" class="syntaxhighlighter  "><div class="bar"><div class="toolbar"><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#viewSource" title="view source" style="width: 16px; height: 16px; " class="item viewSource">view source</a><div class="item copyToClipboard"><embed width="16" height="16" id="highlighter_956647_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_956647" menu="false" src="http://s2.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf?m=1317429124g"></div><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#printSource" title="print" style="width: 16px; height: 16px; " class="item printSource">print</a><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#about" title="?" style="width: 16px; height: 16px; " class="item about">?</a></div></div><div class="lines no-wrap"><div class="line alt1"><table><tbody><tr><td class="number"><code>1</code></td><td class="content"><code class="plain">Object.values = </code><code class="keyword">function</code><code class="plain">(obj) {</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>2</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="keyword">return</code> <code class="plain">Object.keys(obj).map(</code><code class="keyword">function</code><code class="plain">(e) {</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>3</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="keyword">return</code> <code class="plain">obj[e]</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>4</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">});</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>5</code></td><td class="content"><code class="plain">}</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>6</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>7</code></td><td class="content"><code class="plain">Object.values({a:1, b:2, c:3}); </code><code class="comments">//[1, 2, 3]</code></td></tr></tbody></table></div></div></div><br>
+&nbsp;<br>
+<span style="font-weight:bold;font-size:18px;">Object.getOwnPropertyNames(obj)</span><p></p>
+<p>This one is a gem. Its similar to Object.keys but additionally returns the names of non-enumerable properties (again, inherited properties are not included). Now, at long last, you can list the properties of Math! The following snippet collects every Math function that expects exactly one argument and invokes it, passing the number 10…</p>
+<p></p><div id="highlighter_352509" class="syntaxhighlighter  "><div class="bar"><div class="toolbar"><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#viewSource" title="view source" style="width: 16px; height: 16px; " class="item viewSource">view source</a><div class="item copyToClipboard"><embed width="16" height="16" id="highlighter_352509_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_352509" menu="false" src="http://s2.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf?m=1317429124g"></div><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#printSource" title="print" style="width: 16px; height: 16px; " class="item printSource">print</a><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#about" title="?" style="width: 16px; height: 16px; " class="item about">?</a></div></div><div class="lines no-wrap"><div class="line alt1"><table><tbody><tr><td class="number"><code>01</code></td><td class="content"><code class="comments">//Chrome, Safari, FF4, IE9</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>02</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>03</code></td><td class="content"><code class="plain">Object.getOwnPropertyNames(Math).forEach(</code><code class="keyword">function</code><code class="plain">(e) {</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>04</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="keyword">if</code><code class="plain">((</code><code class="keyword">typeof</code> <code class="plain">Math[e] == </code><code class="string">'function'</code><code class="plain">) &amp;&amp; (Math[e].length == 1)) {</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>05</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">console.log(</code><code class="string">"Math."</code> <code class="plain">+ e + </code><code class="string">"(10) -&gt; "</code> <code class="plain">+ Math[e](10));</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>06</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">} </code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>07</code></td><td class="content"><code class="plain">});</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>08</code></td><td class="content"><code class="comments">//Math.cos(10) -&gt; -0.8390715290764524</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>09</code></td><td class="content"><code class="comments">//Math.log(10) -&gt; 2.302585092994046</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>10</code></td><td class="content"><code class="comments">//Math.tan(10) -&gt; 0.6483608274590867</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>11</code></td><td class="content"><code class="comments">//Math.sqrt(10) -&gt; 3.1622776601683795</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>12</code></td><td class="content"><code class="comments">//etc...</code></td></tr></tbody></table></div></div></div><br>
+&nbsp;<br>
+…and here’s an array of all the properties of String.prototype…<p></p>
+<p></p><div id="highlighter_196252" class="syntaxhighlighter  "><div class="bar"><div class="toolbar"><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#viewSource" title="view source" style="width: 16px; height: 16px; " class="item viewSource">view source</a><div class="item copyToClipboard"><embed width="16" height="16" id="highlighter_196252_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_196252" menu="false" src="http://s2.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf?m=1317429124g"></div><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#printSource" title="print" style="width: 16px; height: 16px; " class="item printSource">print</a><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#about" title="?" style="width: 16px; height: 16px; " class="item about">?</a></div></div><div class="lines"><div class="line alt1"><table><tbody><tr><td class="number"><code>1</code></td><td class="content"><code class="comments">//Chrome, Safari, FF4, IE9</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>2</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>3</code></td><td class="content"><code class="plain">Object.getOwnPropertyNames(String.prototype);</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>4</code></td><td class="content"><code class="comments">//["length", "constructor", "concat", "localeCompare", "substring", "italics", "charCodeAt", "strike", "indexOf", "toLowerCase", "trimRight", "toString", "toLocaleLowerCase", "replace", "toUpperCase", "fontsize", "trim", "split", "substr", "sub", "charAt", "blink", "lastIndexOf", "sup", "fontcolor", "valueOf", "link", "bold", "anchor", "trimLeft", "small", "search", "fixed", "big", "match", "toLocaleUpperCase", "slice"] </code></td></tr></tbody></table></div></div></div><br>
+&nbsp;<br>
+Unlike <code>Object.keys</code> we can’t replicate <code>Object.getOwnPropertyNames</code> using regular JavaScript since non-enumerable properties are out of bounds when using traditional iteration loops. Check out <a href="https://bugs.webkit.org/show_bug.cgi?id=32242" target="_blank">this log</a> for an insight into the hazards encountered during the webkit implementation. <p></p>
+<p><span style="font-weight:bold;font-size:18px;">A word on TypeErrors</span><br>
+&nbsp;<br>
+EcmaScript 5 is making gestures towards limiting auto-coercion, notably with the introduction of Strict Mode. That effort also extends to most of the new methods introduced on <code>Object</code>, including <code>Object.keys</code> and <code>Object.getOwnPropertyNames</code>. Neither method will coerce primitive arguments into Objects – in fact they will both throw a <code>TypeError</code>:<br>
+</p><div id="highlighter_51883" class="syntaxhighlighter  "><div class="bar"><div class="toolbar"><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#viewSource" title="view source" style="width: 16px; height: 16px; " class="item viewSource">view source</a><div class="item copyToClipboard"><embed width="16" height="16" id="highlighter_51883_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_51883" menu="false" src="http://s2.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf?m=1317429124g"></div><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#printSource" title="print" style="width: 16px; height: 16px; " class="item printSource">print</a><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#about" title="?" style="width: 16px; height: 16px; " class="item about">?</a></div></div><div class="lines no-wrap"><div class="line alt1"><table><tbody><tr><td class="number"><code>1</code></td><td class="content"><code class="comments">//Chrome, Safari, FF4, IE9</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>2</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>3</code></td><td class="content"><code class="plain">Object.keys(</code><code class="string">"potato"</code><code class="plain">);</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>4</code></td><td class="content"><code class="comments">//TypeError: Object.keys called on non-object</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>5</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>6</code></td><td class="content"><code class="plain">Object.getOwnPropertyNames(</code><code class="string">"potato"</code><code class="plain">);</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>7</code></td><td class="content"><code class="comments">//TypeError: Object.getOwnPropertyNames called on non-object</code></td></tr></tbody></table></div></div></div><br>
+&nbsp;<br>
+Thus, the following examples represent one of the few scenarios outside of Strict Mode where it makes sense to use the <code>new String</code> construction. Note that when either method is passed a string, the index name of each character is included.<p></p>
+<p></p><div id="highlighter_567898" class="syntaxhighlighter  "><div class="bar  "><div class="toolbar"><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#viewSource" title="view source" style="width: 16px; height: 16px; " class="item viewSource">view source</a><div class="item copyToClipboard"><embed width="16" height="16" id="highlighter_567898_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_567898" menu="false" src="http://s2.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf?m=1317429124g"></div><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#printSource" title="print" style="width: 16px; height: 16px; " class="item printSource">print</a><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#about" title="?" style="width: 16px; height: 16px; " class="item about">?</a></div></div><div class="lines no-wrap"><div class="line alt1"><table><tbody><tr><td class="number"><code>1</code></td><td class="content"><code class="comments">//Chrome, Safari, FF4, IE9</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>2</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>3</code></td><td class="content"><code class="plain">Object.keys(</code><code class="keyword">new</code> <code class="plain">String(</code><code class="string">"potato"</code><code class="plain">))</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>4</code></td><td class="content"><code class="comments">//["0", "1", "2", "3", "4", "5"]</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>5</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>6</code></td><td class="content"><code class="plain">Object.getOwnPropertyNames(</code><code class="keyword">new</code> <code class="plain">String(</code><code class="string">"potato"</code><code class="plain">))</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>7</code></td><td class="content"><code class="comments">//["0", "1", "2", "3", "4", "5", "length"]</code></td></tr></tbody></table></div></div></div><br>
+&nbsp;<br>
+<span style="font-weight:bold;font-size:18px;">Wrap Up</span><p></p>
+<p>Once they are available across all the major browsers <code>Object.keys</code> and <code>Object.getOwnPropertyNames</code> will make object/hash manipulation leaner and more powerful by plugging a major hole in the JavaScript Object API. Moreover as the line between Arrays and regular Objects blurs (aided by <a href="http://javascriptweblog.wordpress.com/2010/11/15/extending-objects-with-javascript-getters/" target="_blank">custom getters and setters</a>) we’re likely to see a growth in generic “array-like” objects which enjoy the best of both worlds – non-numeric identifiers and access to the rich API set defined by Array.prototype. EcmaScript 5 has apparently pre-empted this trend by introducing the generic method, defined by one type but useable by any. </p>
+<p>There’s a seismic shift under way – be ready for it!</p>
+<p><span style="font-weight:bold;font-size:18px;">Further Reading</span></p>
+<p>ECMA-262 5th Edition<br>
+<a href="http://ecma262-5.com/ELS5_HTML.htm#Section_15.2.3.14" target="_blank">Object.keys(obj)</a><br>
+<a href="http://ecma262-5.com/ELS5_HTML.htm#Section_15.2.3.4" target="_blank">Object.getOwnPropertyNames(obj)</a></p>
+<div class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow" class="share-twitter sd-button share-icon" href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/?share=twitter&nb=1" title="Click to share on Twitter" id="sharing-twitter-2285"><span>Twitter<span class="share-count">58</span></span></a></li><li class="share-end"></li></ul><div class="sharing-clear"></div></div></div><div id="wpl-likebox" class="sd-block sd-like"><h3 class="sd-title">Like this:</h3><div class="sd-content"><div id="wpl-button"><a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/?like=1&_wpnonce=47e9fee0e0" title="I like this post" class="like needs-login sd-button" rel="nofollow"><span>Like</span></a></div><div id="wpl-count" class="sd-like-count"><span id="wpl-count-number">3</span> bloggers like this post.</div><ul id="wpl-avatars" class="sd-like-gravatars"><li><a href="http://gravatar.com/batmoo" class="wpl-liker"><img src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/16aeda409d2a00b51ac4c5058a3a8435" class="avatar avatar-30 grav-hashed" alt="Mo Jangda" width="30" height="30" id="grav-16aeda409d2a00b51ac4c5058a3a8435-0"></a></li><li><a href="http://gravatar.com/hsfhsf" class="wpl-liker"><img src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/270b6a8f895438b9c31f94b227684dd7" class="avatar avatar-30 grav-hashed" alt="hsfhsf" width="30" height="30" id="grav-270b6a8f895438b9c31f94b227684dd7-0"></a></li><li><a href="http://gravatar.com/raynaldm" class="wpl-liker"><img src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/a8deb3465a8e3d408931506d47aab7b1" class="avatar avatar-30 grav-hashed" alt="Raynald M." width="30" height="30" id="grav-a8deb3465a8e3d408931506d47aab7b1-0"></a></li></ul></div></div></div>						<div class="post-meta">
+							Posted in <a href="http://javascriptweblog.wordpress.com/category/javascript/" title="View all posts in JavaScript" rel="category tag">JavaScript</a> and tagged <a href="http://javascriptweblog.wordpress.com/tag/object-keys-arrays/" rel="tag">object keys arrays</a>						</div><!-- .post-meta -->
+						<div id="post-navigation">
+							<h3 class="screen-reader-text">
+								Single Post Navigation							</h3>
+							<div class="nav-previous"><a href="http://javascriptweblog.wordpress.com/2011/02/07/truth-equality-and-javascript/" rel="prev"><span class="meta-nav">←</span> Older Entry</a></div>							<div class="nav-next"><a href="http://javascriptweblog.wordpress.com/2011/04/04/the-javascript-comma-operator/" rel="next">Newer Entry <span class="meta-nav">→</span></a></div>						</div><!-- #post-navigation -->
+						<div class="clear"></div>
+					</div><!-- .entry-inner -->
+				</div><!-- .entry -->
+				<div id="comments">
+	<div class="entry">
+		<div class="entry-comment">
+
+			
+			
+							<h2 id="comments-title">
+					28 thoughts on “<span>Rethinking JavaScript Object&nbsp;Enumeration</span>”				</h2>
+
+				
+				<ol class="commentlist">
+						<li class="post pingback">
+		<p>Pingback: <a href="http://htmlallyouneedtoknow.com/2011/02/28/rethinking-javascript-object-enumeration-javascript-javascript/" rel="external nofollow" class="url">HTML all you need to know» Blog Archive » Rethinking JavaScript Object Enumeration | JavaScript, JavaScript</a></p>
+	</li>
+	<li class="post pingback">
+		<p>Pingback: <a href="http://htmlscriptstipsandsecrets.com/?p=24214" rel="external nofollow" class="url">HTML Scripts Tips and Secrets » Blog Archive » Rethinking JavaScript Object Enumeration | JavaScript, JavaScript</a></p>
+	</li>
+	<li class="post pingback">
+		<p>Pingback: <a href="http://javascript.darmowe-blogi.pisz.pl/bez-kategorii/rethinking-javascript-object-enumeration-javascript-javascript.html" rel="external nofollow" class="url">Rethinking JavaScript Object Enumeration | JavaScript, JavaScript – javascript - dowiedz się więcej!</a></p>
+	</li>
+	<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-2094">
+		<div id="comment-2094" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/0ab821b3b70b28ec6e507b5424b014f7" class="avatar avatar-60 grav-hashed grav-hijack" height="60" width="60" id="grav-0ab821b3b70b28ec6e507b5424b014f7-0"><span class="fn">Martin</span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-2094"><time pubdate="" datetime="2011-02-28T05:56:46+00:00">February 28, 2011 at 05:56</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>Excellent post, thank you!</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/?replytocom=2094#respond" onclick="return addComment.moveForm(&quot;comment-2094&quot;, &quot;2094&quot;, &quot;respond&quot;, &quot;2285&quot;)">Reply <span>↓</span></a>			</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	</li>
+	<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-2095">
+		<div id="comment-2095" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/2076f150ee7934e4033b0ab7c1a9c73f" class="avatar avatar-60 grav-hashed grav-hijack" height="60" width="60" id="grav-2076f150ee7934e4033b0ab7c1a9c73f-0"><span class="fn"><a href="http://www.machete.ca/" rel="external nofollow" class="url">Allain Lalonde</a></span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-2095"><time pubdate="" datetime="2011-02-28T07:40:38+00:00">February 28, 2011 at 07:40</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>I wonder how long we’ll have to wait for Object.getOwnPropertyNames(obj) to be widely implemented enough to user it without worry.</p>
+<p>Also, I’m having some difficulty finding an example of when Object.getOwnPropertyNames(obj) would allow for some new use that would be useful.</p>
+<p>Thanks for the overview,<br>
+Allain</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/?replytocom=2095#respond" onclick="return addComment.moveForm(&quot;comment-2095&quot;, &quot;2095&quot;, &quot;respond&quot;, &quot;2285&quot;)">Reply <span>↓</span></a>			</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	</li>
+	<li class="post pingback">
+		<p>Pingback: <a href="http://blog.soulrobber.ru/2011/02/28/dj2/" rel="external nofollow" class="url">Дайджест №2 | ByteFrames</a></p>
+	</li>
+	<li class="comment byuser comment-author-angusjs bypostauthor even thread-even depth-1 highlander-comment" id="li-comment-2099">
+		<div id="comment-2099" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/52c6174ba60557536f93809b4e95d97c" class="avatar avatar-60 grav-hashed grav-hijack" height="60" width="60" id="grav-52c6174ba60557536f93809b4e95d97c-0"><span class="fn"><a href="http://javascriptweblog.wordpress.com/" rel="external nofollow" class="url">Angus Croll</a></span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-2099"><time pubdate="" datetime="2011-02-28T08:59:36+00:00">February 28, 2011 at 08:59</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>@Martin Glad you liked it!</p>
+<p>@Allain For tech-savvy consumer apps not long at all – FF4 and IE9 will both support it. Not sure about Opera – @MikeTaylr? For enterprise apps that need to support IE back editions – forever – and no JS library can help you (evil laugh!)</p>
+<p>Possible usage off the top of my head – debugging utils such as tracers that apply a function to every function property of a specified object.</p>
+<p>e.g. traceAll(Math)</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/?replytocom=2099#respond" onclick="return addComment.moveForm(&quot;comment-2099&quot;, &quot;2099&quot;, &quot;respond&quot;, &quot;2285&quot;)">Reply <span>↓</span></a>			</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	</li>
+	<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-2100">
+		<div id="comment-2100" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/299a3d891ff1920b69c364d061007043" class="avatar avatar-60 grav-hashed grav-hijack" height="60" width="60" id="grav-299a3d891ff1920b69c364d061007043-0"><span class="fn"><a href="http://allyoucanleet.com/" rel="external nofollow" class="url">John-David Dalton</a></span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-2100"><time pubdate="" datetime="2011-02-28T09:04:00+00:00">February 28, 2011 at 09:04</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>It should be noted that until Prototype’s most recent version (1.7), <a href="https://github.com/sstephenson/prototype/blob/1.6.1/src/lang/object.js#L128-144" rel="nofollow">its Object.keys()</a> returned an object’s own keys as well as keys from the prototype chain and would also overwrite the native Object.keys() if it exists.</p>
+<p>Also your `Object.keys` implementation overlooked <a href="http://es5.github.com/#x15.2.3.14" rel="nofollow">throwing an error</a> if `obj` is a primitive.</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/?replytocom=2100#respond" onclick="return addComment.moveForm(&quot;comment-2100&quot;, &quot;2100&quot;, &quot;respond&quot;, &quot;2285&quot;)">Reply <span>↓</span></a>			</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-angusjs bypostauthor even depth-2 highlander-comment" id="li-comment-2101">
+		<div id="comment-2101" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/52c6174ba60557536f93809b4e95d97c(1)" class="avatar avatar-36 grav-hashed grav-hijack" height="36" width="36" id="grav-52c6174ba60557536f93809b4e95d97c-1"><span class="fn"><a href="http://javascriptweblog.wordpress.com/" rel="external nofollow" class="url">Angus Croll</a></span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-2101"><time pubdate="" datetime="2011-02-28T09:23:42+00:00">February 28, 2011 at 09:23</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>Fixed – thanks!</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/?replytocom=2101#respond" onclick="return addComment.moveForm(&quot;comment-2101&quot;, &quot;2101&quot;, &quot;respond&quot;, &quot;2285&quot;)">Reply <span>↓</span></a>			</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment odd alt depth-3 highlander-comment" id="li-comment-2105">
+		<div id="comment-2105" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/299a3d891ff1920b69c364d061007043(1)" class="avatar avatar-36 grav-hashed grav-hijack" height="36" width="36" id="grav-299a3d891ff1920b69c364d061007043-1"><span class="fn"><a href="http://allyoucanleet.com/" rel="external nofollow" class="url">John-David Dalton</a></span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-2105"><time pubdate="" datetime="2011-02-28T12:26:56+00:00">February 28, 2011 at 12:26</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>Object.keys() should allow function objects too.</p>
+</div>
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	</li>
+	<li class="comment byuser comment-author-angusjs bypostauthor even depth-3 highlander-comment" id="li-comment-2106">
+		<div id="comment-2106" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/52c6174ba60557536f93809b4e95d97c(1)" class="avatar avatar-36 grav-hashed grav-hijack" height="36" width="36" id="grav-52c6174ba60557536f93809b4e95d97c-2"><span class="fn"><a href="http://javascriptweblog.wordpress.com/" rel="external nofollow" class="url">Angus Croll</a></span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-2106"><time pubdate="" datetime="2011-02-28T12:45:44+00:00">February 28, 2011 at 12:45</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>right – done!</p>
+</div>
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	</li>
+</ul>
+</li>
+</ul>
+</li>
+	<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-2102">
+		<div id="comment-2102" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/82e2a108ae128a41ba2bed3b6e3abbcf" class="avatar avatar-60 grav-hashed grav-hijack" height="60" width="60" id="grav-82e2a108ae128a41ba2bed3b6e3abbcf-0"><span class="fn">Craig Anderson</span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-2102"><time pubdate="" datetime="2011-02-28T09:55:27+00:00">February 28, 2011 at 09:55</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>Useful article.  I’ve started using some of the new ECMAScript functions as provided by underscore.js.  Not all of them are provided, but the supported ones are delegated to the native version if available.</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/?replytocom=2102#respond" onclick="return addComment.moveForm(&quot;comment-2102&quot;, &quot;2102&quot;, &quot;respond&quot;, &quot;2285&quot;)">Reply <span>↓</span></a>			</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	</li>
+	<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-2107">
+		<div id="comment-2107" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/e04fb0aed034ea8b8400040cf8000a9e" class="avatar avatar-60 grav-hashed grav-hijack" height="60" width="60" id="grav-e04fb0aed034ea8b8400040cf8000a9e-0"><span class="fn"><a href="http://samhuri.net/" rel="external nofollow" class="url">Sami Samhuri</a></span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-2107"><time pubdate="" datetime="2011-02-28T13:57:50+00:00">February 28, 2011 at 13:57</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>Another nitpick for you, Object.keys(null) should also throw a TypeError.</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/?replytocom=2107#respond" onclick="return addComment.moveForm(&quot;comment-2107&quot;, &quot;2107&quot;, &quot;respond&quot;, &quot;2285&quot;)">Reply <span>↓</span></a>			</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	</li>
+	<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-2108">
+		<div id="comment-2108" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/e04fb0aed034ea8b8400040cf8000a9e" class="avatar avatar-60 grav-hashed grav-hijack" height="60" width="60" id="grav-e04fb0aed034ea8b8400040cf8000a9e-1"><span class="fn"><a href="http://samhuri.net/" rel="external nofollow" class="url">Sami Samhuri</a></span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-2108"><time pubdate="" datetime="2011-02-28T13:59:51+00:00">February 28, 2011 at 13:59</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>Might be worth having a look at Tom Robinson and Kris Kowal’s es5-shim project, Object.keys is here: <a href="https://github.com/kriskowal/es5-shim/blob/master/es5-shim.js#L400-446" rel="nofollow">https://github.com/kriskowal/es5-shim/blob/master/es5-shim.js#L400-446</a></p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/?replytocom=2108#respond" onclick="return addComment.moveForm(&quot;comment-2108&quot;, &quot;2108&quot;, &quot;respond&quot;, &quot;2285&quot;)">Reply <span>↓</span></a>			</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	</li>
+	<li class="comment byuser comment-author-angusjs bypostauthor even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-2111">
+		<div id="comment-2111" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/52c6174ba60557536f93809b4e95d97c" class="avatar avatar-60 grav-hashed grav-hijack" height="60" width="60" id="grav-52c6174ba60557536f93809b4e95d97c-3"><span class="fn"><a href="http://javascriptweblog.wordpress.com/" rel="external nofollow" class="url">Angus Croll</a></span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-2111"><time pubdate="" datetime="2011-02-28T14:26:58+00:00">February 28, 2011 at 14:26</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>Thanks Sami</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/?replytocom=2111#respond" onclick="return addComment.moveForm(&quot;comment-2111&quot;, &quot;2111&quot;, &quot;respond&quot;, &quot;2285&quot;)">Reply <span>↓</span></a>			</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	</li>
+	<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-2112">
+		<div id="comment-2112" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/0360fb06cceca9d2de741627edc8c36c" class="avatar avatar-60 grav-hashed grav-hijack" height="60" width="60" id="grav-0360fb06cceca9d2de741627edc8c36c-0"><span class="fn">Jason Persampieri</span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-2112"><time pubdate="" datetime="2011-02-28T15:39:01+00:00">February 28, 2011 at 15:39</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>Excellent article, as always.</p>
+<p>Why are the new methods only implemented on ‘Object’, and not ‘Object.prototype’?</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/?replytocom=2112#respond" onclick="return addComment.moveForm(&quot;comment-2112&quot;, &quot;2112&quot;, &quot;respond&quot;, &quot;2285&quot;)">Reply <span>↓</span></a>			</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-angusjs bypostauthor even depth-2 highlander-comment" id="li-comment-2114">
+		<div id="comment-2114" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/52c6174ba60557536f93809b4e95d97c(1)" class="avatar avatar-36 grav-hashed grav-hijack" height="36" width="36" id="grav-52c6174ba60557536f93809b4e95d97c-4"><span class="fn"><a href="http://javascriptweblog.wordpress.com/" rel="external nofollow" class="url">Angus Croll</a></span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-2114"><time pubdate="" datetime="2011-02-28T17:20:22+00:00">February 28, 2011 at 17:20</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>Jason – good question. There is an unwritten rule amongst JavaScript developers to not augment Object.prototype – mainly because for-in was traditionally the only way to iterate a regular Object and the risk was that user defined Object.prototype properties would bleed through every iteration. However this doesn’t really explain the ES5 spec because 1) built in properties are not enumerable 2) ES5 <em>does</em> define some functions on Object.prototype (e.g. hasOwnProperty and isPrototypeOf).</p>
+<p>Prototype.js wrote the first popular implementation of Object.keys (and some other nice Object augmentations) and they made it a property of Object constructor. ES5 may have been following their lead. </p>
+<p>Someone else may have a better answer</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/?replytocom=2114#respond" onclick="return addComment.moveForm(&quot;comment-2114&quot;, &quot;2114&quot;, &quot;respond&quot;, &quot;2285&quot;)">Reply <span>↓</span></a>			</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment odd alt depth-3 highlander-comment" id="li-comment-2116">
+		<div id="comment-2116" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/1ec101ba36bde67f982798b9a548a1ee" class="avatar avatar-36 grav-hashed grav-hijack" height="36" width="36" id="grav-1ec101ba36bde67f982798b9a548a1ee-0"><span class="fn"><a href="http://guyroyse.com/" rel="external nofollow" class="url">Guy Royse</a></span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-2116"><time pubdate="" datetime="2011-02-28T21:10:51+00:00">February 28, 2011 at 21:10</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>I wondered this too.  But, it’s easy enough to fix.  And by fix I mean monkey patch!</p>
+<p><code><br>
+Object.prototype.keys = function() {<br>
+  return Object.keys(this)<br>
+};<br>
+</code></p>
+<p>Now I can do this.</p>
+<p><code><br>
+var obj = {foo : 42, bar : true, baz : 'Hola, mundo!'};<br>
+obj.keys().forEach(function(key) {<br>
+  console.log(key + ' -&gt; ' + obj[key]);<br>
+});<br>
+</code></p>
+<p>Of course, I sure would love to be able to get rid of those parens after keys.</p>
+</div>
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	</li>
+	<li class="comment even depth-3 highlander-comment" id="li-comment-2117">
+		<div id="comment-2117" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/0360fb06cceca9d2de741627edc8c36c(1)" class="avatar avatar-36 grav-hashed grav-hijack" height="36" width="36" id="grav-0360fb06cceca9d2de741627edc8c36c-1"><span class="fn">Jason Persampieri</span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-2117"><time pubdate="" datetime="2011-02-28T22:06:34+00:00">February 28, 2011 at 22:06</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>Very curious about this, so asked on JSMentors.  We’ll see what the experts have to say <img src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/icon_smile.gif" alt=":)" class="wp-smiley"> </p>
+</div>
+
+			<div class="reply">
+							</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	</li>
+</ul>
+</li>
+	<li class="comment odd alt depth-2 highlander-comment" id="li-comment-2118">
+		<div id="comment-2118" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/fede7405a0e4cd5722e0b85920a0728c" class="avatar avatar-36 grav-hashed grav-hijack" height="36" width="36" id="grav-fede7405a0e4cd5722e0b85920a0728c-0"><span class="fn"><a href="http://andrewdupont.net/" rel="external nofollow" class="url">Andrew Dupont</a></span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-2118"><time pubdate="" datetime="2011-02-28T22:07:14+00:00">February 28, 2011 at 22:07</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>I’ve heard two reasons:</p>
+<p>1. Since the global object is (naturally) an object, an annoying side-effect of augmenting <code>Object.prototype</code> is that those new properties get added to the global scope as well. So to add <code>{}.keys</code> would define a global <code>keys</code> function.</p>
+<p>This would be both annoying and inconvenient — in order to retrieve the keys defined on the global object (a not-too-farfetched use case), you’d have to avoid defining a global function called <code>keys</code> because it’d shadow the one you need.</p>
+<p>2. It’s feasible to write a JavaScript-only version of <code>Object.keys</code> for browsers that don’t implement it. ES5 benefits from this approach because it lets us use some of the best stuff now, without having to wait for full ES5 support in all browsers.</p>
+<p>It <em>wouldn’t</em> be feasible to write a JavaScript-only version of a theoretical <code>{}.keys</code> function, since that would require augmenting <code>Object.prototype</code>. (Those same browsers also lack ES5′s <code>Object.defineProperty</code> or any other way to hide property names from enumeration.)</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/?replytocom=2118#respond" onclick="return addComment.moveForm(&quot;comment-2118&quot;, &quot;2118&quot;, &quot;respond&quot;, &quot;2285&quot;)">Reply <span>↓</span></a>			</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	</li>
+</ul>
+</li>
+	<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-2164">
+		<div id="comment-2164" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/5592487d2231fbe06ed2ac80d92c8f20" class="avatar avatar-60 grav-hashed grav-hijack" height="60" width="60" id="grav-5592487d2231fbe06ed2ac80d92c8f20-0"><span class="fn"><a href="http://www.2ality.com/" rel="external nofollow" class="url">Axel Rauschmayer</a></span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-2164"><time pubdate="" datetime="2011-03-06T07:56:54+00:00">March 6, 2011 at 07:56</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>I second the vote for es5-shim. Also useful: The <a href="http://kangax.github.com/es5-compat-table/" rel="nofollow">ECMAScript 5 compatibility table</a> shows what is supported on which browsers.</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/?replytocom=2164#respond" onclick="return addComment.moveForm(&quot;comment-2164&quot;, &quot;2164&quot;, &quot;respond&quot;, &quot;2285&quot;)">Reply <span>↓</span></a>			</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	</li>
+	<li class="comment byuser comment-author-hsfhsf odd alt thread-even depth-1 highlander-comment" id="li-comment-2389">
+		<div id="comment-2389" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/270b6a8f895438b9c31f94b227684dd7(1)" class="avatar avatar-60 grav-hashed grav-hijack" height="60" width="60" id="grav-270b6a8f895438b9c31f94b227684dd7-1"><span class="fn">hsfhsf</span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-2389"><time pubdate="" datetime="2011-03-31T06:44:43+00:00">March 31, 2011 at 06:44</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>hi,<br>
+i am a chinese , i am not good at english.<br>
+i like your articles very much.</p>
+<p>i have a question want to ask you. can you help me? thanks</p>
+<p>var a = function b() { alert(a == b) }</p>
+<p>a(); // true</p>
+<p>alert(typeof b); // undefined</p>
+<p>in chrome, i got this effect.</p>
+<p>not i don’t know why b is not undefined in the function. where b is defined on?</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/?replytocom=2389#respond" onclick="return addComment.moveForm(&quot;comment-2389&quot;, &quot;2389&quot;, &quot;respond&quot;, &quot;2285&quot;)">Reply <span>↓</span></a>			</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-angusjs bypostauthor even depth-2 highlander-comment" id="li-comment-2390">
+		<div id="comment-2390" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/52c6174ba60557536f93809b4e95d97c(1)" class="avatar avatar-36 grav-hashed grav-hijack" height="36" width="36" id="grav-52c6174ba60557536f93809b4e95d97c-5"><span class="fn"><a href="http://javascriptweblog.wordpress.com/" rel="external nofollow" class="url">Angus Croll</a></span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-2390"><time pubdate="" datetime="2011-03-31T07:16:11+00:00">March 31, 2011 at 07:16</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>Hi and thanks for the compliment!</p>
+<p>the right hand side of the first line is a function expression (FE) you haven’t actually assigned anything to b</p>
+<p>It is really the same as saying<br>
+var a = function() {…}</p>
+<p>(you are naming the FE ‘b’ but this is just annidentifier for the FE – it’s not assigned to anything.</p>
+<p>To make typeof b return function you must either use a function declaration (FD)…</p>
+<p>function b() {…};<br>
+var a = b;</p>
+<p>…or use an explicit variable declaration…</p>
+<p>var a = function(){…};<br>
+var b = a;</p>
+<p>For more info see <a href="http://javascriptweblog.wordpress.com/2010/07/06/function-declarations-vs-function-expressions/" rel="nofollow">http://javascriptweblog.wordpress.com/2010/07/06/function-declarations-vs-function-expressions/</a></p>
+<p>Hope this helps</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/?replytocom=2390#respond" onclick="return addComment.moveForm(&quot;comment-2390&quot;, &quot;2390&quot;, &quot;respond&quot;, &quot;2285&quot;)">Reply <span>↓</span></a>			</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	</li>
+</ul>
+</li>
+	<li class="comment byuser comment-author-hsfhsf odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-2405">
+		<div id="comment-2405" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/270b6a8f895438b9c31f94b227684dd7(1)" class="avatar avatar-60 grav-hashed grav-hijack" height="60" width="60" id="grav-270b6a8f895438b9c31f94b227684dd7-2"><span class="fn">hsfhsf</span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-2405"><time pubdate="" datetime="2011-04-01T04:39:43+00:00">April 1, 2011 at 04:39</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>I’m sorry, I have not express clearly.<br>
+when “typeof b == ‘undefined’” is true in global code, b is not blinds with global execution context.<br>
+why “a == b” is true when execute a();<br>
+in your article you recommends to me, you said: The function name is visible within it’s scope and the scope of it’s parent.<br>
+where “b” is blinds with ?<br>
+thank you ask my question.<br>
+because i am not good at english, when I read “Lexical Environments”(ECMA10.2), I was confuse at the concept of declarative environment records and object environment records.<br>
+would you like to write a artcile about that subject when you have enough spare time.</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/?replytocom=2405#respond" onclick="return addComment.moveForm(&quot;comment-2405&quot;, &quot;2405&quot;, &quot;respond&quot;, &quot;2285&quot;)">Reply <span>↓</span></a>			</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	</li>
+	<li class="post pingback">
+		<p>Pingback: <a href="http://www.syngu.com/development/4188530141/rethinking-javascript-object-enumeration/" rel="external nofollow" class="url">Rethinking JavaScript Object Enumeration | Javascript | Syngu</a></p>
+	</li>
+	<li class="post pingback">
+		<p>Pingback: <a href="http://programmersgoodies.com/finding-object-keys-in-javascript" rel="external nofollow" class="url">Finding object keys in Javascript - Programmers Goodies</a></p>
+	</li>
+	<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-8602">
+		<div id="comment-8602" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/3d4fa790d76959965124fbb57fb0a8b0" class="avatar avatar-60 grav-hashed grav-hijack" height="60" width="60" id="grav-3d4fa790d76959965124fbb57fb0a8b0-0"><span class="fn">Stan Cristian</span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-8602"><time pubdate="" datetime="2012-02-19T12:14:00+00:00">February 19, 2012 at 12:14</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>Since version 11.60 Opera supports these functions too, and not only that but “Implemented full support for ECMAScript 5.1″ (<a href="http://www.opera.com/docs/changelogs/windows/1160/" rel="nofollow">http://www.opera.com/docs/changelogs/windows/1160/</a>).</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/?replytocom=8602#respond" onclick="return addComment.moveForm(&quot;comment-8602&quot;, &quot;8602&quot;, &quot;respond&quot;, &quot;2285&quot;)">Reply <span>↓</span></a>			</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	</li>
+	<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-8748">
+		<div id="comment-8748" class="comment">
+			<div class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt="" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/ffb83ba02d9d0309796a19bb0b3bbe54" class="avatar avatar-60 grav-hashed grav-hijack" height="60" width="60" id="grav-ffb83ba02d9d0309796a19bb0b3bbe54-0"><span class="fn"><a href="http://gravatar.com/rmbiggs" rel="external nofollow" class="url">Robert Biggs</a></span> on <a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-8748"><time pubdate="" datetime="2012-02-25T10:19:18+00:00">February 25, 2012 at 10:19</time></a> <span class="says">said:</span>
+									</div><!-- .comment-author .vcard -->
+
+				
+			</div>
+
+			<div class="comment-content"><p>This is a little late, but there is an easy way to extend native objects in JavaScript taking advantage of ECMAScript 5:</p>
+<p>extend = function(obj, prop) {<br>
+	Object.keys(prop).forEach(function(val) {<br>
+		if (prop.hasOwnProperty(val)) {<br>
+			Object.defineProperty(obj, val, {<br>
+				value: prop[val],<br>
+				writable: true,<br>
+				enumerable: false,<br>
+				configurable: true<br>
+			});<br>
+		}<br>
+	});<br>
+};</p>
+<p>This would allow you to extend an object’s prototype using the ‘enumerable’ property set to false so that the object’s prototype only iterates it own properties, solving that headache.</p>
+<p>extend(Object.prototype, {<br>
+   whatever : function(blah) {<br>
+       // do stuff with blah<br>
+   }<br>
+});</p>
+</div>
+
+			<div class="reply">
+				<a class="comment-reply-link" href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/?replytocom=8748#respond" onclick="return addComment.moveForm(&quot;comment-8748&quot;, &quot;8748&quot;, &quot;respond&quot;, &quot;2285&quot;)">Reply <span>↓</span></a>			</div><!-- .reply -->
+		</div><!-- #comment-## -->
+
+	</li>
+				</ol>
+
+				
+			
+											<div id="respond" class="js">
+				<h3 id="reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://javascriptweblog.wordpress.com/wp-comments-post.php" method="post" id="commentform">
+																										
+
+
+												
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest">
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Enter your comment here...</label>
+	<div id="comment-form-comment"><textarea style="resize: none; overflow-y: hidden; position: absolute; top: 0px; left: -9999px; width: 516px; line-height: normal; text-decoration: none; letter-spacing: normal; height: 36px; " tabindex="-1"></textarea><textarea id="comment" name="comment" style="resize: none; overflow-y: hidden; height: 36px; "></textarea></div>
+</div>
+
+<div id="comment-form-identity" style="display: none; ">
+
+	<div id="comment-form-nascar">
+		<p>Fill in your details below or click an icon to log in:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-form-guest" id="postas-guest" title="Guest">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-form-load-service:WordPress.com" id="postas-wordpress" title="WordPress.com">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-form-load-service:Twitter" id="postas-twitter" title="Twitter">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#comment-form-load-service:Facebook" id="postas-facebook" title="Facebook">
+					<span></span>
+				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/ad516503a11cd5ca435acc9bb6523536" alt="Gravatar" width="25" class="no-grav">
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">Email <span class="nopublish">(Address never made public)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="text" value=""></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Name</label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value=""></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Website</label>
+					<div class="comment-form-input"><input id="url" name="url" type="text" value=""></div>
+				</div> 
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/wplogo.png" alt="WordPress.com Logo" width="25" class="no-grav">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="">
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="">
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="">
+				<p class="comment-form-posting-as pa-wordpress"><strong></strong> You are commenting using your WordPress.com account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/ad516503a11cd5ca435acc9bb6523536(1)" alt="Twitter picture" width="25" class="no-grav">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="">
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="">
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="">
+				<p class="comment-form-posting-as pa-twitter"><strong></strong> You are commenting using your Twitter account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/ad516503a11cd5ca435acc9bb6523536(1)" alt="Facebook photo" width="25" class="no-grav">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="">
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="">
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="">
+				<p class="comment-form-posting-as pa-facebook"><strong></strong> You are commenting using your Facebook account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Cancel</a></div>
+		<p>Connecting to %s</p>
+	</div>
+	
+	
+</div>
+
+
+<div id="comment-form-subscribe" style="display: none; "> 
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;" tabindex="6"> <label class="subscribe-label" id="subscribe-label" for="subscribe">Notify me of follow-up comments via email.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;" tabindex="7"> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog">Notify me of new posts via email.</label></p></div>
+
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	// Expando Mode: start small, then auto-resize on focus + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+	jQuery( '#comment' ).css( { 'height':'10px' } ).focus( function() {
+		jQuery( this ).animate( { 'height':'70px' } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+});
+</script>
+												<p class="form-submit" style="display: none; ">
+							<input name="submit" type="submit" id="comment-submit" value="Post Comment">
+							<input type="hidden" name="comment_post_ID" value="2285" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+						</p>
+						
+<input type="hidden" name="genseq" value="1334291539">
+<p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="465678b98f"></p><script type="text/javascript" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/form.js"></script>
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="1334291545924"></p>					</form>
+							</div><!-- #respond -->
+			<div style="clear: both"></div>			
+		</div><!-- .entry -->
+	</div><!-- .entry-comment -->
+</div><!-- #comments -->			</div><!-- .entry-wrapper -->
+		</div><!-- #post-2285 -->
+
+	
+</div><!-- .post-wrapper-->
+
+
+<div id="sidebar">
+	<ul>
+		<li id="text-3" class="widget widget_text">			<div class="textwidget"><a href="http://feeds.feedburner.com/JavascriptJavascript" style="border:none;" title="Subscribe to my feed" rel="alternate"><img src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/feed-icon32x32.png" style="border:none;vertical-align:text-middle;" alt=""></a>&nbsp;&nbsp;<a href="http://www.twitter.com/angusTweets" style="border:none;"><img src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/follow_bird-b.png" style="border:none;vertical-align:text-middle;" alt="Follow angusTweets on Twitter"></a><a href="https://github.com/angus-c" title="Follow me on GitHub"><img style="vertical-align:text-middle;height:40px;width:40px;" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/octocat.png" alt="Follow me on GitHub"></a>
+
+</div>
+		</li>
+<li id="text-6" class="widget widget_text"><h2 class="widgettitle">About me…</h2>
+			<div class="textwidget">Angus Croll<br>
+Web Core Team<br>
+<a href="http://twitter.com/" style="border:none!important;text-decoration:underline!important;">Twitter</a><br>
+San Francisco<br></div>
+		</li>
+<li id="text-11" class="widget widget_text">			<div class="textwidget"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" title="JS String toUpperCase" style="border:none;"><img src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/promotejsh.gif" height="150" width="180" alt="JS String toUpperCase"></a></div>
+		</li>
+		<li id="recent-posts-4" class="widget widget_recent_entries">		<h2 class="widgettitle">Recent Posts</h2>
+		<ul>
+				<li><a href="http://javascriptweblog.wordpress.com/2012/04/09/javascript-fat-city/" title="JavaScript Fat City">JavaScript Fat&nbsp;City</a></li>
+				<li><a href="http://javascriptweblog.wordpress.com/2011/12/05/extending-javascript-natives/" title="Extending JavaScript Natives">Extending JavaScript&nbsp;Natives</a></li>
+				<li><a href="http://javascriptweblog.wordpress.com/2011/08/08/fixing-the-javascript-typeof-operator/" title="Fixing the JavaScript typeof operator">Fixing the JavaScript typeof&nbsp;operator</a></li>
+				<li><a href="http://javascriptweblog.wordpress.com/2011/07/11/waldo-search-the-javascript-runtime-in-under-1-kb/" title="Waldo: Search the JavaScript Object Model in under 1 KB">Waldo: Search the JavaScript Object Model in under 1&nbsp;KB</a></li>
+				<li><a href="http://javascriptweblog.wordpress.com/2011/05/31/a-fresh-look-at-javascript-mixins/" title="A fresh look at JavaScript Mixins">A fresh look at JavaScript&nbsp;Mixins</a></li>
+				</ul>
+		</li>
+<li id="linkcat-1356" class="widget widget_links"><h2 class="widgettitle">Blogroll</h2>
+
+	<ul class="xoxo blogroll">
+<li><a href="http://www.adequatelygood.com/">adequatelygood.com</a></li>
+<li><a href="http://dailyjs.com/" target="_blank">dailyjs.com</a></li>
+<li><a href="http://dmitrysoshnikov.com/2010/04/">dmitry soshnikov</a></li>
+<li><a href="http://osteele.com/" target="_blank">oliver steele</a></li>
+<li><a href="http://perfectionkills.com/">perfectionkills.com</a></li>
+<li><a href="http://peter.michaux.ca/">peter.michaux.ca</a></li>
+<li><a href="http://webreflection.blogspot.com/">webreflection</a></li>
+
+	</ul>
+</li>
+
+<li id="text-7" class="widget widget_text">			<div class="textwidget"><a href="http://feedjit.com/ir1/36a838868ab6245b84eef90cd00c1327/"><img src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/36a838868ab6245b84eef90cd00c1327.png" alt="" border="0" style="width:0;height:0;"></a></div>
+		</li>
+<li id="text-14" class="widget widget_text">			<div class="textwidget"><div style="display:none;">
+<a href="http://github.com/angus-c"><img style="position:absolute;top:0;right:0;border:0;" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub"></a></div>
+</div>
+		</li>
+	</ul>
+</div><!-- #sidebar -->
+		</div><!-- #inner-wrap -->
+		<div id="footer">
+			<a href="http://wordpress.com/?ref=footer" rel="generator">Blog at WordPress.com</a>.
+			Theme: <a href="http://theme.wordpress.com/themes/bold-life/">Bold Life</a> by <a href="http://www.jayhafling.com/" rel="designer">Jay Hafling</a>.		</div><!-- #footer -->
+		<div class="clear"></div>
+	</div><!-- #wrap from header -->
+<div id="bottom-wrap"></div><!-- #bottom-wrap -->
+<script type="text/javascript" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/gprofiles.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/wpgroho.js"></script>
+
+<script type="text/javascript">
+var _qevents = _qevents || [], wpcomQuantcastData = {"qacct":"p-18-mFEk4J448M","labels":",language.en,type.wpcom,posttag.object-keys-arrays"};
+function wpcomQuantcastPixel( labels, options ) {
+	var i, defaults = wpcomQuantcastData, data = { event: 'ajax' };
+
+	labels  = labels  || '';
+	options = options || {};
+
+	if ( typeof labels != 'string' )
+		options = labels;
+
+	for ( i in defaults ) {
+		data[i] = defaults[i];
+	}
+
+	for ( i in options ) {
+		data[i] = options[i];
+	}
+
+	if ( data.labels ) {
+		data.labels += ',' + labels;
+	} else {
+		data.labels = labels;
+	}
+
+	_qevents.push( data );
+};
+(function() {var elem = document.createElement('script');elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";elem.async = true;elem.type = "text/javascript";var scpt = document.getElementsByTagName('script')[0];scpt.parentNode.insertBefore(elem, scpt);  })();
+_qevents.push( wpcomQuantcastData );
+</script>
+<noscript>&lt;div style="display: none;"&gt;&lt;img src="//pixel.quantserve.com/pixel/p-18-mFEk4J448M.gif?labels=%2Clanguage.en%2Ctype.wpcom%2Cposttag.object-keys-arrays" height="1" width="1" alt="" /&gt;&lt;/div&gt;</noscript>
+
+	<script type="text/javascript">
+	/* <![CDATA[ */
+		jQuery(document).ready( function($) {
+
+			// Remove the login box when clicking the page
+			$( document ).mousedown( function( e ) {
+				if ( null == $( e.target ).closest( '#wpl-mustlogin' ).get( 0 ) ) {
+					$( '#wpl-mustlogin' ).remove();
+				}
+			});
+
+			// Handle clicking the like button itself
+			$('#wpl-button > a.like').click( function(e) {
+				e.preventDefault();
+				
+				$.post( 'http://javascriptweblog.wordpress.com/wp-admin/admin-ajax.php', {
+					'action': 'wpl_record_stat',
+					'stat_name': 'loggedout_like_click'
+				} );
+
+				var tenMins = new Date();
+				tenMins.setTime( tenMins.getTime() + 600000 );
+				document.cookie = 'wpl_rand=e035979a71; expires=' + tenMins.toGMTString() + '; domain=wordpress.com; path=/;';
+
+				$('#wpl-count').after( '\
+					<div id="wpl-mustlogin"> \
+						<form action="https://javascriptweblog.wordpress.com/wp-login.php" method="post"> \
+							<p>Just one more step to like this post:</p> \
+							<label><span>Username</span> <input type="text" name="log" id="user_login" class="input" value="" size="20" tabindex="80" /></label> \
+							<label><span>Password</span> <input type="password" name="pwd" id="user_pass" class="input" value="" size="20" tabindex="81" /></label> \
+							<input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="Log In" tabindex="82" /> \
+							<input type="hidden" name="redirect_to" value="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/?like=1" /> \
+							<input type="hidden" name="wpl_rand" value="e035979a71" /> \
+							<p>Not a member yet? <a href="http://wordpress.com/signup/?ref=likebox" id="wpl-signup-link">Sign up with WordPress.com</a></p> \
+						</form> \
+					</div> \
+				');
+
+				$('#wpl-mustlogin').hide().slideDown('fast');
+			} );
+			
+			$('#wpl-mustlogin input.input').live( 'focus', function() {
+				$(this).prev().hide();
+			}).live( 'blur', function() {
+				if ( $(this).val() == '' )
+					$(this).prev().show();
+			});
+			
+			$('#wpl-mustlogin input#wp-submit').live( 'click', function(e) {
+				e.preventDefault();
+				
+				$.post( 'http://javascriptweblog.wordpress.com/wp-admin/admin-ajax.php', { 
+					'action': 'wpl_record_stat',
+					'stat_name': 'loggedout_login_submit'
+				}, function() {
+					$('#wpl-mustlogin form').submit();
+				} );
+			});			
+			
+			$('#wpl-mustlogin a#wpl-signup-link').live( 'click', function(e) {
+				e.preventDefault();
+				
+				var link = $(this).attr('href');
+				
+				$.post( 'http://javascriptweblog.wordpress.com/wp-admin/admin-ajax.php', { 
+					'action': 'wpl_record_stat',
+					'stat_name': 'loggedout_signup_click'
+				}, function() {
+					location.href = link;
+				} );
+			});					
+			
+		});
+	/* ]]> */
+	</script>
+	<script type="text/javascript">
+	WPCOM_sharing_counts = {'http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/':'2285'};
+	</script>
+	<script>jQuery(document).ready(function($){ Gravatar.profile_cb = function( h, d ) { WPGroHo.syncProfileData( h, d );	}; Gravatar.my_hash = WPGroHo.my_hash; Gravatar.init( 'body', '#wp-admin-bar-my-account' ); });</script>	<div style="display:none">
+	<div class="grofile-hash-map-0ab821b3b70b28ec6e507b5424b014f7">
+	</div>
+	<div class="grofile-hash-map-2076f150ee7934e4033b0ab7c1a9c73f">
+	</div>
+	<div class="grofile-hash-map-52c6174ba60557536f93809b4e95d97c">
+	</div>
+	<div class="grofile-hash-map-299a3d891ff1920b69c364d061007043">
+	</div>
+	<div class="grofile-hash-map-82e2a108ae128a41ba2bed3b6e3abbcf">
+	</div>
+	<div class="grofile-hash-map-e04fb0aed034ea8b8400040cf8000a9e">
+	</div>
+	<div class="grofile-hash-map-0360fb06cceca9d2de741627edc8c36c">
+	</div>
+	<div class="grofile-hash-map-1ec101ba36bde67f982798b9a548a1ee">
+	</div>
+	<div class="grofile-hash-map-fede7405a0e4cd5722e0b85920a0728c">
+	</div>
+	<div class="grofile-hash-map-5592487d2231fbe06ed2ac80d92c8f20">
+	</div>
+	<div class="grofile-hash-map-270b6a8f895438b9c31f94b227684dd7">
+	</div>
+	<div class="grofile-hash-map-3d4fa790d76959965124fbb57fb0a8b0">
+	</div>
+	<div class="grofile-hash-map-ffb83ba02d9d0309796a19bb0b3bbe54">
+	</div>
+	</div>
+		<style type="text/css">
+			
+				.reblog-from img                   { margin: 0 10px 0 0; vertical-align: middle; padding: 0; border: 0; }
+				.reblogger-note img.avatar         { float: left; padding: 0; border: 0; }
+				.reblogger-note-content            { margin: 0 0 20px 35px; }
+				.reblog-post                       { border-left: 3px solid #eee; padding-left: 15px; }
+				.reblog-post ul.thumb-list         { display: block; list-style: none; margin: 2px 0; padding: 0; clear: both; }
+				.reblog-post ul.thumb-list li      { display: inline; margin: 0; padding: 0 1px; border: 0; }
+				.reblog-post ul.thumb-list li a    { margin: 0; padding: 0; border: 0; }
+				.reblog-post ul.thumb-list li img  { margin: 0; padding: 0; border: 0; }
+				.reblog-post                       { border-left: 3px solid #eee; padding-left: 15px; }
+
+				.reblog-post .wpcom-enhanced-excerpt { clear: both; }
+
+				.reblog-post .wpcom-enhanced-excerpt address,
+				.reblog-post .wpcom-enhanced-excerpt li,
+				.reblog-post .wpcom-enhanced-excerpt h1,
+				.reblog-post .wpcom-enhanced-excerpt h2,
+				.reblog-post .wpcom-enhanced-excerpt h3,
+				.reblog-post .wpcom-enhanced-excerpt h4,
+				.reblog-post .wpcom-enhanced-excerpt h5,
+				.reblog-post .wpcom-enhanced-excerpt h6,
+				.reblog-post .wpcom-enhanced-excerpt p { font-size: 100% !important; }
+
+				.reblog-post .wpcom-enhanced-excerpt blockquote,
+				.reblog-post .wpcom-enhanced-excerpt pre,
+				.reblog-post .wpcom-enhanced-excerpt code,
+				.reblog-post .wpcom-enhanced-excerpt q { font-size: 98% !important; }
+					</style><script type="text/javascript">
+/* <![CDATA[ */
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"http:\/\/javascriptweblog.wordpress.com\/public.api\/connect\/?action=request","logoutURL":"http:\/\/javascriptweblog.wordpress.com\/wp-login.php?action=logout&_wpnonce=98ce68c22c","homeURL":"http:\/\/javascriptweblog.wordpress.com\/","postID":"2285","gravDefault":"monsterid","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"","userIsLoggedIn":""};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/script.js"></script>
+	
+	<div id="bit" class="loggedout-follow-normal" style="bottom: -285px; ">
+		<a class="bsub" href="javascript:void(0)"><span id="bsub-text">Follow</span></a>
+		<div id="bitsubscribe">
+			
+					<h3><label for="loggedout-follow-field">Follow “JavaScript, JavaScript...”</label></h3>
+		
+			<form action="https://subscribe.wordpress.com/" method="post" accept-charset="utf-8" id="loggedout-follow">
+			<p>Get every new post delivered to your Inbox.</p>
+			
+			<p id="loggedout-follow-error" style="display: none;"></p>
+
+						<p class="bit-follow-count">Join 118 other followers</p>		
+			
+			<p><input type="text" name="email" style="width: 95%; padding: 1px 2px" value="Enter your email address" onfocus="this.value=(this.value==&quot;Enter your email address&quot;) ? &quot;&quot; : this.value;" onblur="this.value=(this.value==&quot;&quot;) ? &quot;Enter email address&quot; : this.value;" id="loggedout-follow-field"></p>
+
+			<input type="hidden" name="action" value="subscribe">
+			<input type="hidden" name="blog_id" value="12490669">
+			<input type="hidden" name="source" value="http://javascriptweblog.wordpress.com/2011/02/28/javascript-object-keys-finally/">
+			<input type="hidden" name="sub-type" value="loggedout-follow">
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="03c93a31d6"><input type="hidden" name="_wp_http_referer" value="/2011/02/28/javascript-object-keys-finally/">
+			<p id="bsub-subscribe-button"><input type="submit" value="Sign me up"></p>
+			</form>
+					<div id="bsub-credit"><a href="http://wordpress.com/signup/?ref=lof">Powered by WordPress.com</a></div>
+		</div><!-- #bitsubscribe -->
+	</div><!-- #bit -->
+ 
+		<img src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/b.gif" alt="" style="display:none">
+		<script type="text/javascript" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/sharing.js"></script>
+		<script type="text/javascript" charset="utf-8">
+		jQuery(document).ready(function(){
+			jQuery( '.share-twitter' ).click(function(){
+				window.open( jQuery(this).attr( 'href' ), 'wpcom-twitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+		<script type="text/javascript" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/beacon.js"></script><script type="text/javascript">try{COMSCORE.beacon({c1:2,c2:7518284});}catch(e){}</script><noscript>&lt;p class="robots-nocontent"&gt;&lt;img src="http://b.scorecardresearch.com/p?cj=1c1=2&amp;#038;c2=7518284" alt="" style="display:none" width="1" height="1" /&gt;&lt;/p&gt;</noscript><script type="text/javascript" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/shCore.js"></script>
+<script type="text/javascript" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/shBrushJScript.js"></script>
+<script type="text/javascript">
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var themecssurl = "http://s0.wp.com/wp-content/plugins/syntaxhighlighter-wpcom/shThemeDefault.css?m=1349269507g&amp;ver=2.1.364b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		document.getElementsByTagName("head")[0].appendChild(themecss);
+	})();
+	SyntaxHighlighter.config.clipboardSwf = 'http://s2.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf?m=1317429124g';
+	SyntaxHighlighter.config.strings.expandSource = 'show source';
+	SyntaxHighlighter.config.strings.viewSource = 'view source';
+	SyntaxHighlighter.config.strings.copyToClipboard = 'copy to clipboard';
+	SyntaxHighlighter.config.strings.copyToClipboardConfirmation = 'The code is in your clipboard now';
+	SyntaxHighlighter.config.strings.print = 'print';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.all();
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script><script src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/w.js" type="text/javascript"></script>
+<script type="text/javascript">
+st_go({'blog':'12490669','v':'wpcom','user_id':'0','post':'2285','subd':'javascriptweblog'});
+ex_go({'crypt':'UE40eW5QN0p8M2Y/RE1zNDZ8S252Wl15TnBbZzdDQV9VODNdNHlpMXEmbEUybk9TWlUvMiZWYS44UD9kcStyUS1GVmQsUGxrbSxtLS5aZU11VVdRfHM5UGFhZTlpemY9K1glMndoUncmQ0EmNkVhbWcwL0FVK0J4P3V4Ty1QZVkyTkRbLWJxPXomVF9DNDlIX3xpWTcsUFdJYVhOQ2dUZHBwOVkzRExRRjNrLEFDMnBMR0Z3UVFQVDlJY04mQVFDODRuZE8rcE51ZSx1RFtGTkpWSCwmRHJHX3cybU0vcElKVEsyZHpITENvQVo4ZldfbXlKS3I4Y0Z+Sl91V1hDSi8m'});
+addLoadEvent(function(){linktracker_init('12490669',2285);});
+	</script><img id="wpstats" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/g.gif" alt=""><img id="wpstats2" src="./Rethinking JavaScript Object Enumeration « JavaScript, JavaScript…_files/g(1).gif" alt="" style="display:none">
+<noscript>&lt;img src="http://stats.wordpress.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /&gt;</noscript>
+
+</body></html>

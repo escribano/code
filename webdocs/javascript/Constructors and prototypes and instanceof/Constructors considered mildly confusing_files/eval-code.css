@@ -1,0 +1,35 @@
+body {
+   max-width: 50em;
+}
+
+.result {
+    position: relative;
+    margin-left: 1em;
+    margin-right: 1em;
+    color: black;
+    font-weight: bold;
+    font-size: larger;
+ }
+
+.good {
+    background-color: #30ff30;
+}
+
+.error {
+    background-color: #ff3030;
+}
+
+html, body {
+    font-family: sans;
+}
+
+h1,h2 {
+    color: #0000a0;
+}
+
+pre {
+   border: 1px dotted grey;
+   background-color: #ffffe0;
+   font-size: larger;
+   padding: 1em;
+}

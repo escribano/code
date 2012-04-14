@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)http://ejohn.org/blog/ecmascript-5-objects-and-properties/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>John Resig -   ECMAScript 5 Objects and Properties</title>
+  <link href="./John Resig - ECMAScript 5 Objects and Properties_files/style.css" media="screen" rel="Stylesheet" type="text/css">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/JohnResig">
+  <link rel="openid.server" href="http://www.livejournal.com/openid/server.bml">
+  <link rel="openid.delegate" href="http://jeresig.livejournal.com/">
+  <script src="./John Resig - ECMAScript 5 Objects and Properties_files/retweet.js"></script>
+  <script type="text/javascript">
+  (function(){
+    var bsa = document.createElement('script');
+       bsa.type = 'text/javascript';
+       bsa.async = true;
+       bsa.src = '//s3.buysellads.com/ac/bsa.js';
+    (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(bsa);
+  })();
+  </script><script type="text/javascript" async="" src="./John Resig - ECMAScript 5 Objects and Properties_files/bsa.js"></script>
+<script type="text/javascript" id="_bsap_js_4781b916559ccb5e5661d93b10000fad" src="./John Resig - ECMAScript 5 Objects and Properties_files/s_4781b916559ccb5e5661d93b10000fad.js" async="async"></script><style type="text/css" id="bsa_css">.one{position:relative}.one .bsa_it_ad{display:block;padding:15px;border:1px solid #e1e1e1;background:#f9f9f9;font-family:helvetica,arial,sans-serif;line-height:100%;position:relative}.one .bsa_it_ad a{text-decoration:none}.one .bsa_it_ad a:hover{text-decoration:none}.one .bsa_it_ad .bsa_it_t{display:block;font-size:12px;font-weight:bold;color:#212121;line-height:125%;padding:0 0 5px 0}.one .bsa_it_ad .bsa_it_d{display:block;font-size:11px;color:#434343;font-size:12px;line-height:135%}.one .bsa_it_ad .bsa_it_i{float:left;margin:0 15px 10px 0}.one .bsa_it_p{display:block;text-align:right;position:absolute;bottom:10px;right:15px}.one .bsa_it_p a{font-size:10px;color:#666;text-decoration:none}.one .bsa_it_ad .bsa_it_p a:hover{font-style:italic}</style></head>
+<body>
+
+<div id="head" class="other">
+	<div class="nav">
+		<ul>
+			<li><a href="http://ejohn.org/">Home</a></li>
+			<li><a href="http://ejohn.org/blog/">Blog</a></li>
+			<li><a rel="author" href="http://ejohn.org/about/">About Me</a></li>
+		</ul>
+	</div>
+	<div class="side">
+		<a href="http://ejohn.org/about/"><img src="./John Resig - ECMAScript 5 Objects and Properties_files/short.sm.jpg" class="logo" alt="John Resig"></a>
+		<div class="text">
+			<a href="http://ejohn.org/about/" class="name"><strong>John</strong> Resig</a><br>
+			<a rel="author" href="http://ejohn.org/about/">Contact</a>,
+			<a href="http://feeds.feedburner.com/JohnResig">Subscribe</a>
+		</div>
+	</div>
+</div>
+<div class="drop"><img src="./John Resig - ECMAScript 5 Objects and Properties_files/ejohn-main-drop.gif"></div>
+<div id="wrap">
+	<div id="body"><div class="wrap">
+<h2>  ECMAScript 5 Objects and Properties</h2><br>
+
+		
+		
+  			
+				<div class="postentry">
+
+
+<p>ECMAScript 5 is on its way. Rising from the ashes of ECMAScript 4, which got scaled way back and became ECMAScript 3.1, which was then re-named ECMAScript 5 (<a href="http://en.wikipedia.org/wiki/ECMAScript#ECMAScript.2C_5th_Edition">more details</a>)- comes a new layer of functionality built on top of our lovable ECMAScript 3.</p>
+<blockquote><p><strong>Update:</strong> I've posted more details on <a href="http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/">ECMAScript 5 Strict Mode, JSON, and More</a>.</p></blockquote>
+<p>There are a few new APIs included in the specification but the most interesting functionality comes into play in the Object/Property code. This new code gives you the ability to dramatically affect how users will be able to interact with your objects, allowing you to provide getters and setters, prevent enumeration, manipulation, or deletion, and even prevent the addition of new properties. In short: You will be able to replicate and expand upon the existing JavaScript-based APIs (such as the DOM) using nothing but JavaScript itself.</p>
+<p>Perhaps best of all, though: These features are due to arrive in all major browsers. All the major browser vendors worked on this specification and have agreed to implement it in their respective engines. The exact timeframe isn't clear yet, but it's going to be sooner, rather than later.</p>
+<p>There doesn't appear to exist a full implementation of ES5 at this point, but there are a few in the works. In the meantime you can read <a href="http://www.ecma-international.org/publications/files/drafts/tc39-2009-025.pdf">the ECMAScript 5 specification</a> (PDF - I discuss pages 107-109 in this post) or watch the <a href="http://google-caja.googlecode.com/svn/trunk/doc/html/es5-talk/es5-talk.html">recent talk</a> by some of the ECMAScript guys at Google.</p>
+<blockquote><p><strong>Note:</strong> I've provided a couple simple, example, implementations for these methods to illustrate how they might operate. Almost all of them require other, new, methods to work correctly - and they are not implemented to match the specification 100% (for example there is no error checking).</p></blockquote>
+<h3>Objects</h3>
+<p>A new feature of ECMAScript 5 is that the extensibility of objects can now be toggled. Turning off extensibility can prevent new properties from getting added to an object.</p>
+<p>ES5 provides two methods for manipulating and verifying the extensibility of objects.</p>
+<p><strong><code>Object.preventExtensions( obj )</code></strong><br>
+<strong><code>Object.isExtensible( obj )</code></strong></p>
+<p><code>preventExtensions</code> locks down an object and prevents and future property additions from occurring. <code>isExtensible</code> is a way to determine the current extensibility of an object.</p>
+<p><strong>Example Usage:</strong></p>
+<div class="syntax_hilite">
+<div id="js-1">
+<div><span style="color: #003366; font-weight: bold;">var</span> obj = <span style="color:#008800; font-weight:bold;">{</span><span style="color:#008800; font-weight:bold;">}</span>;<p></p>
+<p>obj.<span style="color: #006600;">name</span> = <span style="color: #3366CC;">"John"</span>;<br>
+<span style="color: #000066;">print</span><span style="color:#008800; font-weight:bold;">(</span> obj.<span style="color: #006600;">name</span> <span style="color:#008800; font-weight:bold;">)</span>;<br>
+<span style="color: #009900; font-style: italic;">// John</span></p>
+<p><span style="color: #000066;">print</span><span style="color:#008800; font-weight:bold;">(</span> Object.<span style="color: #006600;">isExtensible</span><span style="color:#008800; font-weight:bold;">(</span> obj <span style="color:#008800; font-weight:bold;">)</span> <span style="color:#008800; font-weight:bold;">)</span>;<br>
+<span style="color: #009900; font-style: italic;">// true</span></p>
+<p>Object.<span style="color: #006600;">preventExtensions</span><span style="color:#008800; font-weight:bold;">(</span> obj <span style="color:#008800; font-weight:bold;">)</span>;</p>
+<p>obj.<span style="color: #006600;">url</span> = <span style="color: #3366CC;">"http://ejohn.org/"</span>; <span style="color: #009900; font-style: italic;">// Exception in strict mode</span></p>
+<p><span style="color: #000066;">print</span><span style="color:#008800; font-weight:bold;">(</span> Object.<span style="color: #006600;">isExtensible</span><span style="color:#008800; font-weight:bold;">(</span> obj <span style="color:#008800; font-weight:bold;">)</span> <span style="color:#008800; font-weight:bold;">)</span>;<br>
+<span style="color: #009900; font-style: italic;">// false </span><br>
+&nbsp;</p></div>
+</div>
+</div>
+<h3>Properties and Descriptors</h3>
+<p>Properties have been completely overhauled. No longer are they the simple value associated with an object - you now have complete control over how they can behave. With this power, though, comes increased complexity.</p>
+<p>Object properties are broken down into two portions.</p>
+<p>For the actual "meat" of a property there are two possibilities: A Value (a "Data" property - this is the traditional value that we know and love from ECMAScript 3) or a Getter and Setter (an "Accessor" property - we know this from some modern browsers, like Gecko and WebKit).</p>
+<ul>
+<li>Value. Contains the value of the property.</li>
+<li>Get. The function that will be called when the value of the property is accessed.</li>
+<li>Set. The function that will be called when the value of the property is changed.</li>
+</ul>
+<p>Additionally, properties can be...</p>
+<ul>
+<li>Writable. If false, the value of the property can not be changed.</li>
+<li>Configurable. If false, any attempts to delete the property or change its attributes (Writable, Configurable, or Enumerable) will fail.</li>
+<li>Enumerable. If true, the property will be iterated over when a user does <code>for (var prop in obj){}</code> (or similar).</li>
+</ul>
+<p>Altogether these various attributes make up a <i>property descriptor</i>. For example, a simple descriptor might look something like the following:</p>
+<div class="syntax_hilite">
+<div id="js-2">
+<div><span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; value: <span style="color: #3366CC;">"test"</span>,<br>
+&nbsp; writable: <span style="color: #003366; font-weight: bold;">true</span>,<br>
+&nbsp; enumerable: <span style="color: #003366; font-weight: bold;">true</span>,<br>
+&nbsp; configurable: <span style="color: #003366; font-weight: bold;">true</span><br>
+<span style="color:#008800; font-weight:bold;">}</span></div>
+</div>
+</div>
+<p>The three attributes (writable, enumerable, and configurable) are all optional and all default to true. Thus, the only property that you'll need to provide will be, either, value or get and set.</p>
+<p>You can use the new <code>Object.getOwnPropertyDescriptor</code> method to get at this information for an existing property on an object.</p>
+<p><strong><code>Object.getOwnPropertyDescriptor( obj, prop )</code></strong></p>
+<p>This method allows you to access the descriptor of a property. This method is the only way to get at this information (it is, otherwise, not available to the user - these don't exist as visible properties on the property, they're stored internally in the ECMAScript engine).</p>
+<p><strong>Example Usage:</strong></p>
+<div class="syntax_hilite">
+<div id="js-3">
+<div><span style="color: #003366; font-weight: bold;">var</span> obj = <span style="color:#008800; font-weight:bold;">{</span> foo: <span style="color: #3366CC;">"test"</span> <span style="color:#008800; font-weight:bold;">}</span>;<p></p>
+<p><span style="color: #000066;">print</span><span style="color:#008800; font-weight:bold;">(</span>JSON.<span style="color: #006600;">stringify</span><span style="color:#008800; font-weight:bold;">(</span> <br>
+&nbsp; Object.<span style="color: #006600;">getOwnPropertyDescriptor</span><span style="color:#008800; font-weight:bold;">(</span> obj, <span style="color: #3366CC;">"foo"</span> <span style="color:#008800; font-weight:bold;">)</span><br>
+<span style="color:#008800; font-weight:bold;">)</span><span style="color:#008800; font-weight:bold;">)</span>;<br>
+<span style="color: #009900; font-style: italic;">// {"value": "test", "writable": true, </span><br>
+<span style="color: #009900; font-style: italic;">//&nbsp; "enumerable": true, "configurable": true} </span><br>
+&nbsp;</p></div>
+</div>
+</div>
+<p><strong><code>Object.defineProperty( obj, prop, desc )</code></strong></p>
+<p>This method allows you to define a new property on an object (or change the descriptor of an existing property). This method accepts a property descriptor and uses it to initialize (or update) a property.</p>
+<p><strong>Example Usage:</strong></p>
+<div class="syntax_hilite">
+<div id="js-4">
+<div><span style="color: #003366; font-weight: bold;">var</span> obj = <span style="color:#008800; font-weight:bold;">{</span><span style="color:#008800; font-weight:bold;">}</span>;<p></p>
+<p>Object.<span style="color: #006600;">defineProperty</span><span style="color:#008800; font-weight:bold;">(</span> obj, <span style="color: #3366CC;">"value"</span>, <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; value: <span style="color: #003366; font-weight: bold;">true</span>,<br>
+&nbsp; writable: <span style="color: #003366; font-weight: bold;">false</span>,<br>
+&nbsp; enumerable: <span style="color: #003366; font-weight: bold;">true</span>,<br>
+&nbsp; configurable: <span style="color: #003366; font-weight: bold;">true</span><br>
+<span style="color:#008800; font-weight:bold;">}</span><span style="color:#008800; font-weight:bold;">)</span>;</p>
+<p><span style="color:#008800; font-weight:bold;">(</span><span style="color: #003366; font-weight: bold;">function</span><span style="color:#008800; font-weight:bold;">(</span><span style="color:#008800; font-weight:bold;">)</span><span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; <span style="color: #003366; font-weight: bold;">var</span> <span style="color: #000066;">name</span> = <span style="color: #3366CC;">"John"</span>;<br>
+&nbsp; <br>
+&nbsp; Object.<span style="color: #006600;">defineProperty</span><span style="color:#008800; font-weight:bold;">(</span> obj, <span style="color: #3366CC;">"name"</span>, <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; &nbsp; get: <span style="color: #003366; font-weight: bold;">function</span><span style="color:#008800; font-weight:bold;">(</span><span style="color:#008800; font-weight:bold;">)</span><span style="color:#008800; font-weight:bold;">{</span> <span style="color: #000066; font-weight: bold;">return</span> <span style="color: #000066;">name</span>; <span style="color:#008800; font-weight:bold;">}</span>,<br>
+&nbsp; &nbsp; set: <span style="color: #003366; font-weight: bold;">function</span><span style="color:#008800; font-weight:bold;">(</span>value<span style="color:#008800; font-weight:bold;">)</span><span style="color:#008800; font-weight:bold;">{</span> <span style="color: #000066;">name</span> = value; <span style="color:#008800; font-weight:bold;">}</span><br>
+&nbsp; <span style="color:#008800; font-weight:bold;">}</span><span style="color:#008800; font-weight:bold;">)</span>;<br>
+<span style="color:#008800; font-weight:bold;">}</span><span style="color:#008800; font-weight:bold;">)</span><span style="color:#008800; font-weight:bold;">(</span><span style="color:#008800; font-weight:bold;">)</span>;</p>
+<p><span style="color: #000066;">print</span><span style="color:#008800; font-weight:bold;">(</span> obj.<span style="color: #006600;">value</span> <span style="color:#008800; font-weight:bold;">)</span><br>
+<span style="color: #009900; font-style: italic;">// true</span></p>
+<p><span style="color: #000066;">print</span><span style="color:#008800; font-weight:bold;">(</span> obj.<span style="color: #006600;">name</span> <span style="color:#008800; font-weight:bold;">)</span>;<br>
+<span style="color: #009900; font-style: italic;">// John</span></p>
+<p>obj.<span style="color: #006600;">name</span> = <span style="color: #3366CC;">"Ted"</span>;<br>
+<span style="color: #000066;">print</span><span style="color:#008800; font-weight:bold;">(</span> obj.<span style="color: #006600;">name</span> <span style="color:#008800; font-weight:bold;">)</span>;<br>
+<span style="color: #009900; font-style: italic;">// Ted</span></p>
+<p><span style="color: #000066; font-weight: bold;">for</span> <span style="color:#008800; font-weight:bold;">(</span> <span style="color: #003366; font-weight: bold;">var</span> prop <span style="color: #000066; font-weight: bold;">in</span> obj <span style="color:#008800; font-weight:bold;">)</span> <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; <span style="color: #000066;">print</span><span style="color:#008800; font-weight:bold;">(</span> prop <span style="color:#008800; font-weight:bold;">)</span>;<br>
+<span style="color:#008800; font-weight:bold;">}</span><br>
+<span style="color: #009900; font-style: italic;">// value</span><br>
+<span style="color: #009900; font-style: italic;">// name</span></p>
+<p>obj.<span style="color: #006600;">value</span> = <span style="color: #003366; font-weight: bold;">false</span>; <span style="color: #009900; font-style: italic;">// Exception if in strict mode</span></p>
+<p>Object.<span style="color: #006600;">defineProperty</span><span style="color:#008800; font-weight:bold;">(</span> obj, <span style="color: #3366CC;">"value"</span>, <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; writable: <span style="color: #003366; font-weight: bold;">true</span>,<br>
+&nbsp; configurable: <span style="color: #003366; font-weight: bold;">false</span><br>
+<span style="color:#008800; font-weight:bold;">}</span><span style="color:#008800; font-weight:bold;">)</span>;</p>
+<p>obj.<span style="color: #006600;">value</span> = <span style="color: #003366; font-weight: bold;">false</span>;<br>
+<span style="color: #000066;">print</span><span style="color:#008800; font-weight:bold;">(</span> obj.<span style="color: #006600;">value</span> <span style="color:#008800; font-weight:bold;">)</span>;<br>
+<span style="color: #009900; font-style: italic;">// false</span></p>
+<p><span style="color: #000066; font-weight: bold;">delete</span> obj.<span style="color: #006600;">value</span>; <span style="color: #009900; font-style: italic;">// Exception </span><br>
+&nbsp;</p></div>
+</div>
+</div>
+<p><code>Object.defineProperty</code> is a core method of the new version of ECMAScript. Virtually all the other major features rely upon this method existing.</p>
+<p><strong><code>Object.defineProperties( obj, props )</code></strong></p>
+<p>A means of defining a number of properties simultaneously (instead of individually).</p>
+<p><strong>Example Implementation:</strong></p>
+<div class="syntax_hilite">
+<div id="js-5">
+<div>Object.<span style="color: #006600;">defineProperties</span> = <span style="color: #003366; font-weight: bold;">function</span><span style="color:#008800; font-weight:bold;">(</span> obj, props <span style="color:#008800; font-weight:bold;">)</span> <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; <span style="color: #000066; font-weight: bold;">for</span> <span style="color:#008800; font-weight:bold;">(</span> <span style="color: #003366; font-weight: bold;">var</span> prop <span style="color: #000066; font-weight: bold;">in</span> props <span style="color:#008800; font-weight:bold;">)</span> <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; &nbsp; Object.<span style="color: #006600;">defineProperty</span><span style="color:#008800; font-weight:bold;">(</span> obj, prop, props<span style="color:#008800; font-weight:bold;">[</span>prop<span style="color:#008800; font-weight:bold;">]</span> <span style="color:#008800; font-weight:bold;">)</span>;<br>
+&nbsp; <span style="color:#008800; font-weight:bold;">}</span><br>
+<span style="color:#008800; font-weight:bold;">}</span>;</div>
+</div>
+</div>
+<p><strong>Example Usage:</strong></p>
+<div class="syntax_hilite">
+<div id="js-6">
+<div><span style="color: #003366; font-weight: bold;">var</span> obj = <span style="color:#008800; font-weight:bold;">{</span><span style="color:#008800; font-weight:bold;">}</span>;<p></p>
+<p>Object.<span style="color: #006600;">defineProperties</span><span style="color:#008800; font-weight:bold;">(</span>obj, <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; <span style="color: #3366CC;">"value"</span>: <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; &nbsp; value: <span style="color: #003366; font-weight: bold;">true</span>,<br>
+&nbsp; &nbsp; writable: <span style="color: #003366; font-weight: bold;">false</span><br>
+&nbsp; <span style="color:#008800; font-weight:bold;">}</span>,<br>
+&nbsp; <span style="color: #3366CC;">"name"</span>: <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; &nbsp; value: <span style="color: #3366CC;">"John"</span>,<br>
+&nbsp; &nbsp; writable: <span style="color: #003366; font-weight: bold;">false</span><br>
+&nbsp; <span style="color:#008800; font-weight:bold;">}</span><br>
+<span style="color:#008800; font-weight:bold;">}</span><span style="color:#008800; font-weight:bold;">)</span>;</p></div>
+</div>
+</div>
+<p>Property descriptors (and their associated methods) is probably the most important new feature of ECMAScript 5. It gives developers the ability to have fine-grained control of their objects, prevent undesired tinkering, and maintaining a unified web-compatible API.</p>
+<h3>New Features</h3>
+<p>Building on top of these new additions some interesting new features have been introduced into the language.</p>
+<p>The following two methods are very useful for collecting arrays of all the properties on an object.</p>
+<p><strong><code>Object.keys( obj )</code></strong></p>
+<p>Returns an array of strings representing all the enumerable property names of the object. This is identical to the method included in Prototype.js.</p>
+<p><strong>Example Implementation:</strong></p>
+<div class="syntax_hilite">
+<div id="js-7">
+<div>Object.<span style="color: #006600;">keys</span> = <span style="color: #003366; font-weight: bold;">function</span><span style="color:#008800; font-weight:bold;">(</span> obj <span style="color:#008800; font-weight:bold;">)</span> <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; <span style="color: #003366; font-weight: bold;">var</span> array = <span style="color: #003366; font-weight: bold;">new</span> Array<span style="color:#008800; font-weight:bold;">(</span><span style="color:#008800; font-weight:bold;">)</span>;<br>
+&nbsp; <span style="color: #000066; font-weight: bold;">for</span> <span style="color:#008800; font-weight:bold;">(</span> <span style="color: #003366; font-weight: bold;">var</span> prop <span style="color: #000066; font-weight: bold;">in</span> obj <span style="color:#008800; font-weight:bold;">)</span> <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; &nbsp; <span style="color: #000066; font-weight: bold;">if</span> <span style="color:#008800; font-weight:bold;">(</span> obj.<span style="color: #006600;">hasOwnProperty</span><span style="color:#008800; font-weight:bold;">(</span> prop <span style="color:#008800; font-weight:bold;">)</span> <span style="color:#008800; font-weight:bold;">)</span> <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; &nbsp; &nbsp; array.<span style="color: #006600;">push</span><span style="color:#008800; font-weight:bold;">(</span> prop <span style="color:#008800; font-weight:bold;">)</span>;<br>
+&nbsp; &nbsp; <span style="color:#008800; font-weight:bold;">}</span><br>
+&nbsp; <span style="color:#008800; font-weight:bold;">}</span><br>
+&nbsp; <span style="color: #000066; font-weight: bold;">return</span> array;<br>
+<span style="color:#008800; font-weight:bold;">}</span>;</div>
+</div>
+</div>
+<p><strong>Example Usage:</strong></p>
+<div class="syntax_hilite">
+<div id="js-8">
+<div><span style="color: #003366; font-weight: bold;">var</span> obj = <span style="color:#008800; font-weight:bold;">{</span> <span style="color: #000066;">name</span>: <span style="color: #3366CC;">"John"</span>, url: <span style="color: #3366CC;">"http://ejohn.org/"</span> <span style="color:#008800; font-weight:bold;">}</span>;<p></p>
+<p><span style="color: #000066;">print</span><span style="color:#008800; font-weight:bold;">(</span> Object.<span style="color: #006600;">keys</span><span style="color:#008800; font-weight:bold;">(</span>obj<span style="color:#008800; font-weight:bold;">)</span>.<span style="color: #006600;">join</span><span style="color:#008800; font-weight:bold;">(</span><span style="color: #3366CC;">", "</span><span style="color:#008800; font-weight:bold;">)</span> <span style="color:#008800; font-weight:bold;">)</span>;<br>
+<span style="color: #009900; font-style: italic;">// name, url </span><br>
+&nbsp;</p></div>
+</div>
+</div>
+<p><strong><code>Object.getOwnPropertyNames( obj )</code></strong></p>
+<p>Nearly identical to <code>Object.keys</code> but returns all property names of the object (not just the enumerable ones).</p>
+<p>An implementation isn't possible with regular ECMAScript since non-enumerable properties can't be enumerated. The output and usage is otherwise identical to <code>Object.keys</code>.</p>
+<p><strong><code>Object.create( proto, props )</code></strong></p>
+<p>Creates a new object whose prototype is equal to the value of proto and whose properties are set via <code>Object.defineProperties( props )</code>.</p>
+<p>A simple implementation would look like this (requires the new <code>Object.defineProperties</code> method).</p>
+<p><strong>Example Implementation: (by Ben Newman)</strong></p>
+<div class="syntax_hilite">
+<div id="js-9">
+<div>Object.<span style="color: #006600;">create</span> = <span style="color: #003366; font-weight: bold;">function</span><span style="color:#008800; font-weight:bold;">(</span> proto, props <span style="color:#008800; font-weight:bold;">)</span> <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; <span style="color: #003366; font-weight: bold;">var</span> ctor = <span style="color: #003366; font-weight: bold;">function</span><span style="color:#008800; font-weight:bold;">(</span> ps <span style="color:#008800; font-weight:bold;">)</span> <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; &nbsp; <span style="color: #000066; font-weight: bold;">if</span> <span style="color:#008800; font-weight:bold;">(</span> ps <span style="color:#008800; font-weight:bold;">)</span><br>
+&nbsp; &nbsp; &nbsp; Object.<span style="color: #006600;">defineProperties</span><span style="color:#008800; font-weight:bold;">(</span> <span style="color: #000066; font-weight: bold;">this</span>, ps <span style="color:#008800; font-weight:bold;">)</span>;<br>
+&nbsp; <span style="color:#008800; font-weight:bold;">}</span>;<br>
+&nbsp; ctor.<span style="color: #006600;">prototype</span> = proto;<br>
+&nbsp; <span style="color: #000066; font-weight: bold;">return</span> <span style="color: #003366; font-weight: bold;">new</span> ctor<span style="color:#008800; font-weight:bold;">(</span> props <span style="color:#008800; font-weight:bold;">)</span>;<br>
+<span style="color:#008800; font-weight:bold;">}</span>;</div>
+</div>
+</div>
+<p><strong>Other implementation:</strong></p>
+<div class="syntax_hilite">
+<div id="js-10">
+<div>Object.<span style="color: #006600;">create</span> = <span style="color: #003366; font-weight: bold;">function</span><span style="color:#008800; font-weight:bold;">(</span> proto, props <span style="color:#008800; font-weight:bold;">)</span> <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; <span style="color: #003366; font-weight: bold;">var</span> obj = <span style="color: #003366; font-weight: bold;">new</span> Object<span style="color:#008800; font-weight:bold;">(</span><span style="color:#008800; font-weight:bold;">)</span>;<br>
+&nbsp; obj.__proto__ = proto;<p></p>
+<p>&nbsp; <span style="color: #000066; font-weight: bold;">if</span> <span style="color:#008800; font-weight:bold;">(</span> <span style="color: #000066; font-weight: bold;">typeof</span> props !== <span style="color: #3366CC;">"undefined"</span> <span style="color:#008800; font-weight:bold;">)</span> <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; &nbsp; Object.<span style="color: #006600;">defineProperties</span><span style="color:#008800; font-weight:bold;">(</span> obj, props <span style="color:#008800; font-weight:bold;">)</span>;<br>
+&nbsp; <span style="color:#008800; font-weight:bold;">}</span><br>
+&nbsp; <br>
+&nbsp; <span style="color: #000066; font-weight: bold;">return</span> obj;<br>
+<span style="color:#008800; font-weight:bold;">}</span>;</p></div>
+</div>
+</div>
+<blockquote><p><strong>Note:</strong> The above code makes use of the Mozilla-specific <code>__proto__</code> property. This property gives you access to the internal prototype of an object - and allows you to set its value, as well. The ES5 method <code><a href="http://ejohn.org/blog/objectgetprototypeof/">Object.getPrototypeOf</a></code> allows you to access this value but not set its value - thus the above method cannot be implement in a generic, spec-compatible, manner.</p>
+<p>I discussed <code><a href="http://ejohn.org/blog/objectgetprototypeof/">Object.getPrototypeOf</a></code> previously so I won't bother discussing it again here.</p></blockquote>
+<p><strong>Example Usage:</strong></p>
+<div class="syntax_hilite">
+<div id="js-11">
+<div><span style="color: #003366; font-weight: bold;">function</span> User<span style="color:#008800; font-weight:bold;">(</span><span style="color:#008800; font-weight:bold;">)</span><span style="color:#008800; font-weight:bold;">{</span><span style="color:#008800; font-weight:bold;">}</span><br>
+User.<span style="color: #006600;">prototype</span>.<span style="color: #006600;">name</span> = <span style="color: #3366CC;">"Anonymous"</span>;<br>
+User.<span style="color: #006600;">prototype</span>.<span style="color: #006600;">url</span> = <span style="color: #3366CC;">"http://google.com/"</span>;<p></p>
+<p><span style="color: #003366; font-weight: bold;">var</span> john = Object.<span style="color: #006600;">create</span><span style="color:#008800; font-weight:bold;">(</span><span style="color: #003366; font-weight: bold;">new</span> User<span style="color:#008800; font-weight:bold;">(</span><span style="color:#008800; font-weight:bold;">)</span>, <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; <span style="color: #000066;">name</span>: <span style="color:#008800; font-weight:bold;">{</span> value: <span style="color: #3366CC;">"John"</span>, writable: <span style="color: #003366; font-weight: bold;">false</span> <span style="color:#008800; font-weight:bold;">}</span>,<br>
+&nbsp; url: <span style="color:#008800; font-weight:bold;">{</span> value: <span style="color: #3366CC;">"http://google.com/"</span> <span style="color:#008800; font-weight:bold;">}</span><br>
+<span style="color:#008800; font-weight:bold;">}</span><span style="color:#008800; font-weight:bold;">)</span>;</p>
+<p><span style="color: #000066;">print</span><span style="color:#008800; font-weight:bold;">(</span> john.<span style="color: #006600;">name</span> <span style="color:#008800; font-weight:bold;">)</span>;<br>
+<span style="color: #009900; font-style: italic;">// John</span></p>
+<p>john.<span style="color: #006600;">name</span> = <span style="color: #3366CC;">"Ted"</span>; <span style="color: #009900; font-style: italic;">// Exception if in strict mode </span><br>
+&nbsp;</p></div>
+</div>
+</div>
+<p><strong><code>Object.seal( obj )</code></strong><br>
+<strong><code>Object.isSealed( obj )</code></strong></p>
+<p>Sealing an object prevents other code from deleting, or changing the descriptors of, any of the object's properties - and from adding new properties.</p>
+<p><strong>Example Implementation:</strong></p>
+<div class="syntax_hilite">
+<div id="js-12">
+<div>Object.<span style="color: #006600;">seal</span> = <span style="color: #003366; font-weight: bold;">function</span><span style="color:#008800; font-weight:bold;">(</span> obj <span style="color:#008800; font-weight:bold;">)</span> <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; <span style="color: #003366; font-weight: bold;">var</span> props = Object.<span style="color: #006600;">getOwnPropertyNames</span><span style="color:#008800; font-weight:bold;">(</span> obj <span style="color:#008800; font-weight:bold;">)</span>;<br>
+&nbsp; <br>
+&nbsp; <span style="color: #000066; font-weight: bold;">for</span> <span style="color:#008800; font-weight:bold;">(</span> <span style="color: #003366; font-weight: bold;">var</span> i = <span style="color: #CC0000;">0</span>; i &lt; props.<span style="color: #006600;">length</span>; i++ <span style="color:#008800; font-weight:bold;">)</span> <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; &nbsp; <span style="color: #003366; font-weight: bold;">var</span> desc = Object.<span style="color: #006600;">getOwnPropertyDescriptor</span><span style="color:#008800; font-weight:bold;">(</span> obj, props<span style="color:#008800; font-weight:bold;">[</span>i<span style="color:#008800; font-weight:bold;">]</span> <span style="color:#008800; font-weight:bold;">)</span>;<br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; desc.<span style="color: #006600;">configurable</span> = <span style="color: #003366; font-weight: bold;">false</span>;<br>
+&nbsp; &nbsp; Object.<span style="color: #006600;">defineProperty</span><span style="color:#008800; font-weight:bold;">(</span> obj, props<span style="color:#008800; font-weight:bold;">[</span>i<span style="color:#008800; font-weight:bold;">]</span>, desc <span style="color:#008800; font-weight:bold;">)</span>;<br>
+&nbsp; <span style="color:#008800; font-weight:bold;">}</span><br>
+&nbsp; <br>
+&nbsp; <span style="color: #000066; font-weight: bold;">return</span> Object.<span style="color: #006600;">preventExtensions</span><span style="color:#008800; font-weight:bold;">(</span> obj <span style="color:#008800; font-weight:bold;">)</span>;<br>
+<span style="color:#008800; font-weight:bold;">}</span>;</div>
+</div>
+</div>
+<p>You would seal an object if you want its existing properties to stay intact, without allowing for new additions, but while still allowing the user to write to or edit the properties.</p>
+<p><strong><code>Object.freeze( obj )</code></strong><br>
+<strong><code>Object.isFrozen( obj )</code></strong></p>
+<p>Freezing an object is nearly identical to sealing it but with the addition of making the properties un-editable.</p>
+<p><strong>Example Implementation:</strong></p>
+<div class="syntax_hilite">
+<div id="js-13">
+<div>Object.<span style="color: #006600;">freeze</span> = <span style="color: #003366; font-weight: bold;">function</span><span style="color:#008800; font-weight:bold;">(</span> obj <span style="color:#008800; font-weight:bold;">)</span> <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; <span style="color: #003366; font-weight: bold;">var</span> props = Object.<span style="color: #006600;">getOwnPropertyNames</span><span style="color:#008800; font-weight:bold;">(</span> obj <span style="color:#008800; font-weight:bold;">)</span>;<br>
+&nbsp; <br>
+&nbsp; <span style="color: #000066; font-weight: bold;">for</span> <span style="color:#008800; font-weight:bold;">(</span> <span style="color: #003366; font-weight: bold;">var</span> i = <span style="color: #CC0000;">0</span>; i &lt; props.<span style="color: #006600;">length</span>; i++ <span style="color:#008800; font-weight:bold;">)</span> <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; &nbsp; <span style="color: #003366; font-weight: bold;">var</span> desc = Object.<span style="color: #006600;">getOwnPropertyDescriptor</span><span style="color:#008800; font-weight:bold;">(</span> obj, props<span style="color:#008800; font-weight:bold;">[</span>i<span style="color:#008800; font-weight:bold;">]</span> <span style="color:#008800; font-weight:bold;">)</span>;<br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; <span style="color: #000066; font-weight: bold;">if</span> <span style="color:#008800; font-weight:bold;">(</span> <span style="color: #3366CC;">"value"</span> <span style="color: #000066; font-weight: bold;">in</span> desc <span style="color:#008800; font-weight:bold;">)</span> <span style="color:#008800; font-weight:bold;">{</span><br>
+&nbsp; &nbsp; &nbsp; desc.<span style="color: #006600;">writable</span> = <span style="color: #003366; font-weight: bold;">false</span>;<br>
+&nbsp; &nbsp; <span style="color:#008800; font-weight:bold;">}</span><br>
+&nbsp; &nbsp; <br>
+&nbsp; &nbsp; desc.<span style="color: #006600;">configurable</span> = <span style="color: #003366; font-weight: bold;">false</span>;<br>
+&nbsp; &nbsp; Object.<span style="color: #006600;">defineProperty</span><span style="color:#008800; font-weight:bold;">(</span> obj, props<span style="color:#008800; font-weight:bold;">[</span>i<span style="color:#008800; font-weight:bold;">]</span>, desc <span style="color:#008800; font-weight:bold;">)</span>;<br>
+&nbsp; <span style="color:#008800; font-weight:bold;">}</span><br>
+&nbsp; <br>
+&nbsp; <span style="color: #000066; font-weight: bold;">return</span> Object.<span style="color: #006600;">preventExtensions</span><span style="color:#008800; font-weight:bold;">(</span> obj <span style="color:#008800; font-weight:bold;">)</span>;<br>
+<span style="color:#008800; font-weight:bold;">}</span>;</div>
+</div>
+</div>
+<p>Freezing an object is the ultimate form of lock-down. Once an object has been frozen it cannot be unfrozen - nor can it be tampered in any manner. This is the best way to make sure that your objects will stay exactly as you left them, indefinitely.</p>
+<p>All together these changes are very exciting, they provide you with an unprecedented level of control over the objects that you produce. The best aspect, though, is that you will be able to use these features to build larger and more complex features in pure ECMAScript (such as building new DOM modules, or moving more browser APIs into pure-JavaScript). And since all the browsers are on board this is absolutely something that we can look forward to.</p>
+ 
+
+				</div>
+
+		<p><small><strong>Posted:</strong> May 21st, 2009				</small> · <a href="http://twitter.com/home?status=ECMAScript%205%20Objects%20and%20Properties%20http%3A%2F%2Fbit.ly%2FTWJ36" class="retweet" title=""><strong>2497 </strong><span>♻&nbsp;Retweet</span></a></p>
+				<!--
+				<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+			xmlns:dc="http://purl.org/dc/elements/1.1/"
+			xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+		<rdf:Description rdf:about="http://ejohn.org/blog/ecmascript-5-objects-and-properties/"
+    dc:identifier="http://ejohn.org/blog/ecmascript-5-objects-and-properties/"
+    dc:title="ECMAScript 5 Objects and Properties"
+    trackback:ping="http://ejohn.org/blog/ecmascript-5-objects-and-properties/trackback/" />
+</rdf:RDF>				-->
+			
+
+<!-- You can start editing here. -->
+
+
+	<h4 id="comments">
+	40 Comments		<a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#postcomment" title="Jump to the comments form" id="showcomment" onclick="document.getElementById(&#39;commentlist&#39;).style.display=&#39;block&#39;;">(Show Comments)</a>
+		</h4>
+
+	<ol id="commentlist" style="display:none;">
+
+	
+		<li class="alt " id="comment-384327">
+		
+		<h3 class="commenttitle"><b>Chris Maritn</b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384327" title="Permanent link to this comment">1:49 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>I see some nice stuff but, I also see a lot of “backward compatibility” stuff. That’s unfortunate IMO. It should be up to the browser to allow old code or not.</p>
+<p>It’s not until that happens that the web will “really” move forward.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-384338">
+		
+		<h3 class="commenttitle"><b>ken</b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384338" title="Permanent link to this comment">2:15 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Any word on when FF might adapt this?</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-384370">
+		
+		<h3 class="commenttitle"><b><a href="http://webreflection.blogspot.com/" rel="external nofollow" class="url">Andrea Giammarchi</a></b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384370" title="Permanent link to this comment">3:36 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>half of this stuff is already implemented in <a href="http://code.google.com/p/vice-versa/" rel="nofollow">vice-versa</a> but as Chris said something is not possible to implement at all.</p>
+<p>Maybe getOwnPropertyDescriptor could be fake and always return an object true,true,true but in this case I miss the sense.</p>
+<p>Finally, I love the first sentence: <em>Rising from the ashes of ECMAScript 4</em> … so can we call this version JS Phoenix ? Too cool :D</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-384410">
+		
+		<h3 class="commenttitle"><b><a href="http://eligrey.com/" rel="external nofollow" class="url">Elijah Grey</a></b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384410" title="Permanent link to this comment">5:46 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>I (partially, doesn’t support <code>false</code> for <code>writable</code>, <code>enumerable</code>, or <code>configurable</code>) implemented Object.defineProperty and Object.getOwnPropertyDescriptor called <a href="http://eligrey.com/projects/xccessors/#standard" rel="nofollow">Xccessors</a>. I also have a different version of Xccessors that implements the legacy methods <code>__(lookup|define)[GS]etter__</code> in IE8.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-384416">
+		
+		<h3 class="commenttitle"><b><a href="http://thejit.org/" rel="external nofollow" class="url">Nicolas</a></b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384416" title="Permanent link to this comment">5:59 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Very interesting. What about performance?</p>
+<p>Dealing with Freeze/Sealed objects has (or maybe should have) some performance improvements over manipulating mutable objects?</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" author" id="comment-384442">
+		
+		<h3 class="commenttitle"><b><a href="http://ejohn.org/" rel="external nofollow" class="url">John Resig</a></b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384442" title="Permanent link to this comment">7:21 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>@Chris Martin: Unfortunately we’re pretty much stuck with the code that we have – and browsers have the be backwards compatible going forward if they wish to keep users (no users will use a browser that breaks their favorite web sites). There’s a reason why backwards compatibility was baked into the specification – it’s because all the browser vendors wanted it that way!</p>
+<p>@ken: No word on this yet. I hope soon!</p>
+<p>@Andrea: Looking at <a href="http://code.google.com/p/vice-versa/source/browse/trunk/src/Object.js" rel="nofollow">the source</a> of vice-versa, the only new method that you appear to implement (sort-of) correctly is Object.keys. Of course, that makes sense because all the other methods shown above require other new features provided by the browser.</p>
+<p>I do agree that a lot of the stuff could be faked right now (having the attributes always return true) but that seems like a cheap shot.</p>
+<p>@Nicolas: Not sure about performance, yet – but I’m sure there’s bound to be some benefits to dealing with an immutable object.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-384451">
+		
+		<h3 class="commenttitle"><b>William J. Edney</b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384451" title="Permanent link to this comment">7:43 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>John -</p>
+<p>Should the JavaScript version of the ‘Object.keys()’ implementation that you show above have a ‘hasOwnProperty()’ check?</p>
+<p>15.2.3.14 (page 109) talks about “own” enumerable properties…</p>
+<p>Cheers,</p>
+<p>- Bill</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" author" id="comment-384472">
+		
+		<h3 class="commenttitle"><b><a href="http://ejohn.org/" rel="external nofollow" class="url">John Resig</a></b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384472" title="Permanent link to this comment">9:00 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>@William: Good catch, fixed the example.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-384483">
+		
+		<h3 class="commenttitle"><b>phifeshaheed</b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384483" title="Permanent link to this comment">9:27 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Will Javascript implements that standard? Flex did implement the latest of the ECMA version but JS is always one train behind, so will it be of any concern for a JS developper that this ECMA5 is released?</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-384490">
+		
+		<h3 class="commenttitle"><b><a href="http://tmpvar.com/" rel="external nofollow" class="url">Elijah Insua</a></b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384490" title="Permanent link to this comment">9:42 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Very cool, I can’t wait till this is available!</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt author" id="comment-384493">
+		
+		<h3 class="commenttitle"><b><a href="http://ejohn.org/" rel="external nofollow" class="url">John Resig</a></b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384493" title="Permanent link to this comment">9:44 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>@phifeshaheed: You may be slightly confused. ActionScript (which is used in Flex and Flash) implements an older version of the ECMAScript 4 specification. They’re the only major vendor to do so (with the exception of JScript.NET, which isn’t in Internet Explorer, unless you count Silverlight). As it stands, no major browser vendor is planning on implementing the features in ECMAScript 4 – however all of them are planning on implementing ECMAScript 5. This is an important distinction going forward.</p>
+<p>I should mention that it’s very likely that the ActionScript team will implement the features from ECMAScript 5 in a way that’s compatible with their implementation.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-384502">
+		
+		<h3 class="commenttitle"><b><a href="http://raphscallion.com/blog" rel="external nofollow" class="url">Raphael Speyer</a></b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384502" title="Permanent link to this comment">10:12 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>I’m working on adding EcmaScript 5 features to the Rhino Javascript engine as part of a Google Summer of Code project. It’s very much in a state of flux at the moment, but the code’s on github for those interested in watching/forking/contributing.</p>
+<p><a href="http://github.com/rapha/rhino" rel="nofollow">http://github.com/rapha/rhino</a></p>
+<p>If all goes to plan, at least a significant portion of the work should be complete by mid-August.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-384508">
+		
+		<h3 class="commenttitle"><b><a href="http://www.grayger.com/" rel="external nofollow" class="url">grayger</a></b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384508" title="Permanent link to this comment">10:24 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>After an object was sealed or frozen, is it possible to unseal or unfreeze it? I think it should not be allowed.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-384509">
+		
+		<h3 class="commenttitle"><b><a href="http://dougal.gunters.org/" rel="external nofollow" class="url">Dougal Campbell</a></b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384509" title="Permanent link to this comment">10:26 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>So, would you be able to do something like “Object.seal( document )” for a quick-n-dirty greasemonkey browser security hack?</p>
+<p>I hope the browsers don’t let you freeze() the window object :)</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt author" id="comment-384512">
+		
+		<h3 class="commenttitle"><b><a href="http://ejohn.org/" rel="external nofollow" class="url">John Resig</a></b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384512" title="Permanent link to this comment">10:39 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>@Raphael Speyer: I’m looking forward to seeing an implementation! It’ll be especially useful in Rhino, where we can use it for projects like <a href="http://groups.google.com/group/envjs" rel="nofollow">Env.js</a>.</p>
+<p>@grayger: No, you will not be able to unseal or unfreeze an object or property once it is “locked” – it’s that way for as long as the object exists. This is done intentionally in order to prevent other code from unlocking it and then modifying it.</p>
+<p>@Dougal Campbell: Good question, I’m not sure! I especially wonder about the case of <code>Object.freeze( document.body )</code> – would it prevent you from being able to append to elements to the body (since lastChild would need to be updated in order to have that work).</p>
+<p>I’m going to guess that built-in methods will have the descriptor of: <code>{writable: true, enumerable: false, configurable: false }</code> (and possibly writable: false, for cases like lastChild) – which means that you won’t be able to change the descriptors of those properties later on, which means that freezing or sealing those objects won’t work.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-384524">
+		
+		<h3 class="commenttitle"><b><a href="http://melez.com/mykzilla/" rel="external nofollow" class="url">Myk Melez</a></b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384524" title="Permanent link to this comment">11:07 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>I wish there would be syntactic sugar for configuring properties when defining objects.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-384556">
+		
+		<h3 class="commenttitle"><b><a href="http://oree.ch/" rel="external nofollow" class="url">zimbatm</a></b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384556" title="Permanent link to this comment">12:36 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>While those additions are certainly worthwile, they’re, again, extending the core language.</p>
+<p>I’d better like a minimalist approach, which can then be extended to the language you’d like to have.</p>
+<p>For that, you would need two things:</p>
+<p>* A way to store “languages” in your browser, for example by re-using url caches.<br>
+* A way to extend the language safely by adding a new mean of encapsulation which does not capture context like functions.</p>
+<p>JSON could really just be a namespace, which would be a subset of the javascript language.</p>
+<p><code><br>
+ns = new Namespace();<br>
+ns.hide(Function);<br>
+// ...<br>
+ns.load("http://json-language.ore/impl/v1.js")<br>
+ns.eval("{your:'json';object:null}");<br>
+</code></p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-384575">
+		
+		<h3 class="commenttitle"><b>Azat Razetdinov</b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384575" title="Permanent link to this comment">1:43 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Am I the only one confused with the mixed style in method naming?<br>
+Object.keys(object)<br>
+Object.<b>get</b>OwnPropertyNames(object)<br>
+Object.getPrototype<b>Of</b>(object)</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-384592">
+		
+		<h3 class="commenttitle"><b><a href="http://2ality.blogspot.com/" rel="external nofollow" class="url">Axel Rauschmayer</a></b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384592" title="Permanent link to this comment">2:43 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Will we still get optional typing at some point in the future (as was planned for ECMAScript 4) or has that feature been canceled?</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-384616">
+		
+		<h3 class="commenttitle"><b>Nate</b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384616" title="Permanent link to this comment">4:24 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>If we copy an object will the newly added security properties be copied too?<br>
+If writable is false, does that only mean we cannot add to the object, or will it also prevent us from overwriting the object?</p>
+<p>Here is some code that is probably not quite right, but will hopefully hint at what I’m getting at:</p>
+<p><code>obj.name = "John";<br>
+Object.preventExtensions( obj );<br>
+print( Object.isExtensible( obj ) ); //false<br>
+var copy = obj;<br>
+if ( !Object.isExtensible( copy ) ) {<br>
+&nbsp;&nbsp;copy = {};<br>
+&nbsp;&nbsp;var ignore = {writable:true, enumerable:true, configurable:true, extensible:true };<br>
+&nbsp;&nbsp;for(p in obj) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(ignore[p]) { continue; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;copy[p] = obj[p];<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;obj = copy;<br>
+&nbsp;&nbsp;Object.isExtensible( obj );<br>
+&nbsp;&nbsp;Object.isExtensible( copy );<br>
+}</code></p>
+<p>What would happen in the above code?</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-384669">
+		
+		<h3 class="commenttitle"><b><a href="http://eligrey.com/" rel="external nofollow" class="url">Elijah Grey</a></b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384669" title="Permanent link to this comment">7:40 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>@zimbatm: The <code>Namespace()</code> (and similar <code>QName()</code>) are already used in E4X for XML namespaces. Namespaces are created in a completely different syntax introduced in ECMAScript 4.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-384685">
+		
+		<h3 class="commenttitle"><b>skierpage</b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384685" title="Permanent link to this comment">8:29 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Would someone please abuse ECMA for publishing this spec as a 3.4 MB browser-locking CPU-hogging PDF to whose sections (“pages 107-109″ for the loss) you can’t link and which doesn’t even have inner linking from its TOC or internal section references?!</p>
+<p>“Creator: Microsoft(R) Office Word 2007″ — obviously, use anything but Word to generate PDFs.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-384712">
+		
+		<h3 class="commenttitle"><b><a href="http://www.nczonline.net/" rel="external nofollow" class="url">Nicholas C. Zakas</a></b>
+	
+		<small><small>
+			(May 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384712" title="Permanent link to this comment">10:08 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Back when this was called “ECMAScript 3.1″, I did a reference implementation to play around with some of these as well: <a href="http://www.nczonline.net/blog/2008/11/09/ecmascript-31-static-object-methods-prototype/" rel="nofollow">http://www.nczonline.net/blog/2008/11/09/ecmascript-31-static-object-methods-prototype/</a>. It’s very helpful to test out how you think things might work.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-384761">
+		
+		<h3 class="commenttitle"><b><a href="http://raphscallion.com/blog" rel="external nofollow" class="url">Raphael Speyer</a></b>
+	
+		<small><small>
+			(May 22, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384761" title="Permanent link to this comment">1:20 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>@Nate<br>
+Here’s what I think is going on.</p>
+<p><code>obj.name = "John";<br>
+Object.preventExtensions( obj );<br>
+print( Object.isExtensible( obj ) ); //false<br>
+var copy = obj;</code></p>
+<p>You haven’t actually copied the object here, you now just have two references to it.</p>
+<p>writable, enumerable and configurable are attributes of a *property*, extensible is an attribute of an *object*, but it’s not accessible as such, you can simply call use the Object.isExtensible and Object.preventExtensions methods.</p>
+<p><code>if ( !Object.isExtensible( copy ) ) {<br>
+&nbsp;&nbsp;copy = {};<br>
+&nbsp;&nbsp;var ignore = {writable:true, enumerable:true, configurable:true, extensible:true };</code></p>
+<p><code>&nbsp;&nbsp;for(p in obj) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if(ignore[p]) { continue; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;copy[p] = obj[p];<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;obj = copy;<br>
+&nbsp;&nbsp;Object.isExtensible( obj );<br>
+&nbsp;&nbsp;Object.isExtensible( copy );<br>
+}</code></p>
+<p>What would happen in the above code? </p>
+<p>Here obj and copy both now refer to your newly created object (with {}) so and they’ll both be extensible (by default).</p>
+<p>To copy an object more completely you could do:</p>
+<p><code>var copy = Object.create(Object.getPrototypeOf(obj), {})<br>
+for (var p in Object.getOwnPropertyNames(obj) {<br>
+&nbsp;&nbsp;var descriptor = Object.getOwnPropertyDescriptor(obj, p)<br>
+&nbsp;&nbsp;Object.defineProperty(copy, p, descriptor)<br>
+}<br>
+if (!Object.isExtensible(obj))<br>
+&nbsp;&nbsp;Object.preventExtensions(copy);</code></p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-384766">
+		
+		<h3 class="commenttitle"><b><a href="http://www.henso.com/" rel="external nofollow" class="url">hannesw</a></b>
+	
+		<small><small>
+			(May 22, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384766" title="Permanent link to this comment">1:34 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>I think you got the default value for the writable, enumerable, configurable attributes in property descriptors wrong. Have a look at table 3 in section 8.6.1 of the candidate draft,they’re listed as false.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-384809">
+		
+		<h3 class="commenttitle"><b><a href="http://blog.ashmind.com/" rel="external nofollow" class="url">Andrey Shchekin</a></b>
+	
+		<small><small>
+			(May 22, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384809" title="Permanent link to this comment">3:56 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Seal/freeze/preventExtensions looks good if the javascript framework authors never make mistakes or all js frameworks were easily editable. I have used extensibility very often to work around bad framework design.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-384856">
+		
+		<h3 class="commenttitle"><b><a href="http://www.cjohansen.no/en" rel="external nofollow" class="url">Christian</a></b>
+	
+		<small><small>
+			(May 22, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384856" title="Permanent link to this comment">7:01 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Lots of good stuff here, but I don’t really care for </p>
+<p><code>Object.getOwnPropertyDescriptor(obj, prop)</code></p>
+<p>as opposed to:</p>
+<p><code>obj.getOwnPropertyDescriptor(prop)</code></p>
+<p>Same goes for all the new Object stuff. What’s the reasoning for not implementing this on the prototype?</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-384899">
+		
+		<h3 class="commenttitle"><b><a href="http://webreflection.blogspot.com/" rel="external nofollow" class="url">Andrea Giammarchi</a></b>
+	
+		<small><small>
+			(May 22, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384899" title="Permanent link to this comment">9:01 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>John, in vice-versa defineProperty works fine in FireFox, Opera, Chrome, and Safari. It is not fully compatible, even native, in IE8 while is not implementable in IE</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-384980">
+		
+		<h3 class="commenttitle"><b><a href="http://raphscallion.com/blog" rel="external nofollow" class="url">Raphael Speyer</a></b>
+	
+		<small><small>
+			(May 22, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-384980" title="Permanent link to this comment">12:39 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>@hannesw<br>
+I was quoting Nate’s code. I think he thought that <code>writable</code>, <code>configurable</code>, <code>enumerable</code> and <code>extensible</code> were all enumerable properties of the <code>obj</code> object, and he didn’t want to copy them.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-385026">
+		
+		<h3 class="commenttitle"><b><a href="http://www.henso.com/" rel="external nofollow" class="url">hannesw</a></b>
+	
+		<small><small>
+			(May 22, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-385026" title="Permanent link to this comment">3:17 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Raphael: My comment was referring to John’s original article, more specifically the following sentence: “The three attributes (writable, enumerable, and configurable) are all optional and all default to true.” Which in my (shallow) understanding of ES5 is wrong. Sorry for the confusion.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-385034">
+		
+		<h3 class="commenttitle"><b><a href="http://www.hedgerwow.com/" rel="external nofollow" class="url">Hedger Wang</a></b>
+	
+		<small><small>
+			(May 22, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-385034" title="Permanent link to this comment">3:37 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>This would be definitely useful, and  the browser support isn’t that really important. What’s important is the standard SPEC that major vendor would agree with.</p>
+<p>For a large JavaScript application, most JavaScript codes are actually compiled and checked on the server side first and these new features make it really easy to spot the potential system errors from the codes and it does force good control of codes for developers.</p>
+<p>In my opinion, Rhino should implement these features ASAP.<br>
+Thanks.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-385062">
+		
+		<h3 class="commenttitle"><b>Nate</b>
+	
+		<small><small>
+			(May 22, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-385062" title="Permanent link to this comment">5:11 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>@Raphael: Thanks for clearing up some issues with the code and my word choices. I knew there were problems with it, but I just threw it together quickly in an attempt to illustrate what I was trying to get at.</p>
+<p>Basically, what I was trying to get at was, if a programmer doesn’t set enumerable to false an object can be copied and overwritten allowing anyone to work with objects just as openly as they do now. Is this correct?</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-385081">
+		
+		<h3 class="commenttitle"><b><a href="http://www.davidflanagan.com/" rel="external nofollow" class="url">David Flanagan</a></b>
+	
+		<small><small>
+			(May 22, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-385081" title="Permanent link to this comment">6:06 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Thanks for the summary, John.</p>
+<p>The thing I like about Object.keys is that it provides an alternative to for/in looping that ignores inherited properties:  <code>Object.keys(o).forEach(function() {...})</code></p>
+<p>Also, the <code>Object.create()</code> function (minus the properties stuff) can be defined in ES3.  Douglas Crockford does it like this:</p>
+<p><code>Object.create = function(proto) {<br>
+&nbsp;&nbsp;var F = function(){};<br>
+&nbsp;&nbsp;F.prototype = proto;<br>
+&nbsp;&nbsp;return new F();<br>
+};</code></p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-385474">
+		
+		<h3 class="commenttitle"><b><a href="http://askawizard.blogspot.com/" rel="external nofollow" class="url">Kris Kowal</a></b>
+	
+		<small><small>
+			(May 23, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-385474" title="Permanent link to this comment">6:45 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>One more edge case on <code>Object.keys</code>: Instead of <code>obj.hasOwnProperty(name)</code>, it needs to be <code>Object.prototype.hasOwnProperty.call(obj, prop)</code> so that the “hasOwnProperty” key gets handled correctly if it exists.  Guess who’s got two thumbs and is excited that this will be part of the language instead of a rite of passage!</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-385638">
+		
+		<h3 class="commenttitle"><b>Jakub Kopec</b>
+	
+		<small><small>
+			(May 24, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-385638" title="Permanent link to this comment">6:12 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>@Andrey Shchekin:<br>
+You wrote “Seal/freeze/preventExtensions looks good if the javascript framework authors never make mistakes or all js frameworks were easily editable. I have used extensibility very often to work around bad framework design.”</p>
+<p>This is exactly the thing that I first thought of when I first saw ‘freeze’ ideas!</p>
+<p>I think that what we’re seeing now is a case of pushing to JS ideas that will benefit only framework writes but make humble devs lives more difficult.</p>
+<p>@Dougal Campbell:<br>
+You wrote: So, would you be able to do something like “Object.seal( document )” for a quick-n-dirty greasemonkey browser security hack? I hope the browsers don’t let you freeze() the window object :)</p>
+<p>And this is exactly the thing I fear the most. The specification is about the language. The DOM behavior in regards to this will be defined by whom? By consensus? This ‘freeze’ thing may very quickly raise some new obstacles to everyone that tinkers with the web.</p>
+<p>By the way, I was looking at the ‘freeze’ family with disgust for some time, but after your comment my attitude changes to “please take this horror away from me”.</p>
+<p>@ejohn:</p>
+<p>You wrote (in blog post): “Property descriptors (and their associated methods) is probably the most important new feature of ECMAScript 5. It gives developers the ability to have fine-grained control of their objects, prevent undesired tinkering, and maintaining a unified web-compatible API.”</p>
+<p>Is there something like “desired tinkering”?</p>
+<p>For all of you reading this: please think for the moment about all moments in your life in which you wanted to tinker with something (code, physical object), but it was not possible/very hard, because somebody locked the thing tight.</p>
+<p>Ask yourself the question: would you like more of this? Or maybe less?</p>
+<p>For me it is obvious that freeze/seal/preventExtensions MUST BE reversible. In principle, controlling access should be treated as hint not as law. If one wants to tinker – let’em.</p>
+<p>Of course I understand points of those happy with this new, cold, additions. The “well designed” interfaces. The code/data access control. The constant fear that the user of my code can tinker with my objects (that’s horrible, really :)</p>
+<p>Make those reversible, that is the only way to stop JS from becoming yet another “mature” language which favors library creators over library users.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-386094">
+		
+		<h3 class="commenttitle"><b>MySchizoBuddy</b>
+	
+		<small><small>
+			(May 25, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-386094" title="Permanent link to this comment">12:07 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>When will javascript run off of GPU? just like the incoming OpenCL</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-386168">
+		
+		<h3 class="commenttitle"><b>Corwin</b>
+	
+		<small><small>
+			(May 25, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-386168" title="Permanent link to this comment">5:26 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>I second Jakub. Fixing something in somebody else’s code is everyday stuff. Taking away this “No worries, can fix everything, it’s JS” mantra  will in no doubt result in some nerve-wrecking moments.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-386491">
+		
+		<h3 class="commenttitle"><b>Steven Wood</b>
+	
+		<small><small>
+			(June 1, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-386491" title="Permanent link to this comment">8:02 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>I think Object.create() is just a variation of (or implementation of) Crockford’s “beget” method that he uses frequently in his “JavaScript: The Good Parts book”.  </p>
+<p>Dojo also has this – they call it “dojo.delegate”. It’s cross borwser implementaion is simply :</p>
+<p>Object.prototype.create = function (object, props) {<br>
+    var F = function {};<br>
+    F.prototype = object;<br>
+    var newObj = new F();<br>
+    // copy properties from props to newObj<br>
+    // …<br>
+    return newObj;<br>
+};</p>
+<p>Personally I prefered his “beget” convention which didn’t require the object 1st argument and operated on “this”.  I think it makes more sense to write :</p>
+<p>var manager = employee.beget();</p>
+<p>@Jakub – If you don’t like a framework object that is sealed, you should be able to change it globally ? e.g. if I didn’t like dojo.delegate, but dojo was sealed couldn’t I do :</p>
+<p>window.dojo = Object.create(dojo);<br>
+dojo.delegate = function () {// whatever…}</p>
+<p>Although thinking about it this appears to totally undermine seal() ?</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-386502">
+		
+		<h3 class="commenttitle"><b>jor</b>
+	
+		<small><small>
+			(June 5, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-386502" title="Permanent link to this comment">12:41 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Nice extensions to the JavaScript language.<br>
+However, one very simple thing I’d like to see in the browser is a simple <a href="http://simonwillison.net/2006/Jan/20/escape/" rel="nofollow">RegExp.escape()</a> function.<br>
+I think its place is in the core JS language, not in libraries, because the browser knows better what characters should be escaped.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-386761">
+		
+		<h3 class="commenttitle"><b>Cynic</b>
+	
+		<small><small>
+			(July 21, 2009 
+			at <a href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#comment-386761" title="Permanent link to this comment">3:43 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>The only good part of JavaScript is that nearly everything is extensible. Please don’t take that away.</p>
+</div>
+		
+		</li>
+
+		
+	
+	</ol>
+	
+	<!--<p class="small">
+	<a href='http://ejohn.org/blog/ecmascript-5-objects-and-properties/feed/'><abbr title="Really Simple Syndication">RSS</abbr> feed for comments on this post</a>		</p>-->
+
+
+
+<br><hr>
+<p><b>Comments are closed.</b><br>
+Comments are automatically turned off two weeks after the original post. If you have a question
+concerning the content of this post, please feel free to <a href="http://ejohn.org/about/">contact me</a>.</p>
+<hr>
+
+
+		<script src="./John Resig - ECMAScript 5 Objects and Properties_files/JohnResig" type="text/javascript" charset="utf-8"></script><script src="./John Resig - ECMAScript 5 Objects and Properties_files/JohnResig(1)" type="text/javascript"></script>
+		<!--<img src="http://ejohn.org/apps/rss/?from=single&amp;id=5684" style="width:0px;height:0px;"/>-->
+				
+		
+				
+	
+        </div></div>
+
+        <div id="side">
+                <div id="projects">
+                        <h2>JavaScript Books</h2>
+
+                        <div class="box">
+                        <a href="http://jsninja.com/"><img src="./John Resig - ECMAScript 5 Objects and Properties_files/ninja.74.jpg" class="icon" alt="Secrets of the JavaScript Ninja"></a>
+                        <div class="desc">
+                                <h3><a href="http://jsninja.com/">JavaScript Secrets</a></h3>
+                                <p>Secret techniques of top JavaScript programmers.</p>
+                        </div>
+                        </div>
+                        <div class="box">
+                        <a href="http://jspro.org/"><img src="./John Resig - ECMAScript 5 Objects and Properties_files/ejohn-side-book.gif" class="icon" alt="Pro JavaScript Techniques"></a>
+                        <div class="desc">
+                                <h3><a href="http://jspro.org/">Pro JavaScript</a></h3>
+                                <p>The best techniques for professional  JavaScript. Published by Apress.</p>
+                        </div>
+                        </div>
+
+                        <h2><a href="http://twitter.com/jeresig">Micro Updates</a></h2>
+                        <div class="box">
+                        <a href="http://twitter.com/jeresig"><img src="./John Resig - ECMAScript 5 Objects and Properties_files/twitter-74.png" class="icon" alt="John Resig Twitter Updates"></a>
+                        <div class="desc">
+                                <h3><a href="http://twitter.com/jeresig">@jeresig</a></h3>
+                                <p>Infrequent, short, updates and links.</p>
+                        </div>
+                        </div>
+
+                        <h2><a href="http://jobs.jsninja.com/">JavaScript Jobs</a></h2>
+                        <div class="box">
+			<h3><a href="http://jobs.jsninja.com/">Ninja Jobs: JavaScript Jobs</a></h3>
+			<!--<h3><a href="http://www.mozilla.com/en-US/careers/">Mozilla: Browser Jobs</a></h3>-->
+                        </div>
+
+			<br><br>
+
+			<div id="bsap_1266114" class="bsap_1266114 bsap"><div class="bsa_it one"><div class="bsa_it_ad ad1 odd" id="bsa_1978096"><a href="http://stats.buysellads.com/click.go?z=1266114&b=1978096&g=&s=&sw=1440&sh=900&br=chrome,18,mac&r=0.8213117956183851&link=http://managewp.com/?utm_source=adpacks1&utm_medium=link&utm_content=hassle&utm_campaign=adpacks" onmouseover="window.status = &#39;http://managewp.com/?utm_source=adpacks1&amp;utm_medium=link&amp;utm_content=hassle&amp;utm_campaign=adpacks&#39;; return true;" onmouseout="window.status=&#39;&#39;; return true;" target="_blank"><span class="bsa_it_i"><img src="./John Resig - ECMAScript 5 Objects and Properties_files/91727-1327499832.png" width="130" height="100" alt="WordPress Without Hassle"></span></a><a href="http://stats.buysellads.com/click.go?z=1266114&b=1978096&g=&s=&sw=1440&sh=900&br=chrome,18,mac&r=0.49149833526462317&link=http://managewp.com/?utm_source=adpacks1&utm_medium=link&utm_content=hassle&utm_campaign=adpacks" onmouseover="window.status = &#39;http://managewp.com/?utm_source=adpacks1&amp;utm_medium=link&amp;utm_content=hassle&amp;utm_campaign=adpacks&#39;; return true;" onmouseout="window.status=&#39;&#39;; return true;" target="_blank"><span class="bsa_it_t">WordPress Without Hassle</span><span class="bsa_it_d">The WordPress management revolution has arrived. Get started with ManageWP!</span></a><div style="clear:both"></div></div><span class="bsa_it_p"><a href="http://buysellads.com/buy/detail/75612/zone/1266114?utm_source=site_75612&utm_medium=website&utm_campaign=imagetext&utm_content=zone_1266114">ads by BSA</a></span></div></div>
+			<a href="http://adpacks.com/" id="bsap_aplink">via Ad Packs</a>
+
+			<br>
+                        <div class="box">
+			  <br><strong><a href="http://mediatemple.net/" style="color:#FFF;">VPS Hosting Provided by Media Temple</a></strong>
+			</div>
+
+			<br>
+			<small><a href="http://ukiyo-e.org/">Ukiyo-e: Japanese Woodblock Prints</a></small>
+                </div>
+        </div>
+
+</div>
+<script src="./John Resig - ECMAScript 5 Objects and Properties_files/urchin.js" type="text/javascript"></script>
+<script type="text/javascript">_uacct = "UA-50335-1";urchinTracker();</script>
+
+
+<style type="text/css">a.retweet { font: 12px Helvetica,Arial; color: #000; text-decoration: none; border: 0px; }a.retweet span { color: #FFF; background: #94CC3D; margin-left: 2px; border: 1px solid #43A52A; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; padding: 3px; }a.vert { display: block; text-align: center; font-size: 16px; float: left; margin: 4px; }a.retweet strong.vert { display: block; margin-bottom: 4px; background: #F5F5F5; border: 1px solid #EEE; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; padding: 3px; }a.retweet span.vert { display: block; font-size: 12px; margin-left: 0px; }</style><script language="javascript" type="text/javascript" src="./John Resig - ECMAScript 5 Objects and Properties_files/shorten"></script><script language="javascript" type="text/javascript" src="./John Resig - ECMAScript 5 Objects and Properties_files/clicks"></script></body></html>
