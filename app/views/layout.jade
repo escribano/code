@@ -1,0 +1,30 @@
+!!! 5
+html
+  head
+    title Blog
+    link(rel='stylesheet', href='/styles/style.css')
+    style
+      body {
+       padding: 50px;
+       font: 13px Helvetica, Arial, sans-serif;
+      }
+      .error {
+         color: red
+      }
+      .success {
+         color: green;
+      }
+    //if lt IE 8
+      script(src='/ie-sucks.js')
+      
+    script
+      data='data'
+      window.history.pushState(data, "Title", "/new-url");
+      
+  body
+    #container
+      :markdown
+        Jade is a _high performance_ template engine for [node](http://nodejs.org),
+        inspired by [haml](http://haml-lang.com/), and written by [TJ Holowaychuk](http://github.com/visionmedia).
+    
+      block content

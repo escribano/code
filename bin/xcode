@@ -1,0 +1,10 @@
+#!/usr/bin/env coffee
+
+#require('coffee-script');
+#require('../lib/codex').Command.run(process.argv);
+code = require('../lib/codex')
+view = new code.View
+x = view.test()
+console.log x
+#console.log 'testey'
+console.log code.View.requiredTitle

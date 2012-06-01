@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+require('coffee-script')
+
+var Test = require('../lib/hook-io-test').Test;
+
+var hook = new Test({
+  name: 'test'
+});
+
+hook.start();
+//hook.listen()
+//hook.connect()

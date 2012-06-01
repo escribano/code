@@ -1,10 +1,53 @@
-#!/usr/bin/env coffee
+#!/usr/bin/env node
 
-#require('coffee-script');
-#require('../lib/codex').Command.run(process.argv);
-code = require('../lib/codex')
-view = new code.View
-x = view.test()
-console.log x
-#console.log 'testey'
-console.log code.View.requiredTitle
+/**
+ * This tiny wrapper file checks for known node flags and appends them
+ * when found, before invoking the "real" _code(1) executable.
+ */
+
+require('coffee-script')
+
+var spawn = require('child_process').spawn
+  //, args = [ __dirname + '/_code' ];
+  , coffee = 'node_modules/.bin/coffee'
+  , args = [ __dirname + '/server' ];
+  
+childEnv = process.env
+//childEnv['DEBUG'] = 'code:*'
+process.argv.slice(2).forEach(function (arg) {
+  switch (arg) {
+    case '-d':
+      args.unshift('--debug');
+      break;
+    case 'debug':
+    case '--debug':
+    case '--debug-brk':
+      //childEnv['DEBUG'] = 'code:*'
+      childEnv['DEBUG'] = '*'
+      //args.unshift(arg);
+      //args.push('-d');
+      break;
+    case 'cluster':
+      args.push('-d');
+      break;
+    case '-gc':
+    case '--expose-gc':
+      args.unshift('--expose-gc');
+      break;
+    default:
+      args.push(arg);
+      break;
+  }
+});
+a = ['--nodejs'].concat(args)
+//console.log(a)
+//console.log(process.argv[0])
+//console.log(args) //which coffee
+//var proc = spawn(process.argv[0], args, { customFds: [0,1,2] });
+//var exec = require('child_process').exec
+//childEnv = process.env
+//childEnv['DEBUG'] = 'code:*'
+
+var proc = spawn(coffee, args, { cwd: process.cwd(), env: childEnv, customFds: [0,1,2] });
+//var proc = spawn("coffee", a, { cwd: process.cwd(), env: childEnv, customFds: [0,1,2] });
+proc.on('exit', process.exit);

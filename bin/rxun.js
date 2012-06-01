@@ -1,0 +1,5 @@
+require('coffee-script')
+applib = require('./applib')
+app = applib.getApp()
+app.listen (app.set('port'))
+applib.log(app)

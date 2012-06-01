@@ -1,0 +1,13 @@
+
+module.exports = (route, sec) ->
+  
+  @namespace '/samples', ->
+    
+    @get '/', route.to controller: 'samples'
+
+    @namespace '/iphone', ->
+      
+      @get '/', route.to controller: 'samples/sample-controller'
+      
+      @get '/:view', [sec.level 'owner']
+        , route.to controller: 'samples/sample-controller', action: 'view'

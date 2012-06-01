@@ -1,0 +1,23 @@
+
+div#id.left(class='user user-' + name).container
+  h1.title= name
+  form
+    //- unbuffered comment :)
+    // An example of attributes.
+    input(type='text', name='user[name]', value=name)
+    input(checked, type='checkbox', name='user[blocked]')
+    input(type='submit', value='Update')
+    
+    
+#
+form(method='post', action='/')
+  input(type='text', name='user[name]')
+  input(type='text', name='user[email]')
+  input(type='submit', value='Submit')
+  
+#
+html
+  head
+    title Dynamic Inline JavaScript
+    script
+      var users = !{JSON.stringify(users)}

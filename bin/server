@@ -1,0 +1,243 @@
+#!/usr/bin/env coffee
+# chmod +x server
+
+# The `coffee` utility. Handles command-line compilation of CoffeeScript
+# into various forms: saved into `.js` files or printed to stdout, piped to
+# [JavaScript Lint](http://javascriptlint.com/) or recompiled every time the source is
+# saved, printed as a token stream or as the syntax tree, or launch an
+# interactive REPL.
+
+# External dependencies.
+fs             = require 'fs'
+path           = require 'path'
+helpers        = require '../lib/command/helpers'
+optparse       = require '../lib/command/optparse'
+#Code           = require './code'
+{spawn, exec}  = require 'child_process'
+{EventEmitter} = require 'events'
+debug         = require('debug')('code:server')
+
+# Allow CoffeeScript to emit Node.js events.
+#helpers.extend CoffeeScript, new EventEmitter
+
+printLine = (line) -> process.stdout.write line + '\n'
+printWarn = (line) -> process.stderr.write line + '\n'
+
+hidden = (file) -> /^\.|~$/.test file
+
+# The help banner that is printed when `coffee` is called without arguments.
+BANNER = '''
+  Usage: coffee [options] path/to/script.coffee -- [args]
+
+  If called without options, `coffee` will run your script.
+'''
+
+# The list of all the valid option flags that `coffee` knows how to handle.
+SWITCHES = [
+  ['-a', '--app',             'app mode']
+  ['-b', '--bare',            'compile without a top-level function wrapper']
+  ['-c', '--compile',         'compile to JavaScript and save as .js files']
+  ['-d', '--daemon',          'cluster']
+  ['-e', '--eval',            'pass a string from the command line as input']
+  ['-h', '--help',            'display this help message']
+  ['-i', '--interactive',     'run an interactive CoffeeScript REPL']
+  ['-j', '--join [FILE]',     'concatenate the source CoffeeScript before compiling']
+  ['-l', '--lint',            'pipe the compiled JavaScript through JavaScript Lint']
+  ['-n', '--nodes',           'print out the parse tree that the parser produces']
+  [      '--nodejs [ARGS]',   'pass options directly to the "node" binary']
+  ['-o', '--output [DIR]',    'set the output directory for compiled JavaScript']
+  ['-p', '--print',           'print out the compiled JavaScript']
+  ['-r', '--require [FILE*]', 'require a library before executing your script']
+  ['-s', '--stdio',           'listen for and compile scripts over stdio']
+  ['-t', '--tokens',          'print out the tokens that the lexer/rewriter produce']
+  ['-v', '--version',         'display the version number']
+  ['-w', '--watch',           'watch scripts for changes and rerun commands']
+]
+
+# Top-level objects shared by all the functions.
+opts         = {}
+sources      = []
+sourceCode   = []
+notSources   = {}
+watchers     = {}
+optionParser = null
+
+# Run `coffee` by parsing passed options and determining what action to take.
+# Many flags cause us to divert before compiling anything. Flags passed after
+# `--` will be passed verbatim to your script as arguments in `process.argv`
+exports.run = ->
+  parseOptions()
+  return app()                           if opts.app
+  return daemon()                        if opts.daemon
+  return forkNode()                      if opts.nodejs
+  return usage()                         if opts.help
+  return version()                       if opts.version
+  loadRequires()                         if opts.require
+  return require './repl'                if opts.interactive
+  if opts.watch and !fs.watch
+    return printWarn "The --watch feature depends on Node v0.6.0+. You are running #{process.version}."
+  return compileStdio()                  if opts.stdio
+  return compileScript null, sources[0]  if opts.eval
+  #process.env['DEBUG'] = 'code:*'
+  #console.log(process.env['DEBUG'])
+  return app()
+  #return simple()
+  #return forkCode()
+  #return require './repl'                unless sources.length
+  literals = if opts.run then sources.splice 1 else []
+  process.argv = process.argv[0..1].concat literals
+  process.argv[0] = 'coffee'
+  process.execPath = require.main.filename
+  for source in sources
+    compilePath source, yes, path.normalize source
+
+simple = ->
+  result = require('subprocess').command('node -v')
+  return
+  exec('coffee run.coffee')
+  return
+  s = exec(process.execPath, [  __dirname + '/run.coffee' ])
+  s.stderr.on "data", (data) ->
+    console.log "stderr: " + data
+
+forkCode = ->
+  {fork}  = require 'child_process'
+  #console.log process.execPath
+  childEnv = process.env
+  childEnv['DEBUG'] = 'code:*'
+  #process.exit()
+  mod = __dirname + '/run.js'
+  console.log mod
+  n = fork(mod)
+  #n = fork process.execPath, ['run']
+  ###
+  n.on "message", (m) ->
+    console.log "PARENT got message:", m
+
+  n.send hello: "world"
+  ###
+  #ls = spawn process.execPath, ['run'],
+  #  cwd:        process.cwd()
+  #  env:        childEnv
+  #  customFds: [0,1,2]
+
+spawnCode = ->
+  console.log process.execPath
+  childEnv = process.env
+  childEnv['DEBUG'] = 'code:*'
+  ls = spawn process.execPath, ['run'],
+    cwd:        process.cwd()
+    env:        childEnv
+    customFds: [0,1,2]
+  ###
+  ls.stdout.on "data", (data) ->
+    console.log "stdout: " + data
+
+  ls.stderr.on "data", (data) ->
+    console.log "stderr: " + data
+
+  ls.on "exit", (code) ->
+    console.log "child process exited with code " + code
+  ###
+  ###
+  nodeArgs = opts.nodejs.split /\s+/
+  args     = process.argv[1..]
+  args.splice args.indexOf('--nodejs'), 2
+  spawn process.execPath, nodeArgs.concat(args),
+    cwd:        process.cwd()
+    env:        process.env
+    customFds:  [0, 1, 2]
+  
+  #unless module.parent
+  if require.main == module
+    debug('acquiring app')
+    app = getApp()
+    debug('app acquired')
+    app.listen app.set('port')
+    debug('server listening')
+    log(app)
+  ###
+
+getApp = ->
+  app = require('../app')
+  app.set('port', process.env.PORT || 3000)
+  app.set('hostname', 'localhost')
+  app
+  
+log = (app) ->
+  console.log "%s, version: %s, host %s:%d, %s mode"
+    , app.set('app name')
+    , app.set('app version')
+    , app.set('hostname')
+    , app.set('port')
+    , app.settings.env
+
+# Print the `--help` usage message and exit. Deprecated switches are not
+# shown.
+app = ->
+  #unless module.parent
+  if require.main == module
+    debug('acquiring app')
+    app = getApp()
+    debug('app acquired')
+    app.listen app.set('port')
+    debug('server listening')
+    log(app)
+    
+      
+daemon = ->
+  debug('cluster server')
+  require("../lib/cluster/cluster-server") ->
+    debug('acquiring app')
+    app = getApp()
+    debug('app acquired')
+    log(app)
+    app
+      
+
+
+# Pretty-print a stream of tokens.
+printTokens = (tokens) ->
+  strings = for token in tokens
+    [tag, value] = [token[0], token[1].toString().replace(/\n/, '\\n')]
+    "[#{tag} #{value}]"
+  printLine strings.join(' ')
+
+# Use the [OptionParser module](optparse.html) to extract all options from
+# `process.argv` that are specified in `SWITCHES`.
+parseOptions = ->
+  optionParser  = new optparse.OptionParser SWITCHES, BANNER
+  o = opts      = optionParser.parse process.argv[2..]
+  o.compile     or=  !!o.output
+  o.run         = not (o.compile or o.print or o.lint)
+  o.print       = !!  (o.print or (o.eval or o.stdio and o.compile))
+  sources       = o.arguments
+  sourceCode[i] = null for source, i in sources
+  return
+
+
+# The compile-time options to pass to the CoffeeScript compiler.
+compileOptions = (filename) ->
+  {filename, bare: opts.bare, header: opts.compile}
+
+# Start up a new Node.js instance with the arguments in `--nodejs` passed to
+# the `node` binary, preserving the other options.
+forkNode = ->
+  nodeArgs = opts.nodejs.split /\s+/
+  args     = process.argv[1..]
+  args.splice args.indexOf('--nodejs'), 2
+  spawn process.execPath, nodeArgs.concat(args),
+    cwd:        process.cwd()
+    env:        process.env
+    customFds:  [0, 1, 2]
+
+# Print the `--help` usage message and exit. Deprecated switches are not
+# shown.
+usage = ->
+  printLine (new optparse.OptionParser SWITCHES, BANNER).help()
+
+# Print the `--version` message and exit.
+version = ->
+  printLine "CoffeeScript version #{CoffeeScript.VERSION}"
+  
+@run()

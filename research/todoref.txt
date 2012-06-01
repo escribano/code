@@ -1,0 +1,55 @@
+#console.log filteredLines
+#newlines = lines.map (line) ->
+#  console.log line.length
+#  return if line.length == 0
+#  line.split ':'
+#console.log newlines
+#lines.forEach (line) ->
+#  parts = line.split ':'
+#parts = lines.map (line) -> line.split ':'
+#console.log parts
+# String lines[] = String.split("\\r?\\n");
+# Windows: \r\n Unix: \n Mac: \r
+# If you don’t want empty lines:
+#String.split("[\\r\\n]+")
+#For my multiline input controls, I have a getValue function that takes the value and 
+# returns value.replace(/\r\n/g,'\n') - just to keep the output consistent across browsers/platforms. 
+###
+<!doctype html>
+<script>
+function bar(){
+    baz = document.getElementById('foo').value;
+    alert((baz.match(/\r/) && 'CR') + ' ' + (baz.match(/\n/) && 'LF'));
+    document.getElementById('foo').value = "foo\nbar";
+}
+</script>
+<body onload="bar()">
+<form><textarea id="foo" name="foo">
+
+</textarea>
+<input type="submit">
+</form>
+</body>
+
+lines = foo.value.split(/\r\n|\r|\n/);
+htmlstring = stringContainingNewLines.replace(/(\r\n|\n|\r)/gm, "<br>");
+
+String.prototype.trim=function(){return this.replace(/^\s\s*/, '').replace(/\s\s*$/, '');};
+
+String.prototype.ltrim=function(){return this.replace(/^\s+/,'');}
+
+String.prototype.rtrim=function(){return this.replace(/\s+$/,'');}
+
+String.prototype.fulltrim=function(){return this.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,' ');}
+
+
+if(!String.prototype.trim) {  
+  String.prototype.trim = function () {  
+    return this.replace(/^\s+|\s+$/g,'');  
+  };  
+}
+
+
+function trim(str) {
+        return str.replace(/^\s+|\s+$/g,"");
+}

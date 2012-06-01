@@ -1,5 +1,17 @@
 REPORTER = dot
 
+debugall:
+	@DEBUG=* coffee server -a
+
+debugcluster:
+	@DEBUG=code:* coffee server -d
+
+debug:
+	@DEBUG=code:* coffee server -a
+
+server:
+	@DEBUG=app:index coffee server -a
+
 test:
 	@NODE_ENV=test ./node_modules/.bin/mocha \
 		--reporter $(REPORTER)

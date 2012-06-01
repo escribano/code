@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+// chmod +x bin/hookio-master
+
+require('coffee-script')
+
+var HookMaster = require('../lib/hooks/master').HookMaster;
+
+var hook = new HookMaster({
+  name: 'hookMaster'
+});
+
+//hook.start();
+hook.listen()
+//hook.connect()

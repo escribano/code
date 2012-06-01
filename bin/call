@@ -1,43 +1,163 @@
-#!/usr/bin/env coffee
-# chmod +x bin/call
+#!/usr/bin/env node
 
-###
- * Module dependencies.
-###
+/**
+ * This tiny wrapper file checks for known node flags and appends them
+ * when found, before invoking the "real" _call(1) executable.
+ */
 
-call = require("../")
-exec = require("child_process").exec
-program = require("commander")
-#mkdirp = require("mkdirp")
-os = require("os")
-fs = require("fs")
+require('coffee-script')
 
-console.log call
+var spawn = require('child_process').spawn
+  , args = [ __dirname + '/_call' ];
+  
+var opts         = {}
+
+getApp = function () {
+  app = require('../app')
+  app.set('port', process.env.PORT || 3000)
+  app.set('hostname', 'localhost')
+  return (app)
+}
+
+appMode = function () {
+  // unless module.parent
+  if (!module.parent) {
+    //debug('acquiring app')
+    var app;
+    app = getApp()
+    app.listen(app.set('port'));
+    console.log('Calling started on port 3000');
+    //debug('server listening')
+    //log(app)
+  }
+}
+
+clusterMode = function () {
+  //debug('cluster server')
+  return require("../lib/cluster/cluster-server")(function() {
+    //debug('acquiring app')
+    var app;
+    app = getApp()
+    //debug('app acquired')
+    //log(app)
+    return app;
+})}
+
+process.argv.slice(2).forEach(function (arg) {
+  //console.log(arg)
+  switch (arg) {
+    case 'cluster':
+    case '-c':
+    case '--cluster':
+      opts.clustermode = true
+      args.push(arg);
+      //args.unshift('--debug');
+      break;
+    case '-d':
+      args.unshift('--debug');
+      break;
+    case 'debug':
+    case '--debug':
+    case '--debug-brk':
+      args.unshift(arg);
+      break;
+    case '-gc':
+    case '--expose-gc':
+      args.unshift('--expose-gc');
+      break;
+    default:
+      //console.log('setting app mode')
+      //opts.appmode = true
+      args.push(arg);
+      break;
+  }
+});
 
 
-# CLI
 
-program
-  .version(call.version)
-  .option('-s, --assets', 'add assets support')
-  .option('-c, --compiler <engine>', 'add compiler <engine> support (coffee|jade) (defaults to coffee)')
-  .parse(process.argv)
+exports.run = function () {
+  parseOptions()
+  if (opts.clustermode) {
+    //console.log("clustermode")
+    cargs = [ __dirname + '/clustermode.js' ]
+    var proc = spawn(process.argv[0], cargs, { customFds: [0,1,2] });
+    proc.on('exit', process.exit);
+    //return appMode()  
+    //process.exit()
+    return
+  }
+  if (opts.appmode) {
+    //console.log("appmode")
+    cargs = [ __dirname + '/app.js' ]
+    var proc = spawn(process.argv[0], cargs, { customFds: [0,1,2] });
+    proc.on('exit', process.exit);
+    //return appMode()  
+  }
+  if (opts.app) {
+    console.log("app")
+    return appMode()  
+  }
+  if (opts.cluster) {
+    //console.log("cluster")
+    return clusterMode()  
+  }
+  if (opts.argv) {
+    //console.log("cluster")
+    console.log(opts.argv)
+    console.log(process.argv[0])
+    console.log(process.argv.slice(2))
+    console.log(args)
+    //console.log(args.unshift('--debug'));
+    //console.log(args)
+    //args.unshift('arg')
+    //console.log(args)
+    //return 
+  }
+  //console.log("appmode")
+  var childEnv = process.env
+  childEnv['DEBUG'] = 'code:*'
+  //childEnv = childEnv.concat()
+  //childEnv['DEBUG'] = '*'
+  //childEnv['DEBUG'] = 'code:*'
+  //a = ['--nodejs'].concat(args)
+  cargs = [ __dirname + '/app.js' ]
+  //env: childEnv
+  //var proc = spawn(process.argv[0], cargs, { customFds: [0,1,2] });
+  //cwd: process.cwd(), env: childEnv,
+  var proc = spawn(process.argv[0], cargs, { env: childEnv, customFds: [0,1,2] });
+  proc.on('exit', process.exit);
+}
 
-# Path
+parseOptions = function () {
+  /*
+  optionParser  = new optparse.OptionParser SWITCHES, BANNER
+  o = opts      = optionParser.parse process.argv[2..]
+  o.compile     or=  !!o.output
+  o.run         = not (o.compile or o.print or o.lint)
+  o.print       = !!  (o.print or (o.eval or o.stdio and o.compile))
+  sources       = o.arguments
+  sourceCode[i] = null for source, i in sources
+  */
+  var o = opts
+  //o.app = true
+  //o.cluster = true
+  //o.argv = process.argv
+  return
+}
 
-path = program.args.shift() or "."
+this.run()
 
-
-# end-of-line code
-
-eol = (if "win32" is os.platform() then "\r\n" else "\n")
-
-switch program.css
-  when "coffee"
-    console.log  "coffee"
-  when "jade"
-    console.log "stylus"
-  else
-    console.log "less"
-
-
+/*
+// unless module.parent
+if (!module.parent) {
+  //debug('acquiring app')
+  app = getApp()
+  app.listen(app.set('port'));
+  console.log('Calling started on port 3000');
+  //debug('server listening')
+  //log(app)
+}
+*/
+// var proc = spawn(process.argv[0], args, { customFds: [0,1,2] });
+// var proc = spawn(process.argv[0], args, { customFds: [0,1,2] });
+// proc.on('exit', process.exit);

@@ -1,5 +1,3 @@
-## Todo
-
 ### dispositio
 
 tar -ztvf `npm pack`
